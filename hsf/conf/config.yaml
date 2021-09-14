@@ -1,3 +1,4 @@
 defaults:
   - roiloc: roiloc
   - segmentation: arunet
+  - override hydra/help: hsf

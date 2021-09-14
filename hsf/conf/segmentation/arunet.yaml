@@ -1,0 +1,2 @@
+models_path: "~/.hsf/models"
+test_time_augmentation: True

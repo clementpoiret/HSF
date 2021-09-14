@@ -1,0 +1,33 @@
+[tool.poetry]
+name = "HSF"
+version = "0.0.1"
+description = ""
+authors = ["Clément POIRET <poiret.clement@outlook.fr>"]
+license = "MIT"
+readme = "README.rst"
+keywords = ["mri", "brain", "hippocampus", "segmentation", "deep learning"]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "License :: OSI Approved :: MIT License",
+    "Topic :: Scientific/Engineering :: Bio-Informatics",
+    "Topic :: Scientific/Engineering :: Image Processing"
+]
+homepage = "https://hippomnesis.dev"
+repository = "https://github.com/clementpoiret/HSF"
+
+[tool.poetry.scripts]
+hsf = 'hsf.factory:start'
+
+[tool.poetry.dependencies]
+python = "^3.9"
+torchio = "^0.18.56"
+roiloc = "^0.2.3"
+onnxruntime = "^1.8.1"
+hydra-core = "^1.1.1"
+
+[tool.poetry.dev-dependencies]
+pytest = "^5.2"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"

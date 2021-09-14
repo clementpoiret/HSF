@@ -1,0 +1,3 @@
+defaults:
+  - roiloc: roiloc
+  - segmentation: arunet

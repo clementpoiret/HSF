@@ -1,8 +1,0 @@
-roiloc:
-  margin:
-  - 8
-  - 8
-  - 8
-segmentation:
-  models_path: ~/.hsf/models
-  test_time_augmentation: true

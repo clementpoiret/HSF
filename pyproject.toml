@@ -24,6 +24,7 @@ torchio = "^0.18.56"
 roiloc = "^0.2.3"
 onnxruntime = "^1.8.1"
 hydra-core = "^1.1.1"
+wget = "^3.2"
 
 [tool.poetry.dev-dependencies]
 pytest = "^5.2"

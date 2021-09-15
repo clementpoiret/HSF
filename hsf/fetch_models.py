@@ -7,14 +7,14 @@ from icecream import ic
 from omegaconf import DictConfig
 
 
-def get_md5(fname: str):
+def get_md5(fname: str) -> str:
     """ Get md5sum of a file
 
     Args:
-        fname ([type]): [description]
+        fname (str): [description]
 
     Returns:
-        [type]: [description]
+        str: [description]
     """
     hash_md5 = hashlib.md5()
     with open(fname, "rb") as f:
@@ -42,7 +42,7 @@ def fetch(dir: str, filename: str, url: str, md5: str) -> None:
             ic(model)
             return
         else:
-            model = f"{filename} already exists but is corrupted"
+            model = f"{filename} already exists but is not up to date"
             ic(model)
             outfile.unlink()
 

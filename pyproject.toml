@@ -26,6 +26,7 @@ onnxruntime = "^1.8.1"
 hydra-core = "^1.1.1"
 wget = "^3.2"
 icecream = "^2.1.1"
+antspyx = "^0.2.9"
 
 [tool.poetry.dev-dependencies]
 pytest = "^5.2"

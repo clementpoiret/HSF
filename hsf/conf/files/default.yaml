@@ -1,3 +1,4 @@
 path: "/home/cp264607/Datasets/SHATAU/082T/"
 pattern: "*T_T2w.nii"
 mask_pattern: "*mask.nii.gz"
+output_dir: "hsf_outputs"

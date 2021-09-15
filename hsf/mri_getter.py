@@ -1,9 +1,10 @@
 from pathlib import Path, PosixPath
 from typing import Optional
+
 import ants
+from icecream import ic
 from omegaconf.dictconfig import DictConfig
 from roiloc.locator import RoiLocator
-from icecream import ic
 
 
 def load_from_config(path: str, pattern: str) -> list:

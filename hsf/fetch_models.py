@@ -49,6 +49,7 @@ def fetch(dir: str, filename: str, url: str, md5: str) -> None:
     log = "Fetching {}".format(url)
     ic(log)
     wget.download(url, out=str(outfile))
+    print("\n")
 
     if not md5 == get_md5(str(outfile)):
         ic("MD5 checksum failed")

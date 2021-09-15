@@ -82,8 +82,10 @@ def save_hippocampi(right_mri: ants.ANTsImage, left_mri: ants.ANTsImage,
     output_path = original_mri_path.parent / dir_name
     output_path.mkdir(parents=True, exist_ok=True)
 
-    output_pattern = str(
-        output_path / (str(original_mri_path.stem) + "_{}_hippocampus.nii.gz"))
+    extensions = "".join(original_mri_path.suffixes)
+    fname = original_mri_path.name.replace(extensions, "")
+
+    output_pattern = str(output_path / (fname + "_{}_hippocampus.nii.gz"))
 
     right_output_path = output_pattern.format("right")
     left_output_path = output_pattern.format("left")

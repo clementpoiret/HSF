@@ -2,4 +2,4 @@ contrast: "t2"
 roi: "hippocampus"
 bet: False
 transform_type: "AffineFast"
-margin: [16, 16, 16]
+margin: [8, 8, 8]

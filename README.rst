@@ -8,6 +8,12 @@ Installation
 Quick start
 ***********
 
+Configuration
+*************
+
+How to improve segmentation quality?
+************************************
+
 Custom models
 *************
 

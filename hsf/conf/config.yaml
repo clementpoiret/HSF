@@ -1,5 +1,6 @@
 defaults:
   - files: default
-  - roiloc: roiloc
-  - segmentation: arunet
+  - roiloc: default_t2iso
+  - segmentation: single_accurate
+  - augmentation: default
   - override hydra/help: hsf

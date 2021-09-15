@@ -1,0 +1,15 @@
+flip:
+  axes: ["LR"]
+  flip_probability: 0.5
+
+affine_probability: 0.75
+affine:
+  scales: 0.2
+  degrees: 10
+  translation: 3
+
+elastic_probability: 0.25
+elastic:
+  num_control_points: 4
+  max_displacement: 3
+  locked_borders: 0

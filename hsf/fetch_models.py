@@ -11,10 +11,10 @@ def get_md5(fname: str) -> str:
     """ Get md5sum of a file
 
     Args:
-        fname (str): [description]
+        fname (str): Path to file
 
     Returns:
-        str: [description]
+        str: md5sum of file
     """
     hash_md5 = hashlib.md5()
     with open(fname, "rb") as f:
@@ -24,13 +24,13 @@ def get_md5(fname: str) -> str:
 
 
 def fetch(dir: str, filename: str, url: str, md5: str) -> None:
-    """[summary]
+    """ Fetch a model from a url
 
     Args:
-        dir (str): [description]
-        filename (str): [description]
-        url (str): [description]
-        md5 (str): [description]
+        dir (str): Directory to save model
+        filename (str): Filename of model
+        url (str): Url to download model from
+        md5 (str): md5sum of model
     """
     p = Path(dir).expanduser()
     p.mkdir(parents=True, exist_ok=True)
@@ -58,15 +58,15 @@ def fetch(dir: str, filename: str, url: str, md5: str) -> None:
 
 
 def fetch_models(dir: str, models: DictConfig) -> None:
-    """[summary]
+    """ Fetch all models
 
     Args:
-        dir (str): [description]
-        models (DictConfig): [description]
+        dir (str): Directory to save models
+        models (DictConfig): Models to fetch
     """
     for model in models:
         fetch(dir, filename=str(model), **models[model])
 
 
-def test():
-    dir = "~/.hsf/models"
+# def test():
+#     dir = "~/.hsf/models"

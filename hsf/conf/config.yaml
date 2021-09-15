@@ -1,4 +1,5 @@
 defaults:
+  - files: default
   - roiloc: roiloc
   - segmentation: arunet
   - override hydra/help: hsf

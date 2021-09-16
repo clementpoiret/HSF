@@ -52,7 +52,7 @@ def main(cfg: DictConfig) -> None:
     mris = load_from_config(cfg.files.path, cfg.files.pattern)
 
     print(
-        "Please be aware that the segmentation is highly dependant on ROILoc to locate the hippocampi.\nROILoc will be ran using the following configuration.\nIf the segmentation is of bad quality, please tune your ROILoc settings (e.g. ``margin``)."
+        "Please be aware that the segmentation is highly dependant on ROILoc to locate both hippocampi.\nROILoc will be run using the following configuration.\nIf the segmentation is of bad quality, please tune your ROILoc settings (e.g. ``margin``)."
     )
     ic(cfg.roiloc)
     print(
@@ -72,6 +72,7 @@ def main(cfg: DictConfig) -> None:
                 augmentation_cfg=cfg.augmentation,
                 segmentation_cfg=cfg.segmentation.segmentation,
                 sessions=sessions,
+                ca_mode=str(cfg.segmentation.ca_mode),
             )
 
             ic("Saving cropped segmentation in LPI orientation.")

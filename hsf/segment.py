@@ -5,6 +5,7 @@ import onnxruntime as ort
 import torch
 import torchio as tio
 from omegaconf.dictconfig import DictConfig
+from rich.progress import track
 
 
 def mri_to_subject(mri: PosixPath) -> tio.Subject:
@@ -63,8 +64,48 @@ def get_inference_sessions(models_path: PosixPath) -> list:
     return [ort.InferenceSession(str(model_path)) for model_path in models]
 
 
-def segment(subject: tio.Subject, augmentation_cfg: DictConfig,
-            segmentation_cfg: DictConfig, sessions: list) -> torch.Tensor:
+def to_ca_mode(logits: torch.Tensor, ca_mode: str = "1/2/3") -> torch.Tensor:
+    """ Converts the logits to the ca_mode.
+
+    Args:
+        logits (torch.Tensor): The logits.
+        ca_mode (str): The cornu ammoni division mode.
+
+    Returns:
+        torch.Tensor: The corrected logits.
+    """
+    # 0: bg, 1: dg, 2: ca1, 3: ca2, 4: ca3, 5: sub
+    if ca_mode == "1/2/3":
+        # identity
+        return logits
+    elif ca_mode == "1/23":
+        # ca1; ca2+ca3
+        _pre = logits[:, :3, :, :, :]
+        _in = logits[:, 3:4, :, :, :] + logits[:, 4:5, :, :, :]
+        _post = logits[:, 5:, :, :, :]
+
+        return torch.cat([_pre, _in, _post], dim=1)
+    elif ca_mode == "123":
+        # ca1+ca2+ca3
+        _pre = logits[:, :2, :, :, :]
+        _in = logits[:,
+                     2:3, :, :, :] + logits[:,
+                                            3:4, :, :, :] + logits[:,
+                                                                   4:5, :, :, :]
+        _post = logits[:, 5:, :, :, :]
+
+        return torch.cat([_pre, _in, _post], dim=1)
+    else:
+        raise ValueError(
+            f"Unknown `ca_mode` ({ca_mode}). `ca_mode` must be 1/2/3, 1/23 or 123"
+        )
+
+
+def segment(subject: tio.Subject,
+            augmentation_cfg: DictConfig,
+            segmentation_cfg: DictConfig,
+            sessions: list,
+            ca_mode: str = "1/2/3") -> torch.Tensor:
     """ Segments the given subject.
 
     Args:
@@ -72,6 +113,7 @@ def segment(subject: tio.Subject, augmentation_cfg: DictConfig,
         augmentation_cfg (DictConfig): Augmentation configuration.
         segmentation_cfg (DictConfig): Segmentation configuration.
         sessions (List[ort.InferenceSession]): ONNX runtime sessions.
+        ca_mode (str): The cornu ammoni division mode. Defaults to "1/2/3".
 
     Returns:
         torch.Tensor: The segmented subject.
@@ -84,7 +126,10 @@ def segment(subject: tio.Subject, augmentation_cfg: DictConfig,
 
     # to try: 20 augmentation for 5 models, or 20 augmentations PER model
     results = []
-    for i in range(n_aug):
+    for i in track(
+            range(n_aug),
+            description=f"Segmenting (TTA: {n_aug} | {len(sessions)} MODELS)..."
+    ):
         if i == 0:
             augmented = subject
         else:
@@ -95,7 +140,8 @@ def segment(subject: tio.Subject, augmentation_cfg: DictConfig,
         sessions_predictions = []
         for session in sessions:
             logits = session.run(None, {"input": input_tensor.numpy()})
-            output_tensor = torch.tensor(logits[0]).argmax(dim=1, keepdim=True)
+            logits = to_ca_mode(torch.tensor(logits[0]), ca_mode)
+            output_tensor = logits.argmax(dim=1, keepdim=True)
             lm_temp = tio.LabelMap(tensor=torch.rand(1, 1, 1, 1),
                                    affine=augmented.mri.affine)
             augmented.add_image(lm_temp, 'label')

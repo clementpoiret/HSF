@@ -1,3 +1,4 @@
+ca_mode: "1/2/3"
 models_path: "~/.hsf/models"
 models:
   arunet_bag_0.onnx:

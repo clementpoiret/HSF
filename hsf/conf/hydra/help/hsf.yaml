@@ -29,7 +29,8 @@ template: |
   == Config ==
   Override anything in the config (e.g. hsf roiloc.margin=[16, 2, 16])
   You can also add specific configs absent from the default yaml files (e.g. hsf +augmentation.elastic.image_interpolation=sitkBSpline)
+  Fields set with ??? are mandatory.
 
   $CONFIG
-  
+
   ${hydra.help.footer}

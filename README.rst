@@ -2,6 +2,8 @@
 Hippocampal Segmentation Factory (HSF)
 ======================================
 
+.. image:: res/header.svg
+
 Installation
 ************
 

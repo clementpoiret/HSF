@@ -27,8 +27,15 @@ or tail class.
 
 Please note that the tool is still under development and is not yet
 ready for production use. It uses multiple expert deep learning models
-trained on 600+ manually segmented hippocampi (see :ref:`Which MRI modalities are usable in HSF?`)
+trained on 600+ manually segmented hippocampi (see `Which MRI modalities are usable in HSF?`_)
 which are not yet fully trained.
+
+HSF uses inference sessions provided by `ONNXRuntime <https://onnxruntime.ai>`_,
+which means that it can be used *theoretically* on Windows, MacOS and Linux,
+and the following hardware accelerations: CPU, CUDA, DirectML, OneDNN,
+OpenVINO, TensorRT, NUPHAR, Vitis AI, ACL, ArmNN, MIGraphX, and Rockchip NPU.
+Please be aware that we do not tested all possible configurations, as HSF
+has been tested only on CPU and CUDA on Linux (Debian-based and Arch-based distros).
 
 
 Installation

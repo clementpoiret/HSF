@@ -3,9 +3,11 @@ app_name: "Hippocampal Segmentation Factory (HSF)"
 
 # Help header, customize to describe your app to your users
 header: |
-  ${hydra.help.app_name} is powered by Hydra.
+  ${hydra.help.app_name} is powered by Hydra, ONNX, ONNXRuntime, and has been made possible by the HPE Jean Zay Supercomputer (IDRIS, GENCI, France).
 footer: |
-  Powered by Hydra (https://hydra.cc)
+  Inference sessions are provided by ONNX (https://onnx.ai), and ONNXRuntime (https://onnxruntime.ai).
+  Please refer to ONNXRuntime's documentation for setting-up the correct environment, to benefit from the performance and scalability of hardware accelerations.
+  Configuration powered by Hydra (https://hydra.cc)
   Use --hydra-help to view Hydra specific help
 # Basic Hydra flags:
 #   $FLAGS_HELP
@@ -19,10 +21,15 @@ footer: |
 #
 template: |
   ${hydra.help.header}
+
   == Configuration groups ==
   Compose your configuration from those groups (group=option)
   $APP_CONFIG_GROUPS
+
   == Config ==
-  Override anything in the config (foo.bar=value)
+  Override anything in the config (e.g. hsf roiloc.margin=[16, 2, 16])
+  You can also add specific configs absent from the default yaml files (e.g. hsf +augmentation.elastic.image_interpolation=sitkBSpline)
+
   $CONFIG
+  
   ${hydra.help.footer}

@@ -2,8 +2,8 @@ ca_mode: "1/2/3"
 models_path: "~/.hsf/models"
 models:
   arunet_bag_0.onnx:
-    url: "https://zenodo.org/record/5507086/files/arunet_v0_bag_0.onnx?download=1"
-    md5: "1458216b86a83193002d77daeca3a097"
+    url: "https://zenodo.org/record/5524594/files/arunet_bag0.onnx?download=1"
+    md5: "10026a4ef697871b7d49c08a4f16b6ae"
 
 segmentation:
   test_time_augmentation: False

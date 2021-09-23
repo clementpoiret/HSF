@@ -1,0 +1,22 @@
+ca_mode: "1/2/3"
+models_path: "~/.hsf/models"
+models:
+  arunet_bag_0.onnx:
+    url: "https://zenodo.org/record/5524594/files/arunet_bag0.onnx?download=1"
+    md5: "10026a4ef697871b7d49c08a4f16b6ae"
+  arunet_bag_1.onnx:
+    url: "https://zenodo.org/record/5524594/files/arunet_bag1.onnx?download=1"
+    md5: "3daf3086b0395712dd2bd30facd685c5"
+  arunet_bag_2.onnx:
+    url: "https://zenodo.org/record/5524594/files/arunet_bag2.onnx?download=1"
+    md5: "5a16d85dd34a972793401f51023d7ade"
+  arunet_bag_3.onnx:
+    url: "https://zenodo.org/record/5524594/files/arunet_bag3.onnx?download=1"
+    md5: "c5b278911504f2a667b5af3d0fb3881d"
+  arunet_bag_4.onnx:
+    url: "https://zenodo.org/record/5524594/files/arunet_bag4.onnx?download=1"
+    md5: "5947db98c8644c8e48975ffec2538d85"
+
+segmentation:
+  test_time_augmentation: False
+  test_time_num_aug: 1

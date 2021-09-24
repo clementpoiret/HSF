@@ -2,8 +2,8 @@
 Hippocampal Segmentation Factory (HSF)
 ======================================
 
-.. image:: https://zenodo.org/badge/DOI/10.5281/zenodo.5527123.svg
-   :target: https://doi.org/10.5281/zenodo.5527123
+.. image:: https://zenodo.org/badge/DOI/10.5281/zenodo.5527122.svg
+   :target: https://doi.org/10.5281/zenodo.5527122
 
 The Hippocampal Segmentation Factory (HSF) is a Python package for
 the segmentation of the hippocampal subfields in raw MRI volumes.
@@ -182,3 +182,17 @@ Performance tunning
 
 Please refer to ONNXRuntime's documentation for setting-up the correct environment,
 to benefit from the performance and scalability of hardware accelerations.
+
+
+Authorship, Affiliations and Citations
+**************************************
+
+CEA Saclay / NeuroSpin / UNIACT-InsermU1141
+
+If you use this work, please cite it as follows:
+
+``C. Poiret, et al. (2021). clementpoiret/HSF. Zenodo. https://doi.org/10.5281/zenodo.5527122``
+
+This work was supported in part by the Fondation de France and the IDRIS/Genci for the HPC Supercomputer Jean Zay.
+
+HSF is licensed under MIT license.

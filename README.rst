@@ -83,55 +83,55 @@ Configuration
 As HSF is pretty modular, you can easily configure it to your needs thanks to Hydra.
 
 Compose your configuration from those groups (group=option)
-- augmentation: default
-- files: default
-- roiloc: default_t2iso
-- segmentation: bagging_accurate, bagging_fast, single_accurate, single_fast
+* augmentation: default
+* files: default
+* roiloc: default_t2iso
+* segmentation: bagging_accurate, bagging_fast, single_accurate, single_fast
 
 Override anything in the config (e.g. hsf roiloc.margin=[16, 2, 16])
 You can also add specific configs absent from the default yaml files (e.g. hsf +augmentation.elastic.image_interpolation=sitkBSpline)
 Fields set with ??? are mandatory.
 
 files:
-- path: ???
-- pattern: ???
-- mask_pattern: '*mask.nii.gz'
-- output_dir: hsf_outputs
+* path: ???
+* pattern: ???
+* mask_pattern: '*mask.nii.gz'
+* output_dir: hsf_outputs
 
 roiloc:
-- contrast: t2
-- roi: hippocampus
-- bet: false
-- transform_type: AffineFast
-- margin: [8, 8, 8]
+* contrast: t2
+* roi: hippocampus
+* bet: false
+* transform_type: AffineFast
+* margin: [8, 8, 8]
 
 segmentation:
-- ca_mode: 1/2/3
-- models_path: ~/.hsf/models
-- models:
-   -  arunet_bag_0.onnx:
-   -  url: https://zenodo.org/record/5524594/files/arunet_bag0.onnx?download=1
-   -  md5: 10026a4ef697871b7d49c08a4f16b6ae
-   segmentation:
-      - test_time_augmentation: true
-      - test_time_num_aug: 20
+* ca_mode: 1/2/3
+* models_path: ~/.hsf/models
+* models:
+   *  arunet_bag_0.onnx:
+   *  url: https://zenodo.org/record/5524594/files/arunet_bag0.onnx?download=1
+   *  md5: 10026a4ef697871b7d49c08a4f16b6ae
+   * segmentation:
+      * test_time_augmentation: true
+      * test_time_num_aug: 20
 
 augmentation:
-- flip:
-   - axes:
-      - LR
-   - flip_probability: 0.5
-   - affine_probability: 0.75
-   - affine:
-      - scales: 0.2
-      - degrees: 15
-      - translation: 3
-      - isotropic: false
-   - elastic_probability: 0.25
-   - elastic:
-      - num_control_points: 4
-      - max_displacement: 4
-      - locked_borders: 0
+* flip:
+   * axes:
+      * LR
+   * flip_probability: 0.5
+   * affine_probability: 0.75
+   * affine:
+      * scales: 0.2
+      * degrees: 15
+      * translation: 3
+      * isotropic: false
+   * elastic_probability: 0.25
+   * elastic:
+      * num_control_points: 4
+      * max_displacement: 4
+      * locked_borders: 0
 
 
 How to improve segmentation quality?

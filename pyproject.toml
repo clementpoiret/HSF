@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "HSF"
-version = "0.0.1"
+version = "0.1.0"
 description = ""
 authors = ["Clément POIRET <poiret.clement@outlook.fr>"]
 license = "MIT"

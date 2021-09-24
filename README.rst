@@ -8,8 +8,6 @@ Hippocampal Segmentation Factory (HSF)
 The Hippocampal Segmentation Factory (HSF) is a Python package for
 the segmentation of the hippocampal subfields in raw MRI volumes.
 
-.. image:: res/header.svg
-
 The main idea is to have a click-button tool that allows the user to
 segment the hippocampal subfields in a given raw image (T1w or T2w), while keeping
 as much modularity and customization options as possible.
@@ -49,6 +47,7 @@ Then, simply run:
 
 ``pip install hsf``.
 
+
 Quick start
 ***********
 
@@ -77,6 +76,7 @@ Finally, ``segmentation.ca_mode`` is a parameter that allows to combine CA1, CA2
 It is particularly useful when you want to segment low-resolution images where it makes no sense to
 distinguish between CA's subfields.
 
+
 Configuration
 *************
 
@@ -93,50 +93,46 @@ Override anything in the config (e.g. hsf roiloc.margin=[16, 2, 16])
 You can also add specific configs absent from the default yaml files (e.g. hsf +augmentation.elastic.image_interpolation=sitkBSpline)
 Fields set with ??? are mandatory.
 
-files:
+* files:
+   * path: ???
+   * pattern: ???
+   * mask_pattern: ``*mask.nii.gz``
+   * output_dir: hsf_outputs
 
-* path: ???
-* pattern: ???
-* mask_pattern: '*mask.nii.gz'
-* output_dir: hsf_outputs
+* roiloc:
+   * contrast: t2
+   * roi: hippocampus
+   * bet: false
+   * transform_type: AffineFast
+   * margin: [8, 8, 8]
 
-roiloc:
+* segmentation:
+   * ca_mode: 1/2/3
+   * models_path: ~/.hsf/models
+   * models:
+      *  arunet_bag_0.onnx:
+      *  url: https://zenodo.org/record/5524594/files/arunet_bag0.onnx?download=1
+      *  md5: 10026a4ef697871b7d49c08a4f16b6ae
+      * segmentation:
+         * test_time_augmentation: true
+         * test_time_num_aug: 20
 
-* contrast: t2
-* roi: hippocampus
-* bet: false
-* transform_type: AffineFast
-* margin: [8, 8, 8]
-
-segmentation:
-
-* ca_mode: 1/2/3
-* models_path: ~/.hsf/models
-* models:
-   *  arunet_bag_0.onnx:
-   *  url: https://zenodo.org/record/5524594/files/arunet_bag0.onnx?download=1
-   *  md5: 10026a4ef697871b7d49c08a4f16b6ae
-   * segmentation:
-      * test_time_augmentation: true
-      * test_time_num_aug: 20
-
-augmentation:
-
-* flip:
-   * axes:
-      * LR
-   * flip_probability: 0.5
-   * affine_probability: 0.75
-   * affine:
-      * scales: 0.2
-      * degrees: 15
-      * translation: 3
-      * isotropic: false
-   * elastic_probability: 0.25
-   * elastic:
-      * num_control_points: 4
-      * max_displacement: 4
-      * locked_borders: 0
+* augmentation:
+   * flip:
+      * axes:
+         * LR
+      * flip_probability: 0.5
+      * affine_probability: 0.75
+      * affine:
+         * scales: 0.2
+         * degrees: 15
+         * translation: 3
+         * isotropic: false
+      * elastic_probability: 0.25
+      * elastic:
+         * num_control_points: 4
+         * max_displacement: 4
+         * locked_borders: 0
 
 
 How to improve segmentation quality?

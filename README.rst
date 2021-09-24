@@ -83,6 +83,7 @@ Configuration
 As HSF is pretty modular, you can easily configure it to your needs thanks to Hydra.
 
 Compose your configuration from those groups (group=option)
+
 * augmentation: default
 * files: default
 * roiloc: default_t2iso
@@ -93,12 +94,14 @@ You can also add specific configs absent from the default yaml files (e.g. hsf +
 Fields set with ??? are mandatory.
 
 files:
+
 * path: ???
 * pattern: ???
 * mask_pattern: '*mask.nii.gz'
 * output_dir: hsf_outputs
 
 roiloc:
+
 * contrast: t2
 * roi: hippocampus
 * bet: false
@@ -106,6 +109,7 @@ roiloc:
 * margin: [8, 8, 8]
 
 segmentation:
+
 * ca_mode: 1/2/3
 * models_path: ~/.hsf/models
 * models:
@@ -117,6 +121,7 @@ segmentation:
       * test_time_num_aug: 20
 
 augmentation:
+
 * flip:
    * axes:
       * LR

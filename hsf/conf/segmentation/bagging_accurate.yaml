@@ -20,4 +20,3 @@ models:
 segmentation:
   test_time_augmentation: True
   test_time_num_aug: 20
-

@@ -59,14 +59,18 @@ def main(cfg: DictConfig) -> None:
         "For additional details about ROILoc, please see https://github.com/clementpoiret/ROILoc"
     )
 
-    for mri in mris:
+    N = len(mris)
+    print(f"HSF found {N} MRIs to segment following to your configuration.")
+
+    for i, mri in enumerate(mris):
         locator, orientation, hippocampi = get_lr_hippocampi(mri, cfg)
 
-        for hippocampus in hippocampi:
+        for j, hippocampus in enumerate(hippocampi):
+            print(f"Subject {i}/{N}, side {j}/1")
             hippocampus = Path(hippocampus)
             subject = mri_to_subject(hippocampus)
 
-            ic("Starting segmentation...")
+            ic(f"Starting segmentation...")
             prediction = segment(
                 subject=subject,
                 augmentation_cfg=cfg.augmentation,

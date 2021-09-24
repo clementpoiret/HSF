@@ -17,7 +17,7 @@ def load_from_config(path: str, pattern: str) -> list:
     Returns:
         list: List of mris.
     """
-    p = Path(path)
+    p = Path(path).expanduser()
     return list(p.glob(pattern))
 
 

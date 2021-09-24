@@ -187,7 +187,13 @@ to benefit from the performance and scalability of hardware accelerations.
 Authorship, Affiliations and Citations
 **************************************
 
-CEA Saclay / NeuroSpin / UNIACT-InsermU1141
+Authorship:
+
+* C. Poiret, UNIACT-NeuroSpin, CEA, Saclay University, France,
+* A. Bouyeure, UNIACT-NeuroSpin, CEA, Saclay University, France,
+* S. Patil, UNIACT-NeuroSpin, CEA, Saclay University, France,
+* C. Boniteau, UNIACT-NeuroSpin, CEA, Saclay University, France,
+* M. Noulhiane, UNIACT-NeuroSpin, CEA, Saclay University, France.
 
 If you use this work, please cite it as follows:
 

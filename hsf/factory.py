@@ -70,7 +70,7 @@ def main(cfg: DictConfig) -> None:
             hippocampus = Path(hippocampus)
             subject = mri_to_subject(hippocampus)
 
-            ic(f"Starting segmentation...")
+            ic("Starting segmentation...")
             prediction = segment(
                 subject=subject,
                 augmentation_cfg=cfg.augmentation,

@@ -61,7 +61,12 @@ def get_inference_sessions(models_path: PosixPath) -> list:
     p = Path(models_path).expanduser()
     models = list(p.glob("*.onnx"))
 
-    return [ort.InferenceSession(str(model_path)) for model_path in models]
+    ep_list = ['CUDAExecutionProvider', 'CPUExecutionProvider']
+
+    return [
+        ort.InferenceSession(str(model_path), providers=ep_list)
+        for model_path in models
+    ]
 
 
 def to_ca_mode(logits: torch.Tensor, ca_mode: str = "1/2/3") -> torch.Tensor:

@@ -64,7 +64,7 @@ Now, let's dive into the details.
 They specify the path to the dataset (or MRI) and the pattern to find the files.
 
 All parameters starting with ``roiloc.`` are directly linked to our home-made ROI location algorithm.
-You can find more information about it in the `related GitHub repository <https://github.com/clementpoiret/HSF>`_.
+You can find more information about it in the `related GitHub repository <https://github.com/clementpoiret/ROILoc>`_.
 
 To date, we propose 4 different segmentation algorithms (from the fastest to the most accurate):
 

@@ -5,6 +5,7 @@ import onnxruntime as ort
 import torch
 import torchio as tio
 from omegaconf.dictconfig import DictConfig
+from omegaconf.listconfig import ListConfig
 from rich.progress import track
 
 
@@ -62,7 +63,11 @@ def get_inference_sessions(models_path: PosixPath, providers: list) -> list:
     def _correct_provider(provider):
         if isinstance(provider, str):
             return provider
-        elif isinstance(provider, list):
+        elif isinstance(provider, ListConfig):
+            provider = list(provider)
+            assert len(provider) == 2
+            provider[1] = dict(provider[1])
+
             return tuple(provider)
 
     p = Path(models_path).expanduser()

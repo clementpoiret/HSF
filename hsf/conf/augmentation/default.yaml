@@ -2,14 +2,14 @@ flip:
   axes: ["LR"]
   flip_probability: 0.5
 
-affine_probability: 0.75
+affine_probability: 0.8
 affine:
   scales: 0.2
   degrees: 15
   translation: 3
   isotropic: False
 
-elastic_probability: 0.25
+elastic_probability: 0.20
 elastic:
   num_control_points: 4
   max_displacement: 4

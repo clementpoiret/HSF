@@ -1,0 +1,1 @@
+execution_providers: ['CUDAExecutionProvider', 'CPUExecutionProvider']

@@ -1,6 +1,7 @@
 defaults:
   - files: default
   - roiloc: default_t2iso
-  - segmentation: single_accurate
+  - segmentation: bagging_accurate
   - augmentation: default
+  - hardware: default
   - override hydra/help: hsf

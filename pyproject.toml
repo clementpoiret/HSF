@@ -1,7 +1,7 @@
 [tool.poetry]
 name = "HSF"
-version = "0.1.1"
-description = "Simple yet exhaustive segmentation tool of the Hippocampal Subfields in T1w and T2w MRIs."
+version = "0.1.2"
+description = "A simple yet exhaustive segmentation tool of the Hippocampal Subfields in T1w and T2w MRIs."
 authors = ["Clément POIRET <poiret.clement@outlook.fr>"]
 license = "MIT"
 readme = "README.rst"
@@ -21,7 +21,7 @@ hsf = 'hsf.factory:start'
 [tool.poetry.dependencies]
 python = "^3.9"
 torchio = "^0.18.56"
-roiloc = "^0.2.3"
+roiloc = "^0.2.5"
 onnxruntime = "^1.8.1"
 hydra-core = "^1.1.1"
 wget = "^3.2"

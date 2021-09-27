@@ -46,7 +46,9 @@ def get_lr_hippocampi(mri: PosixPath, cfg: DictConfig) -> tuple:
 def main(cfg: DictConfig) -> None:
     fetch_models(cfg.segmentation.models_path, cfg.segmentation.models)
 
-    sessions = get_inference_sessions(cfg.segmentation.models_path)
+    sessions = get_inference_sessions(
+        cfg.segmentation.models_path,
+        providers=cfg.hardware.execution_providers)
     ic("Successfully loaded segmentation models in memory.")
 
     mris = load_from_config(cfg.files.path, cfg.files.pattern)

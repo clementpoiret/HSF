@@ -49,7 +49,7 @@ def get_augmentation_pipeline(augmentation_cfg: DictConfig) -> tio.Compose:
     return tio.Compose((flip, resample))
 
 
-def get_inference_sessions(models_path: PosixPath) -> list:
+def get_inference_sessions(models_path: PosixPath, providers: list) -> list:
     """ Returns ONNX runtime sessions.
 
     Args:
@@ -61,10 +61,8 @@ def get_inference_sessions(models_path: PosixPath) -> list:
     p = Path(models_path).expanduser()
     models = list(p.glob("*.onnx"))
 
-    ep_list = ['CUDAExecutionProvider', 'CPUExecutionProvider']
-
     return [
-        ort.InferenceSession(str(model_path), providers=ep_list)
+        ort.InferenceSession(str(model_path), providers=providers)
         for model_path in models
     ]
 

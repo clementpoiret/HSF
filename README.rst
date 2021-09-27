@@ -38,6 +38,9 @@ Please be aware that we do not tested all possible configurations, as HSF
 has been tested only on CPU and CUDA on Linux (Debian-based and Arch-based distros).
 
 
+.. contents:: Table of Contents
+
+
 Installation
 ************
 

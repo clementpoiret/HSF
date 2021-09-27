@@ -171,6 +171,20 @@ The offset parameters are lists of 3 integers, one for each axis. They specify t
 1/ from left to right, 2/ from posterior to anterior, and 3/ from inferior to superior.
 
 
+How to help us improve segmentation quality?
+********************************************
+
+If you found a way to improve our segmentation quality (e.g. by tweaking TTA), please open
+an issue or make a PR on GitHub.
+
+Additionnally data is the new gold. If you have incorrect segmentations, feel free to
+correct them, and then send us the MRI and the segmentation. The data will be kept private,
+stored in secured infrastructures, and will be used in the next training iteration of HSF.
+We would be very grateful.
+
+Please open an issue on GitHub so we can agree on how to transfer the segmentations.
+
+
 Which MRI modalities are usable in HSF?
 ***************************************
 

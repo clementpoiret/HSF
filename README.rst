@@ -56,7 +56,7 @@ Once installed, HSF can be used simply by running the ``hsf`` command.
 
 For example, to segment a set of T2w MRIs of 0.3*0.3*1.2, run:
 
-``hsf files.path="~/Dataset/MRIs/" files.pattern="*T2w.nii" roiloc.contrast="t2" roiloc.margin=\[10,2,10\] segmentation=bagging_accurate segmentation.ca_mode="1/2/3"``
+``hsf files.path="~/Dataset/MRIs/" files.pattern="*T2w.nii" roiloc.contrast="t2" roiloc.margin=[10,2,10] segmentation=bagging_accurate segmentation.ca_mode="1/2/3"``
 
 Now, let's dive into the details.
 
@@ -89,54 +89,59 @@ Compose your configuration from those groups (group=option)
 * roiloc: default_t2iso
 * segmentation: bagging_accurate, bagging_fast, single_accurate, single_fast
 
-Override anything in the config (e.g. hsf roiloc.margin=[16, 2, 16])
-You can also add specific configs absent from the default yaml files (e.g. hsf +augmentation.elastic.image_interpolation=sitkBSpline)
+Override anything in the config (e.g. hsf roiloc.margin=[16,2,16])
+
+You can also add specific configs absent from the default yaml files
+(e.g. hsf +augmentation.elastic.image_interpolation=sitkBSpline)
+
 Fields set with ??? are mandatory.
 
-files:
+   files:
 
-* path: ???
-* pattern: ???
-* mask_pattern: ``*mask.nii.gz``
-* output_dir: hsf_outputs
+   * path: ???
+   * pattern: ???
+   * mask_pattern: ``*mask.nii.gz``
+   * output_dir: hsf_outputs
 
-roiloc:
+   roiloc:
 
-* contrast: t2
-* roi: hippocampus
-* bet: false
-* transform_type: AffineFast
-* margin: [8, 8, 8]
+   * contrast: t2
+   * roi: hippocampus
+   * bet: false
+   * transform_type: AffineFast
+   * margin: [8, 8, 8]
+   * rightoffset: [0, 0, 0]
+   * leftoffset: [0, 0, 0]
 
-segmentation:
+   segmentation:
 
-* ca_mode: 1/2/3
-* models_path: ~/.hsf/models
-* models:
-   *  arunet_bag_0.onnx:
-   *  url: https://zenodo.org/record/5524594/files/arunet_bag0.onnx?download=1
-   *  md5: 10026a4ef697871b7d49c08a4f16b6ae
-   * segmentation:
-      * test_time_augmentation: true
-      * test_time_num_aug: 20
+   * ca_mode: 1/2/3
+   * models_path: ~/.hsf/models
+   * models:
+      *  arunet_bag_0.onnx:
+      *  url: https://zenodo.org/record/5524594/files/arunet_bag0.onnx?download=1
+      *  md5: 10026a4ef697871b7d49c08a4f16b6ae
+      * segmentation:
+         * test_time_augmentation: true
+         * test_time_num_aug: 20
 
-augmentation:
+   augmentation:
 
-* flip:
-   * axes:
-      * LR
-   * flip_probability: 0.5
-   * affine_probability: 0.75
-   * affine:
-      * scales: 0.2
-      * degrees: 15
-      * translation: 3
-      * isotropic: false
-   * elastic_probability: 0.25
-   * elastic:
-      * num_control_points: 4
-      * max_displacement: 4
-      * locked_borders: 0
+   * flip:
+      * axes:
+         * LR
+      * flip_probability: 0.5
+      * affine_probability: 0.75
+      * affine:
+         * scales: 0.2
+         * degrees: 15
+         * translation: 3
+         * isotropic: false
+      * elastic_probability: 0.25
+      * elastic:
+         * num_control_points: 4
+         * max_displacement: 4
+         * locked_borders: 0
 
 
 How to improve segmentation quality?
@@ -153,7 +158,11 @@ Generally, performing a brain extraction step, our using another ``transform_typ
 solves this problem.
 
 Also check that the margins are high engough, otherwise you might be missing some subfields
-(crop effect).
+(crop effect). If your margins are already larges, but part of the hippocampus stays outside,
+you might want to try to increase the ``rightoffset`` and ``leftoffset`` parameters.
+
+The offset parameters are lists of 3 integers, one for each axis. They specify the offset
+1/ from left to right, 2/ from posterior to anterior, and 3/ from inferior to superior.
 
 
 Which MRI modalities are usable in HSF?
@@ -172,9 +181,37 @@ You can of course try with other settings, feel free to report your results :)
 Custom models
 *************
 
-You can use your own ONNX models by placing them in ``~/.hsf/models``, and providing the correct configuration (path & md5).
+You can use your own ONNX models by placing them in ``~/.hsf/models``, and
+providing the correct configuration (path & md5).
 
-You can also just place your models there, and use our ``bagging*`` presets, they will be included in the plurality votes.
+You can also just place your models there, and use our ``bagging*`` presets,
+they will be included in the plurality votes.
+
+
+Hardware management and Execution Providers
+*******************************************
+
+Since v0.1.2, HSF allows the customization of execution providers though
+``hardware.execution_providers``, taking a list of execution providers 
+in order of decreasing precedance.
+
+Please check ONNXRuntime's documentation on
+`Execution Providers <https://onnxruntime.ai/docs/execution-providers>`_
+for more information.
+
+Here is the default execution:
+
+``hsf hardware.execution_providers=["CUDAExecutionProvider","CPUExecutionProvider"]``
+
+By default, if a provider isn't available, the next one will be used. As an example,
+to force the use of your CPU, you can do:
+
+``hsf hardware.execution_providers=["CPUExecutionProvider"]``
+
+You can also specify provider options by providing a ``List[str, dict]`` instead of
+a single ``str`` as in the following example:
+
+``hsf hardware.execution_providers=[["CUDAExecutionProvider",{"device_id":0,"gpu_mem_limit":2147483648}],"CPUExecutionProvider"]``
 
 
 Performance tunning

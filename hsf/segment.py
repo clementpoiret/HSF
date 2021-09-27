@@ -58,8 +58,17 @@ def get_inference_sessions(models_path: PosixPath, providers: list) -> list:
     Returns:
         List[ort.InferenceSession]: ONNX runtime sessions.
     """
+
+    def _correct_provider(provider):
+        if isinstance(provider, str):
+            return provider
+        elif isinstance(provider, list):
+            return tuple(provider)
+
     p = Path(models_path).expanduser()
     models = list(p.glob("*.onnx"))
+
+    providers = [_correct_provider(provider) for provider in providers]
 
     return [
         ort.InferenceSession(str(model_path), providers=providers)

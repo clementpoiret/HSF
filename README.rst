@@ -38,10 +38,10 @@ Please be aware that we do not tested all possible configurations, as HSF
 has been tested only on CPU and CUDA on Linux (Debian-based and Arch-based distros).
 
 
-Table of Contents
-*****************
+Table of Contents...
+********************
 
-.. contents::
+.. contents:: ...To guide you in the challenging world of hippocampal subfields segmentation :)
 
 
 Installation

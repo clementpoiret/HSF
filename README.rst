@@ -187,6 +187,16 @@ Models
 Frequently asked questions
 ==========================
 
+How to specify where to store ONNX models?
+------------------------------------------
+
+Just override the ``segmentation.models_path`` parameter in the configuration like this:
+
+``hsf segmentation.models_path="~/my_models"``
+
+This parameter defaults to ``~/.hsf/models``.
+
+
 How to improve segmentation quality?
 ------------------------------------
 

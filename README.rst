@@ -2,6 +2,10 @@
 Hippocampal Segmentation Factory (HSF)
 ======================================
 
+**Current HSF version:** 0.1.2
+
+**Current Models version:** 1.0.0
+
 .. image:: https://zenodo.org/badge/DOI/10.5281/zenodo.5527122.svg
    :target: https://doi.org/10.5281/zenodo.5527122
 
@@ -39,13 +43,13 @@ has been tested only on CPU and CUDA on Linux (Debian-based and Arch-based distr
 
 
 Table of Contents...
-********************
+====================
 
 .. contents:: ...To guide you in the challenging world of hippocampal subfields segmentation :)
 
 
 Installation
-************
+============
 
 To install the package, first setup an environment suitable for `ONNX Runtime <https://onnxruntime.ai>`_.
 
@@ -55,8 +59,9 @@ Then, simply run:
 
 ``pip install hsf``.
 
+
 Quick start
-***********
+===========
 
 Once installed, HSF can be used simply by running the ``hsf`` command.
 
@@ -83,8 +88,9 @@ Finally, ``segmentation.ca_mode`` is a parameter that allows to combine CA1, CA2
 It is particularly useful when you want to segment low-resolution images where it makes no sense to
 distinguish between CA's subfields.
 
+
 Configuration
-*************
+=============
 
 As HSF is pretty modular, you can easily configure it to your needs thanks to Hydra.
 
@@ -150,8 +156,39 @@ Fields set with ??? are mandatory.
          * locked_borders: 0
 
 
+Changelogs
+==========
+
+HSF
+---
+
+**Version 0.1.2**
+
+* Added build-in support for offsets to recenter the hippocampus in ROILoc,
+* Added support for the customization of Hardware Execution Providers.
+
+**Version 0.1.1**
+
+* Fixed CUDA Execution Provider.
+
+**Version 0.1.0**
+
+* Initial release.
+
+
+Models
+------
+
+**Version 1.0.0**
+
+* Initial release.
+
+
+Frequently asked questions
+==========================
+
 How to improve segmentation quality?
-************************************
+------------------------------------
 
 If the segmentation is not good enough, you can try to improve it with the following steps:
 - Try to augment the number of TTAs,
@@ -172,7 +209,7 @@ The offset parameters are lists of 3 integers, one for each axis. They specify t
 
 
 How to help us improve segmentation quality?
-********************************************
+--------------------------------------------
 
 If you found a way to improve our segmentation quality (e.g. by tweaking TTA), please open
 an issue or make a PR on GitHub.
@@ -194,7 +231,7 @@ will then be able to benefit from the improved segmentation by running
 
 
 Which MRI modalities are usable in HSF?
-***************************************
+---------------------------------------
 
 We trained HSF using T1 (MPRAGE & MP2RAGE) and T2 (mostly TSE) modalities.
 
@@ -207,7 +244,7 @@ You can of course try with other settings, feel free to report your results :)
 
 
 Custom models
-*************
+-------------
 
 You can use your own ONNX models by placing them in ``~/.hsf/models``, and
 providing the correct configuration (path & md5).
@@ -217,7 +254,7 @@ they will be included in the plurality votes.
 
 
 Hardware management and Execution Providers
-*******************************************
+-------------------------------------------
 
 Since v0.1.2, HSF allows the customization of execution providers though
 ``hardware.execution_providers``, taking a list of execution providers 
@@ -243,14 +280,14 @@ a single ``str`` as in the following example:
 
 
 Performance tunning
-*******************
+-------------------
 
 Please refer to ONNXRuntime's documentation for setting-up the correct environment,
 to benefit from the performance and scalability of hardware accelerations.
 
 
 Authorship, Affiliations and Citations
-**************************************
+======================================
 
 Authorship:
 

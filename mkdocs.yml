@@ -12,5 +12,6 @@ nav:
     - Usage: 'user-guide/usage.md'
     - Advanced: 'user-guide/advanced.md'
   - About:
+    - Authorship: 'about/authorship.md'
     - 'Realease Notes': 'about/release-notes.md'
     - License: 'about/license.md'

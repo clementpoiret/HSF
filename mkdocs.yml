@@ -1,8 +1,16 @@
-site_name: HSF
+site_name: Hippocampal Segmentation Factory
 
 theme:
   name: material
   
 nav:
   - Home: 'index.md'
-  - Usage: 'usage.md'
+  - 'Getting Started': 'getting-started.md'
+  - 'User Guide':
+    - Overview: 'user-guide/overview.md'
+    - Installation: 'user-guide/installation.md'
+    - Usage: 'user-guide/usage.md'
+    - Advanced: 'user-guide/advanced.md'
+  - About:
+    - 'Realease Notes': 'about/release-notes.md'
+    - License: 'about/license.md'

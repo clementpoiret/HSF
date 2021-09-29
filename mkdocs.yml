@@ -1,0 +1,4 @@
+site_name: HSF
+docs_dir: docs
+theme:
+  name: material

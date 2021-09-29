@@ -4,5 +4,5 @@ theme:
   name: material
   
 nav:
-  - Home: 'index.md'
-  - Usage: 'usage.md'
+  - Home: 'index.rst'
+  - Usage: 'usage.rst'

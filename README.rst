@@ -201,6 +201,7 @@ How to improve segmentation quality?
 ------------------------------------
 
 If the segmentation is not good enough, you can try to improve it with the following steps:
+
 * Try to augment the number of TTAs,
 * Try to use a different ONNX model (by adding its ONNX to ``~/.hsf/models``),
 

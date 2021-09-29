@@ -29,8 +29,8 @@ or tail class.
 
 Please note that the tool is still under development and is not yet
 ready for production use. It uses multiple expert deep learning models
-trained on 600+ manually segmented hippocampi (see `Which MRI modalities are usable in HSF?`_)
-which are not yet fully trained.
+trained on 600+ manually segmented hippocampi (see the [F.A.Q. section](faq.md))
+which are not yet fully polished.
 
 HSF uses inference sessions provided by [ONNXRuntime](https://onnxruntime.ai),
 which means that it can be used *theoretically* on Windows, MacOS and Linux,

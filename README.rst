@@ -201,8 +201,8 @@ How to improve segmentation quality?
 ------------------------------------
 
 If the segmentation is not good enough, you can try to improve it with the following steps:
-- Try to augment the number of TTAs,
-- Try to use a different ONNX model (by adding its ONNX to ``~/.hsf/models``),
+* Try to augment the number of TTAs,
+* Try to use a different ONNX model (by adding its ONNX to ``~/.hsf/models``),
 
 If the segmentation is clearly absent or outside the hippocampus, it is because ROILoc failed.
 This is caused by ANTs having troubles to perform registration, leading to a wrong bounding box.

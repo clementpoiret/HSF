@@ -1,4 +1,4 @@
-# Welcome to the Hippocampal Segmentation Factory (HSF) Documentation
+# Hippocampal Segmentation Factory (HSF) - Documentation
 
 **Current Models version:** 1.0.0
 

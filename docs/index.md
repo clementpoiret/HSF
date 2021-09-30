@@ -1,9 +1,10 @@
 # Welcome to the Hippocampal Segmentation Factory (HSF) Documentation
 
-**Current HSF version:** 0.1.2
-
 **Current Models version:** 1.0.0
 
+[![Version](https://badge.fury.io/py/hsf.svg)](https://badge.fury.io/py/hsf)
+![PyPI - Downloads](https://img.shields.io/pypi/dm/hsf)
+[![Code Quality](https://app.codacy.com/project/badge/Grade/cf02d1f84739401ba695e24f333c23b7)](https://www.codacy.com/gh/clementpoiret/HSF/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=clementpoiret/HSF&amp;utm_campaign=Badge_Grade)
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.5527122.svg)](https://doi.org/10.5281/zenodo.5527122)
 [![Documentation Status](https://readthedocs.org/projects/hsf/badge/?version=latest)](https://hsf.readthedocs.io/en/latest/?badge=latest)
 

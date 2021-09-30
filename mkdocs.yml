@@ -11,8 +11,15 @@ nav:
     - Installation: 'user-guide/installation.md'
     - Usage: 'user-guide/usage.md'
     - Advanced: 'user-guide/advanced.md'
+  - "What's Next?": 'whats-next.md'
   - FAQ: 'faq.md'
   - About:
     - Authorship: 'about/authorship.md'
     - 'Realease Notes': 'about/release-notes.md'
     - License: 'about/license.md'
+
+markdown_extensions:
+  - admonition
+  - pymdownx.details
+  - pymdownx.tasklist
+  - pymdownx.superfences

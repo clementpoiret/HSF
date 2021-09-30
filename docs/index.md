@@ -38,7 +38,8 @@ OpenVINO, TensorRT, NUPHAR, Vitis AI, ACL, ArmNN, MIGraphX, and Rockchip NPU.
 Please be aware that we do not tested all possible configurations, as HSF
 has been tested only on CPU and CUDA on Linux (Debian-based and Arch-based distros).
 
-> This work has been partly founded by the Fondation de France.
-> HSF has been made possible by the IDRIS/GENCI with the HPE Jean Zay Supercomputer.
-> 
-> CEA Saclay | NeuroSpin | UNIACT-Inserm U1141
+!!! note ""
+    This work has been partly founded by the Fondation de France.
+    HSF has been made possible by the IDRIS/GENCI with the HPE Jean Zay Supercomputer.
+
+    CEA Saclay | NeuroSpin | UNIACT-Inserm U1141

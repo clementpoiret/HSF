@@ -4,7 +4,7 @@ Hippocampal Segmentation Factory (HSF)
 
 **Current Models version:** 1.0.0
 
-.. list-table:: HSF
+.. list-table::
     :header-rows: 1
 
     * - PyPI

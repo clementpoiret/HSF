@@ -2,13 +2,11 @@
 
 Task List
 
-- [X] item 1
-    * [X] item A
-    * [ ] item B
-        more text
-        + [x] item a
-        + [ ] item b
-        + [x] item c
-    * [X] item C
-- [ ] item 2
-- [ ] item 3
+- [ ] Complete the documentation
+- [ ] Improve the models
+    * [ ] `Single` shouldn't be part of the bag because it hasn't seen all the data 
+    * [ ] Increase the amount of training data
+    * [ ] Enhance data augmentation
+- [ ] Provide a way to QC segmentations
+    * [ ] Fleiss Kappa
+    * [ ] Krippendorff's alpha

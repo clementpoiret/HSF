@@ -1,4 +1,5 @@
 site_name: Hippocampal Segmentation Factory
+repo_url: https://github.com/clementpoiret/HSF
 repo_name: clementpoiret/HSF
 
 theme:
@@ -18,7 +19,10 @@ theme:
         name: Switch to light mode
   features:
     - navigation.tabs
-  
+
+plugins:
+  - git-revision-date
+
 nav:
   - Home: 'index.md'
   - 'Getting Started': 'getting-started.md'

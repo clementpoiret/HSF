@@ -1,6 +1,5 @@
 import hashlib
 from pathlib import Path
-from re import L
 
 import wget
 from icecream import ic
@@ -8,7 +7,7 @@ from omegaconf import DictConfig
 
 
 def get_md5(fname: str) -> str:
-    """ Get md5sum of a file
+    """Get md5sum of a file
 
     Args:
         fname (str): Path to file
@@ -23,16 +22,16 @@ def get_md5(fname: str) -> str:
     return hash_md5.hexdigest()
 
 
-def fetch(dir: str, filename: str, url: str, md5: str) -> None:
-    """ Fetch a model from a url
+def fetch(directory: str, filename: str, url: str, md5: str) -> None:
+    """Fetch a model from a url
 
     Args:
-        dir (str): Directory to save model
+        directory (str): Directory to save model
         filename (str): Filename of model
         url (str): Url to download model from
         md5 (str): md5sum of model
     """
-    p = Path(dir).expanduser()
+    p = Path(directory).expanduser()
     p.mkdir(parents=True, exist_ok=True)
     outfile = p / filename
 
@@ -57,15 +56,15 @@ def fetch(dir: str, filename: str, url: str, md5: str) -> None:
         raise Exception("MD5 checksum failed")
 
 
-def fetch_models(dir: str, models: DictConfig) -> None:
-    """ Fetch all models
+def fetch_models(directory: str, models: DictConfig) -> None:
+    """Fetch all models
 
     Args:
-        dir (str): Directory to save models
+        directory (str): Directory to save models
         models (DictConfig): Models to fetch
     """
     for model in models:
-        fetch(dir, filename=str(model), **models[model])
+        fetch(directory, filename=str(model), **models[model])
 
 
 # def test():

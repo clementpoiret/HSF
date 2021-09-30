@@ -33,6 +33,7 @@ nav:
     - Usage: 'user-guide/usage.md'
     - Advanced: 'user-guide/advanced.md'
   - "What's Next?": 'whats-next.md'
+  - Contributing: 'contributing.md'
   - FAQ: 'faq.md'
   - About:
     - Authorship: 'about/authorship.md'

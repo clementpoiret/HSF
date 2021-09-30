@@ -4,20 +4,26 @@ Hippocampal Segmentation Factory (HSF)
 
 **Current Models version:** 1.0.0
 
-.. image:: https://badge.fury.io/py/hsf.svg
-   :target: https://badge.fury.io/py/hsf
-.. image:: https://img.shields.io/pypi/dm/hsf
-   :alt: PyPI - Downloads
-.. image:: https://app.codacy.com/project/badge/Grade/cf02d1f84739401ba695e24f333c23b7
-   :target: https://www.codacy.com/gh/clementpoiret/HSF/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=clementpoiret/HSF&amp;utm_campaign=Badge_Grade
-.. image:: https://api.codeclimate.com/v1/badges/e0bf481dcbf3eecebefd/maintainability
-   :target: https://codeclimate.com/github/clementpoiret/HSF/maintainability
-   :alt: Maintainability
-.. image:: https://readthedocs.org/projects/hsf/badge/?version=latest
-   :target: https://hsf.readthedocs.io/en/latest/?badge=latest
-   :alt: Documentation Status
-.. image:: https://zenodo.org/badge/DOI/10.5281/zenodo.5527122.svg
-   :target: https://doi.org/10.5281/zenodo.5527122
+.. list-table:: HSF
+    :header-rows: 1
+
+    * - PyPI
+      - Code Quality
+      - Misc
+    * - .. image:: https://badge.fury.io/py/hsf.svg
+           :target: https://badge.fury.io/py/hsf
+        .. image:: https://img.shields.io/pypi/dm/hsf
+           :alt: PyPI - Downloads
+      - .. image:: https://app.codacy.com/project/badge/Grade/cf02d1f84739401ba695e24f333c23b7
+           :target: https://www.codacy.com/gh/clementpoiret/HSF/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=clementpoiret/HSF&amp;utm_campaign=Badge_Grade
+        .. image:: https://api.codeclimate.com/v1/badges/e0bf481dcbf3eecebefd/maintainability
+           :target: https://codeclimate.com/github/clementpoiret/HSF/maintainability
+           :alt: Maintainability
+      - .. image:: https://readthedocs.org/projects/hsf/badge/?version=latest
+           :target: https://hsf.readthedocs.io/en/latest/?badge=latest
+           :alt: Documentation Status
+        .. image:: https://zenodo.org/badge/DOI/10.5281/zenodo.5527122.svg
+           :target: https://doi.org/10.5281/zenodo.5527122
 
 
 The Hippocampal Segmentation Factory (HSF) is a Python package for

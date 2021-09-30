@@ -21,6 +21,7 @@ theme:
     - navigation.tabs
 
 plugins:
+  - search
   - git-revision-date
 
 nav:

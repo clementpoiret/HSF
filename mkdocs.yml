@@ -11,6 +11,7 @@ nav:
     - Installation: 'user-guide/installation.md'
     - Usage: 'user-guide/usage.md'
     - Advanced: 'user-guide/advanced.md'
+  - FAQ: 'faq.md'
   - About:
     - Authorship: 'about/authorship.md'
     - 'Realease Notes': 'about/release-notes.md'

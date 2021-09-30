@@ -2,6 +2,15 @@ site_name: Hippocampal Segmentation Factory
 
 theme:
   name: material
+  palette:
+    - scheme: default
+      toggle:
+        icon: material/toggle-switch-off-outline
+        name: Switch to dark mode
+    - scheme: slate
+      toggle:
+        icon: material/toggle-switch
+        name: Switch to light mode
   
 nav:
   - Home: 'index.md'
@@ -20,6 +29,7 @@ nav:
 
 markdown_extensions:
   - admonition
+  - pymdownx.arithmatex
   - pymdownx.details
   - pymdownx.tasklist
   - pymdownx.superfences

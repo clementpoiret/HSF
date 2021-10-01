@@ -67,6 +67,10 @@ To segment the whole database, you can just run the following command:
 
 And that's it! :smile:
 
+Now, do you want to segment the T1w MRIs? Nothing simpler:
+
+`hsf files.path="~/Database" files.pattern="**/*t1w.nii.gz" roiloc.margin=[8,8,8] roiloc.contrast="t1"`
+
 `files.path` and `files.pattern` are the only mandatory parameters. They are used to
 determine the list of files to segment.
 
@@ -83,5 +87,8 @@ Keep the box centered around the hippocampus, but not too close to it.
 Here is a good example:
 
 ![Sample hippocampus](resources/sample_hippocampus.png)
+
+If you want to check the resulting boxes, HSF creates a folder for each subject called
+`hsf_outputs`, where you'll find boxes for each of the segmented hippocampi.
 
 For more details, please check the [dedicated page](user-guide/usage.md).

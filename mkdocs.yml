@@ -32,6 +32,7 @@ nav:
     - Overview: 'user-guide/overview.md'
     - Installation: 'user-guide/installation.md'
     - Usage: 'user-guide/usage.md'
+    - ROILoc: 'user-guide/roiloc.md'
     - Advanced: 'user-guide/advanced.md'
   - "What's Next?": 'whats-next.md'
   - Contributing: 'contributing.md'

@@ -82,6 +82,6 @@ Keep the box centered around the hippocampus, but not too close to it.
 
 Here is a good example:
 
-![Sample hippocampus](docs/resources/sample_hippocampus.png)
+![Sample hippocampus](resources/sample_hippocampus.png)
 
 For more details, please check the [dedicated page](user-guide/usage.md).

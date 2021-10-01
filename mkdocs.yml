@@ -47,6 +47,9 @@ markdown_extensions:
   - pymdownx.details
   - pymdownx.tasklist
   - pymdownx.superfences
+  - pymdownx.emoji:
+      emoji_index: !!python/name:materialx.emoji.twemoji
+      emoji_generator: !!python/name:materialx.emoji.to_svg
 
 extra:
   version:

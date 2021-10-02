@@ -1,4 +1,10 @@
-# Hippocampal Segmentation Factory (HSF) - Documentation
+# HSF - Documentation
+
+<p align="center">
+    <img src="https://raw.githubusercontent.com/clementpoiret/HSF/docs/resources/hsf_logo.svg">
+    <br>
+    <h2><b>Hippocampal</b> <i>Segmentation</i> Factory</h2>
+</p>
 
 **Current Models version:** 1.0.0
 

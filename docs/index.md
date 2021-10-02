@@ -1,9 +1,10 @@
 # HSF - Documentation
 
 <p align="center">
-    <img src="https://raw.githubusercontent.com/clementpoiret/HSF/master/docs/resources/hsf_logo.svg">
+    <img src="https://raw.githubusercontent.com/clementpoiret/HSF/master/docs/resources/hsf_logo.svg" width="300">
     <br>
     <font size="+2"><b>Hippocampal</b> <i>Segmentation</i> Factory</font>
+    <br>
 </p>
 
 **Current Models version:** 1.0.0

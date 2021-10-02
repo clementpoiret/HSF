@@ -5,6 +5,7 @@ copyright: "Copyright &copy; 2021 - POIRET Clément (CEA Saclay | NeuroSpin | UN
 
 theme:
   name: material
+  logo: resources/hsf_logo_white.svg
   icon:
     repo: fontawesome/brands/git-alt
   palette:

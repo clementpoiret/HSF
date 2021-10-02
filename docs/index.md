@@ -47,6 +47,12 @@ OpenVINO, TensorRT, NUPHAR, Vitis AI, ACL, ArmNN, MIGraphX, and Rockchip NPU.
 Please be aware that we do not tested all possible configurations, as HSF
 has been tested only on CPU and CUDA on Linux (Debian-based and Arch-based distros).
 
+HSF is distributed under the [MIT license](about/license.md):
+
+| Permissions                                                   | Conditions                                                  | Limitations           |
+| ------------------------------------------------------------- | ----------------------------------------------------------- | --------------------- |
+| Commercial use<br>Distribution<br>Modification<br>Private use | A copy of the license and copyright notice must be included | Liability<br>Warranty |
+
 !!! note ""
     This work has been partly founded by the Fondation de France.
     HSF has been made possible by the IDRIS/GENCI with the HPE Jean Zay Supercomputer.

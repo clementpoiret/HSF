@@ -29,7 +29,7 @@ Hippocampal Segmentation Factory (HSF)
 The Hippocampal Segmentation Factory (HSF) is a Python package for
 the segmentation of the hippocampal subfields in raw MRI volumes.
 
-.. image:: https://raw.githubusercontent.com/clementpoiret/HSF/0537a69c6390d497157e0e6c95398610b6447ace/res/header.svg
+.. image:: https://raw.githubusercontent.com/clementpoiret/HSF/master/docs/resources/header.svg
 
 The main idea is to have a click-button tool that allows the user to
 segment the hippocampal subfields in a given raw image (T1w or T2w), while keeping

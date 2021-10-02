@@ -33,7 +33,7 @@ nav:
   - 'User Guide':
     - Overview: 'user-guide/overview.md'
     - Installation: 'user-guide/installation.md'
-    - Usage: 'user-guide/usage.md'
+    - Configuration: 'user-guide/configuration.md'
     - ROILoc: 'user-guide/roiloc.md'
     - Advanced: 'user-guide/advanced.md'
   - Troubleshooting: 'troubleshooting.md'

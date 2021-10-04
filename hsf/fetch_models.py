@@ -7,7 +7,8 @@ from omegaconf import DictConfig
 
 
 def get_hash(fname: str) -> str:
-    """Get xxHash3 of a file
+    """
+    Get xxHash3 of a file
 
     Args:
         fname (str): Path to file
@@ -23,7 +24,8 @@ def get_hash(fname: str) -> str:
 
 
 def fetch(directory: str, filename: str, url: str, xxh3_64: str) -> None:
-    """Fetch a model from a url
+    """
+    Fetch a model from a url
 
     Args:
         directory (str): Directory to save model
@@ -57,7 +59,8 @@ def fetch(directory: str, filename: str, url: str, xxh3_64: str) -> None:
 
 
 def fetch_models(directory: str, models: DictConfig) -> None:
-    """Fetch all models
+    """
+    Fetch all models
 
     Args:
         directory (str): Directory to save models

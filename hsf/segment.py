@@ -10,7 +10,8 @@ from rich.progress import track
 
 
 def mri_to_subject(mri: PosixPath) -> tio.Subject:
-    """ Loads the MRI data from the given path and returns
+    """
+    Loads the MRI data from the given path and returns
     the preprocessed torchio subject.
 
     Args:
@@ -31,7 +32,8 @@ def mri_to_subject(mri: PosixPath) -> tio.Subject:
 
 
 def get_augmentation_pipeline(augmentation_cfg: DictConfig) -> tio.Compose:
-    """ Returns the augmentation pipeline.
+    """
+    Returns the augmentation pipeline.
 
     Args:
         augmentation_cfg (DictConfig): Augmentation configuration.
@@ -51,7 +53,8 @@ def get_augmentation_pipeline(augmentation_cfg: DictConfig) -> tio.Compose:
 
 
 def get_inference_sessions(models_path: PosixPath, providers: list) -> list:
-    """ Returns ONNX runtime sessions.
+    """
+    Returns ONNX runtime sessions.
 
     Args:
         models_path (PosixPath): Path to the models.
@@ -82,7 +85,8 @@ def get_inference_sessions(models_path: PosixPath, providers: list) -> list:
 
 
 def to_ca_mode(logits: torch.Tensor, ca_mode: str = "1/2/3") -> torch.Tensor:
-    """ Converts the logits to the ca_mode.
+    """
+    Converts the logits to the ca_mode.
 
     Args:
         logits (torch.Tensor): The logits.
@@ -123,7 +127,8 @@ def segment(subject: tio.Subject,
             segmentation_cfg: DictConfig,
             sessions: list,
             ca_mode: str = "1/2/3") -> torch.Tensor:
-    """ Segments the given subject.
+    """
+    Segments the given subject.
 
     Args:
         subject (tio.Subject): The subject to segment.
@@ -181,7 +186,8 @@ def segment(subject: tio.Subject,
 def save_prediction(mri: PosixPath,
                     prediction: torch.Tensor,
                     suffix: str = "seg") -> ants.ANTsImage:
-    """ Saves the prediction to the given path.
+    """
+    Saves the prediction to the given path.
 
     Args:
         mri (PosixPath): Path to the MRI data.

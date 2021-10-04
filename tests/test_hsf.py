@@ -30,12 +30,11 @@ def test_roiloc():
     mri, mask = hsf.roiloc_wrapper.get_mri(mris[0])
     assert isinstance(mri, ants.ANTsImage)
 
-    locator, right, left = hsf.roiloc_wrapper.get_hippocampi(
-        mri, {
-            "contrast": "t2",
-            "margin": [16, 8, 16],
-            "roi": "hippocampus"
-        }, mask)
+    _, right, left = hsf.roiloc_wrapper.get_hippocampi(mri, {
+        "contrast": "t2",
+        "margin": [16, 8, 16],
+        "roi": "hippocampus"
+    }, mask)
 
     assert isinstance(right, ants.ANTsImage)
     assert isinstance(left, ants.ANTsImage)

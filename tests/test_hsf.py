@@ -6,7 +6,6 @@ import ants
 import hsf.fetch_models
 import hsf.roiloc_wrapper
 import hsf.segment
-import torch
 from hsf import __version__
 
 tmpdir = tempfile.mkdtemp()

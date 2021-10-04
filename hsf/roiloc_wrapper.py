@@ -8,7 +8,7 @@ from roiloc.locator import RoiLocator
 
 
 def load_from_config(path: str, pattern: str) -> list:
-    """ Loads all mris from a given path with a given pattern.
+    """Loads all mris from a given path with a given pattern.
 
     Args:
         path (str): Path to the mris.
@@ -22,7 +22,7 @@ def load_from_config(path: str, pattern: str) -> list:
 
 
 def get_mri(mri: PosixPath, mask_pattern: Optional[str] = None) -> tuple:
-    """ Loads an mri from a given path.
+    """Loads an mri from a given path.
 
     Args:
         mri (PosixPath): Path to the mri.
@@ -39,6 +39,8 @@ def get_mri(mri: PosixPath, mask_pattern: Optional[str] = None) -> tuple:
         else:
             mask = None
             ic("Couldn't find brain extraction mask for the provided pattern.")
+    else:
+        mask = None
 
     return ants.image_read(str(mri)), mask
 
@@ -46,7 +48,7 @@ def get_mri(mri: PosixPath, mask_pattern: Optional[str] = None) -> tuple:
 def get_hippocampi(mri: ants.ANTsImage,
                    roiloc_cfg: DictConfig,
                    mask: Optional[ants.ANTsImage] = None) -> tuple:
-    """ Locate right and left hippocampi from a given mri.
+    """Locate right and left hippocampi from a given mri.
 
     Args:
         mri (ants.ANTsImage): Loaded mri.
@@ -68,7 +70,7 @@ def get_hippocampi(mri: ants.ANTsImage,
 
 def save_hippocampi(right_mri: ants.ANTsImage, left_mri: ants.ANTsImage,
                     dir_name: str, original_mri_path: PosixPath) -> tuple:
-    """ Saves right and left hippocampus from a given mri.
+    """Saves right and left hippocampus from a given mri.
 
     Args:
         right_mri (ants.ANTsImage): Right hippocampus.

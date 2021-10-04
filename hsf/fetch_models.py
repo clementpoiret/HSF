@@ -1,5 +1,3 @@
-import shutil
-import tempfile
 from pathlib import Path
 
 import wget
@@ -67,18 +65,3 @@ def fetch_models(directory: str, models: DictConfig) -> None:
     """
     for model in models:
         fetch(directory, filename=str(model), **models[model])
-
-
-def test(
-    url:
-    str = "https://zenodo.org/record/5524594/files/arunet_bag0.onnx?download=1",
-    xxh3: str = "d0de65baa81d9382",
-):
-    """Test fetch_models and assert hashing function"""
-    directory = tempfile.mkdtemp()
-
-    fetch(directory, "model.onnx", url, xxh3)
-
-    assert xxh3 == get_hash(directory + "/model.onnx")
-
-    shutil.rmtree(directory)

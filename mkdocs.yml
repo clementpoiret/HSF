@@ -1,7 +1,7 @@
 site_name: Hippocampal Segmentation Factory
 repo_url: https://github.com/clementpoiret/HSF
 repo_name: clementpoiret/HSF
-copyright: "Copyright &copy; 2021 - POIRET Clément (CEA Saclay | NeuroSpin | UNIACT-Inserm U1141)<br/><i>C. Poiret, A. Bouyeure, S. Patil, C. Boniteau, M. Noulhiane</i>."
+copyright: "Copyright &copy; 2021 - POIRET Clément (CEA Saclay | NeuroSpin | UNIACT-Inserm U1141)<br/><i>C. Poiret, A. Bouyeure, S. Patil, C. Boniteau, A. Grigis, E. Duchesnay, M. Noulhiane</i>."
 
 theme:
   name: material

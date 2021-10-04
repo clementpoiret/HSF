@@ -3,19 +3,19 @@ models_path: "~/.hsf/models"
 models:
   arunet_bag_0.onnx:
     url: "https://zenodo.org/record/5524594/files/arunet_bag0.onnx?download=1"
-    md5: "10026a4ef697871b7d49c08a4f16b6ae"
+    xxh3_64: "d0de65baa81d9382"
   arunet_bag_1.onnx:
     url: "https://zenodo.org/record/5524594/files/arunet_bag1.onnx?download=1"
-    md5: "3daf3086b0395712dd2bd30facd685c5"
+    xxh3_64: "d637f90ad6c91287"
   arunet_bag_2.onnx:
     url: "https://zenodo.org/record/5524594/files/arunet_bag2.onnx?download=1"
-    md5: "5a16d85dd34a972793401f51023d7ade"
+    xxh3_64: "e80dc074c3a8e28e"
   arunet_bag_3.onnx:
     url: "https://zenodo.org/record/5524594/files/arunet_bag3.onnx?download=1"
-    md5: "c5b278911504f2a667b5af3d0fb3881d"
+    xxh3_64: "0a2a2852bc2f5068"
   arunet_bag_4.onnx:
     url: "https://zenodo.org/record/5524594/files/arunet_bag4.onnx?download=1"
-    md5: "5947db98c8644c8e48975ffec2538d85"
+    xxh3_64: "64eaa5cf25691a55"
 
 segmentation:
   test_time_augmentation: True

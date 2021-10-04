@@ -149,7 +149,7 @@ Fields set with ??? are mandatory.
    * models:
       *  arunet_bag_0.onnx:
       *  url: https://zenodo.org/record/5524594/files/arunet_bag0.onnx?download=1
-      *  md5: 10026a4ef697871b7d49c08a4f16b6ae
+      *  xxh3_64: d0de65baa81d9382
       * segmentation:
          * test_time_augmentation: true
          * test_time_num_aug: 20
@@ -275,7 +275,7 @@ Custom models
 -------------
 
 You can use your own ONNX models by placing them in ``~/.hsf/models``, and
-providing the correct configuration (path & md5).
+providing the correct configuration (path & xxh3_64).
 
 You can also just place your models there, and use our ``bagging*`` presets,
 they will be included in the plurality votes.

@@ -1,42 +1,42 @@
-import hashlib
 from pathlib import Path
 
 import wget
+import xxhash
 from icecream import ic
 from omegaconf import DictConfig
 
 
-def get_md5(fname: str) -> str:
-    """Get md5sum of a file
+def get_hash(fname: str) -> str:
+    """Get xxHash3 of a file
 
     Args:
         fname (str): Path to file
 
     Returns:
-        str: md5sum of file
+        str: xxHash3 of file
     """
-    hash_md5 = hashlib.md5()
+    xxh = xxhash.xxh3_64()
     with open(fname, "rb") as f:
         for chunk in iter(lambda: f.read(4096), b""):
-            hash_md5.update(chunk)
-    return hash_md5.hexdigest()
+            xxh.update(chunk)
+    return xxh.hexdigest()
 
 
-def fetch(directory: str, filename: str, url: str, md5: str) -> None:
+def fetch(directory: str, filename: str, url: str, xxh3_64: str) -> None:
     """Fetch a model from a url
 
     Args:
         directory (str): Directory to save model
         filename (str): Filename of model
         url (str): Url to download model from
-        md5 (str): md5sum of model
+        xxh3_64 (str): xxh3_64 of model
     """
     p = Path(directory).expanduser()
     p.mkdir(parents=True, exist_ok=True)
     outfile = p / filename
 
     if outfile.exists():
-        if get_md5(str(outfile)) == md5:
+        if get_hash(str(outfile)) == xxh3_64:
             model = f"{filename} already exists and is up to date"
             ic(model)
             return
@@ -50,10 +50,10 @@ def fetch(directory: str, filename: str, url: str, md5: str) -> None:
     wget.download(url, out=str(outfile))
     print("\n")
 
-    if not md5 == get_md5(str(outfile)):
-        ic("MD5 checksum failed")
+    if not xxh3_64 == get_hash(str(outfile)):
+        ic("xxh3_64 checksum failed")
         outfile.unlink()
-        raise Exception("MD5 checksum failed")
+        raise Exception("xxh3_64 checksum failed")
 
 
 def fetch_models(directory: str, models: DictConfig) -> None:

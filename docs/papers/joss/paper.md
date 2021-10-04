@@ -1,11 +1,11 @@
 ---
 title: 'HSF for a Fast, Robust, and Automated Segmentation of Hippocampal Subfields in MRI'
 tags:
-  - Python
-  - MRI
-  - Segmentation
-  - Brain
-  - Deep Learning
+  - python
+  - mri
+  - brain
+  - medical-imaging
+  - deep-learning
 authors:
   - name: Clement Poiret
     orcid: 0000-0002-1571-2161

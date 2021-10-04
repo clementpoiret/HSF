@@ -122,6 +122,35 @@ def to_ca_mode(logits: torch.Tensor, ca_mode: str = "1/2/3") -> torch.Tensor:
         )
 
 
+def predict(subject: tio.Subject,
+            session: ort.InferenceSession,
+            ca_mode: str = "1/2/3") -> torch.Tensor:
+    """
+    Predict a segmentation from a subject.
+
+    Args:
+        subject (tio.Subject): Loaded torchio subject.
+        session (ort.InferenceSession): ONNXRuntime session.
+        ca_mode (str, optional): The cornu ammoni division mode.
+            Defaults to "1/2/3".
+
+    Returns:
+        torch.Tensor: Segmentation.
+    """
+    logits = session.run(None, {"input": subject.mri.data[None].numpy()})
+    logits = to_ca_mode(torch.tensor(logits[0]), ca_mode)
+    output_tensor = logits.argmax(dim=1, keepdim=True)
+
+    lm_temp = tio.LabelMap(tensor=torch.rand(1, 1, 1, 1),
+                           affine=subject.mri.affine)
+    subject.add_image(lm_temp, 'label')
+    subject.label.set_data(output_tensor[0])
+
+    back = subject.apply_inverse_transform(warn=True)
+
+    return back.label.data
+
+
 def segment(subject: tio.Subject,
             augmentation_cfg: DictConfig,
             segmentation_cfg: DictConfig,
@@ -157,22 +186,12 @@ def segment(subject: tio.Subject,
         else:
             augmented = augmentation_pipeline(subject)
 
-        input_tensor = augmented.mri.data[None]
+        sessions_predictions = [
+            predict(augmented, session, ca_mode) for session in sessions
+        ]
 
-        sessions_predictions = []
-        for session in sessions:
-            logits = session.run(None, {"input": input_tensor.numpy()})
-            logits = to_ca_mode(torch.tensor(logits[0]), ca_mode)
-            output_tensor = logits.argmax(dim=1, keepdim=True)
-            lm_temp = tio.LabelMap(tensor=torch.rand(1, 1, 1, 1),
-                                   affine=augmented.mri.affine)
-            augmented.add_image(lm_temp, 'label')
-            augmented.label.set_data(output_tensor[0])
-            back = augmented.apply_inverse_transform(warn=True)
-            sessions_predictions.append(back.label.data)
-
-        aug_sessions_predictions = torch.stack(sessions_predictions).long()
-        sessions_result_tensor = aug_sessions_predictions.mode(dim=0).values
+        sessions_predictions = torch.stack(sessions_predictions).long()
+        sessions_result_tensor = sessions_predictions.mode(dim=0).values
         results.append(sessions_result_tensor)
 
     if segmentation_cfg.test_time_augmentation:

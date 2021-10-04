@@ -15,8 +15,7 @@ def load_from_config(path: str, pattern: str) -> list:
         pattern (str): Pattern to search for.
 
     Returns:
-        list: List of mris.
-    """
+        list: List of mris."""
     p = Path(path).expanduser()
     return list(p.glob(pattern))
 
@@ -30,8 +29,7 @@ def get_mri(mri: PosixPath, mask_pattern: Optional[str] = None) -> tuple:
 
     Returns:
         ants.ANTsImage: Loaded mri.
-        ants.ANTsImage: Loaded mask or None.
-    """
+        ants.ANTsImage: Loaded mask or None."""
     if mask_pattern:
         mask = list(mri.parent.glob(mask_pattern))
         if mask:
@@ -59,8 +57,7 @@ def get_hippocampi(mri: ants.ANTsImage,
     Returns:
         RoiLocator: fitted roilocator.
         right_mri (ants.ANTsImage): Right hippocampus.
-        left_mri (ants.ANTsImage): Left hippocampus.
-    """
+        left_mri (ants.ANTsImage): Left hippocampus."""
     locator = RoiLocator(**roiloc_cfg, mask=mask)
 
     right_mri, left_mri = locator.fit_transform(mri)
@@ -79,8 +76,7 @@ def save_hippocampi(right_mri: ants.ANTsImage, left_mri: ants.ANTsImage,
         original_mri_path (PosixPath): Path to the original mri.
 
     Returns:
-        tuple: Path to the right & left hippocampi.
-    """
+        tuple: Path to the right & left hippocampi."""
     output_path = original_mri_path.parent / dir_name
     output_path.mkdir(parents=True, exist_ok=True)
 

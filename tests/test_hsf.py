@@ -17,6 +17,7 @@ def test_version():
 
 # Models getters
 def test_fetching():
+    """Tests that we can download and hash a model."""
     url = "https://zenodo.org/record/5524594/files/arunet_bag0.onnx?download=1"
     xxh3 = "d0de65baa81d9382"
 
@@ -26,6 +27,7 @@ def test_fetching():
 
 
 def test_roiloc():
+    """Tests that we can locate and save hippocampi."""
     mris = hsf.roiloc_wrapper.load_from_config("tests/mri", "*.nii.gz")
     assert mris
 
@@ -46,6 +48,7 @@ def test_roiloc():
 
 
 def test_segment():
+    """Tests that we can segment and save a hippocampus."""
     mri = Path(tmpdir + "/tse_right_hippocampus.nii.gz")
     sub = hsf.segment.mri_to_subject(mri)
     session = hsf.segment.get_inference_sessions(

@@ -31,7 +31,6 @@ nav:
   - Home: 'index.md'
   - 'Getting Started': 'getting-started.md'
   - 'User Guide':
-    - Overview: 'user-guide/overview.md'
     - Installation: 'user-guide/installation.md'
     - Configuration: 'user-guide/configuration.md'
     - ROILoc: 'user-guide/roiloc.md'
@@ -50,6 +49,8 @@ markdown_extensions:
   - pymdownx.arithmatex
   - pymdownx.details
   - pymdownx.tasklist
+  - pymdownx.tabbed:
+      alternate_style: true
   - pymdownx.superfences
   - pymdownx.emoji:
       emoji_index: !!python/name:materialx.emoji.twemoji

@@ -193,7 +193,7 @@ def save_prediction(mri: PosixPath,
         mri (PosixPath): Path to the MRI data.
         prediction (torch.Tensor): The prediction.
         suffix (str): The suffix of the output file.
-    
+
     Returns:
         ants.ANTsImage: The predicted segmentation.
     """

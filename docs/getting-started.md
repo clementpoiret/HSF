@@ -54,11 +54,11 @@ Database
 │
 └───sub-00C
 │   │   sub-00C_tse.nii.gz
-|   |   sub-00C_t1w.nii.gz
+│   │   sub-00C_t1w.nii.gz
 │   
 └───sub-01C
     │   sub-01C_tse.nii.gz
-    |   sub-01C_t1w.nii.gz
+    │   sub-01C_t1w.nii.gz
 ```
 
 To segment the whole database, you can just run the following command:

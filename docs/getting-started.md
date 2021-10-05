@@ -13,7 +13,7 @@ the [page dedicated to installation details](user-guide/installation.md).
 We encourage you to use the [`conda`](https://conda.io/) environment manager
 to use HSF.
 
-To create a new environment, run the following commant:
+To create a new environment, run the following command:
 
 `conda create -n hsf python=3.9`
 
@@ -63,13 +63,17 @@ Database
 
 To segment the whole database, you can just run the following command:
 
-`hsf files.path="~/Database" files.pattern="**/*tse.nii.gz" roiloc.margin=[16,4,16]`
+```
+hsf files.path="~/Database" files.pattern="**/*tse.nii.gz" roiloc.margin=[16,4,16]
+```
 
 And that's it! :smile:
 
 Now, do you want to segment the T1w MRIs? Nothing simpler:
 
-`hsf files.path="~/Database" files.pattern="**/*t1w.nii.gz" roiloc.margin=[8,8,8] roiloc.contrast="t1"`
+```
+hsf files.path="~/Database" files.pattern="**/*t1w.nii.gz" roiloc.margin=[8,8,8] roiloc.contrast="t1"
+```
 
 `files.path` and `files.pattern` are the only mandatory parameters. They are used to
 determine the list of files to segment.

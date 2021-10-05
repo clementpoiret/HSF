@@ -42,7 +42,7 @@ You can also add specific configs absent from the default yaml files (e.g. `hsf 
 
 ## Configuration details
 
-Every *.yaml file defines a set of parameters influencing the segmentation, as detailed below.
+Every `*.yaml` file defines a set of parameters influencing the segmentation, as detailed below.
 
 
 ### Inputs & Outputs
@@ -55,10 +55,31 @@ I/O are managed through the `files.*` arguments. Default parameters are defined 
 
 The following example will recursively search all `*T2w.nii.gz` files in the `~Datasets/MRI/` folder, for search a `*T2w_bet_mask.nii.gz` located next to each T2w images:
 
-`hsf files.path="~/Datasets/MRI/" files.pattern="**/*T2w.nii.gz" files.mask_pattern="*T2w_bet_mask.nii.gz`
+```
+hsf files.path="~/Datasets/MRI/" files.pattern="**/*T2w.nii.gz" files.mask_pattern="*T2w_bet_mask.nii.gz
+```
 
 
 ### Preprocessing pipeline
+
+The preprocessing pipeline is kept as minimal as possible.
+
+``` mermaid
+sequenceDiagram
+  MNI Template->>MRI Native Space: Registration
+  MNI Template---Hippocampi Bounding Boxes
+  Hippocampi Bounding Boxes->>MRI Native Space: Registration
+```
+<!-- Alice->>John: Hello John, how are you?
+loop Healthcheck
+    John->>John: Fight against hypochondria
+end
+Note right of John: Rational thoughts!
+John--Alice: Great!
+John->>Bob: How about you?
+Bob--John: Jolly good! -->
+
+
 
 ### Segmentation Models
 

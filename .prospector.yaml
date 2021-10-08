@@ -1,3 +1,0 @@
-pep257:
-  disable:
-    - D212

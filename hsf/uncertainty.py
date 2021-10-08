@@ -6,9 +6,8 @@ import ants
 
 
 def voxelwise_uncertainty(samples: list) -> ants.ANTsImage:
-    """Compute the voxelwise uncertainty of a list of samples.
-
-    Voxel-wise uncertainty is estimated as entropy over all probability maps.
+    """
+    Computes the voxelwise uncertainty of a list of samples as entropy.
 
     Args:
         samples (list): List of predictions.
@@ -20,9 +19,8 @@ def voxelwise_uncertainty(samples: list) -> ants.ANTsImage:
 
 
 def structural_uncertainty(samples: list) -> ants.ANTsImage:
-    """Compute the structural uncertainty of a list of samples.
-
-    Structure-wise uncertainty from N probability maps.
+    """
+    Compute the structural uncertainty of a list of samples.
 
     Args:
         samples (list): List of predictions.

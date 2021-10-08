@@ -11,8 +11,7 @@ from rich.progress import track
 
 def mri_to_subject(mri: PosixPath) -> tio.Subject:
     """
-    Loads the MRI data from the given path and returns
-    the preprocessed torchio subject.
+    Loads the MRI data from the given path and returns the preprocessed subject.
 
     Args:
         mri (PosixPath): Path to the MRI data.

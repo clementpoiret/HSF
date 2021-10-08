@@ -41,7 +41,15 @@ bibliography: paper.bib
 
 # Summary
 
-# Statement of need
+# Statement of Need
+
+# Segmentation Pipeline
+
+## Hippocampal Localization and Preprocessing
+
+## Hippocampal Subfields Segmentation
+
+## Postprocessing and Uncertainty Estimation
 
 # Acknowledgements
 

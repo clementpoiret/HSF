@@ -2,7 +2,6 @@ from pathlib import Path, PosixPath
 from typing import Optional
 
 import ants
-from icecream import ic
 from omegaconf.dictconfig import DictConfig
 from roiloc.locator import RoiLocator
 
@@ -40,7 +39,8 @@ def get_mri(mri: PosixPath, mask_pattern: Optional[str] = None) -> tuple:
             mask = ants.image_read(str(mask[0]), pixeltype="unsigned int")
         else:
             mask = None
-            ic("Couldn't find brain extraction mask for the provided pattern.")
+            print(
+                "Couldn't find brain extraction mask for the provided pattern.")
     else:
         mask = None
 

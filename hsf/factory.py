@@ -3,7 +3,6 @@ from pathlib import Path, PosixPath
 import ants
 import hydra
 # from hydra import compose, initialize
-from icecream import ic
 from omegaconf import DictConfig
 from rich import print
 
@@ -29,12 +28,12 @@ def get_lr_hippocampi(mri: PosixPath, cfg: DictConfig) -> tuple:
         )
         image = ants.reorient_image2(image, orientation="LPI")
 
-    ic("Started locating left and right hippocampi...")
+    print("Started locating left and right hippocampi...")
     locator, right_mri, left_mri = get_hippocampi(mri=image,
                                                   roiloc_cfg=cfg.roiloc,
                                                   mask=bet_mask)
 
-    ic("Saving left and right hippocampi (LPI orientation)...")
+    print("Saving left and right hippocampi (LPI orientation)...")
     return locator, original_orientation, save_hippocampi(
         right_mri=right_mri,
         left_mri=left_mri,
@@ -49,14 +48,14 @@ def main(cfg: DictConfig) -> None:
     sessions = get_inference_sessions(
         cfg.segmentation.models_path,
         providers=cfg.hardware.execution_providers)
-    ic("Successfully loaded segmentation models in memory.")
+    print("Successfully loaded segmentation models in memory.")
 
     mris = load_from_config(cfg.files.path, cfg.files.pattern)
 
     print(
         "Please be aware that the segmentation is highly dependant on ROILoc to locate both hippocampi.\nROILoc will be run using the following configuration.\nIf the segmentation is of bad quality, please tune your ROILoc settings (e.g. ``margin``)."
     )
-    ic(cfg.roiloc)
+    print(cfg.roiloc)
     print(
         "For additional details about ROILoc, please see https://github.com/clementpoiret/ROILoc"
     )
@@ -72,7 +71,7 @@ def main(cfg: DictConfig) -> None:
             hippocampus = Path(hippocampus)
             subject = mri_to_subject(hippocampus)
 
-            ic("Starting segmentation...")
+            print("Starting segmentation...")
             prediction = segment(
                 subject=subject,
                 augmentation_cfg=cfg.augmentation,
@@ -81,7 +80,7 @@ def main(cfg: DictConfig) -> None:
                 ca_mode=str(cfg.segmentation.ca_mode),
             )
 
-            ic("Saving cropped segmentation in LPI orientation.")
+            print("Saving cropped segmentation in LPI orientation.")
             segmentation = save_prediction(mri=hippocampus,
                                            prediction=prediction,
                                            suffix="seg_crop")
@@ -89,7 +88,7 @@ def main(cfg: DictConfig) -> None:
             native_segmentation = locator.inverse_transform(segmentation)
 
             if orientation != "LPI":
-                ic("Reorienting segmentation to original orientation...")
+                print("Reorienting segmentation to original orientation...")
                 native_segmentation = ants.reorient_image2(
                     native_segmentation, orientation=orientation)
 
@@ -100,7 +99,7 @@ def main(cfg: DictConfig) -> None:
             ants.image_write(native_segmentation, str(output_path))
 
             output = f"Saved segmentation in native space to {str(output_path)}"
-            ic(output)
+            print(output)
 
 
 def start():

@@ -2,7 +2,6 @@ from pathlib import Path
 
 import wget
 import xxhash
-from icecream import ic
 from omegaconf import DictConfig
 
 
@@ -39,21 +38,18 @@ def fetch(directory: str, filename: str, url: str, xxh3_64: str) -> None:
 
     if outfile.exists():
         if get_hash(str(outfile)) == xxh3_64:
-            model = f"{filename} already exists and is up to date"
-            ic(model)
+            print(f"{filename} already exists and is up to date")
             return
         else:
-            model = f"{filename} already exists but is not up to date"
-            ic(model)
+            print(f"{filename} already exists but is not up to date")
             outfile.unlink()
 
-    log = "Fetching {}".format(url)
-    ic(log)
+    print(f"Fetching {url}")
     wget.download(url, out=str(outfile))
     print("\n")
 
     if not xxh3_64 == get_hash(str(outfile)):
-        ic("xxh3_64 checksum failed")
+        print("xxh3_64 checksum failed")
         outfile.unlink()
         raise Exception("xxh3_64 checksum failed")
 

@@ -189,9 +189,6 @@ def segment(subject: tio.Subject,
     soft_predictions = torch.stack(results, dim=0)
     hard_prediction = soft_predictions.argmax(dim=1).long().mode(dim=0).values
 
-    print("soft", soft_predictions.shape)
-    print("hard", hard_prediction.shape)
-
     return soft_predictions, hard_prediction
 
 

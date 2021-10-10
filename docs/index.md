@@ -20,6 +20,9 @@ the segmentation of the hippocampal subfields in raw MRI volumes.
 
 ![Header](resources/header.svg)
 
+
+## Purpose & Use Cases
+
 The main idea is to have a click-button tool that allows the user to
 segment the hippocampal subfields in a given raw image (T1w or T2w), while keeping
 as much modularity and customization options as possible.
@@ -40,12 +43,17 @@ ready for production use. It uses multiple expert deep learning models
 trained on 600+ manually segmented hippocampi (see the [F.A.Q. section](faq.md))
 which are not yet fully polished.
 
+
+## Technical Features
+
 HSF uses inference sessions provided by [ONNXRuntime](https://onnxruntime.ai),
 which means that it can be used *theoretically* on Windows, MacOS and Linux,
 and the following hardware accelerations: CPU, CUDA, DirectML, OneDNN,
 OpenVINO, TensorRT, NUPHAR, Vitis AI, ACL, ArmNN, MIGraphX, and Rockchip NPU.
 Please be aware that we do not tested all possible configurations, as HSF
 has been tested only on CPU and CUDA on Linux (Debian-based and Arch-based distros).
+
+____
 
 HSF is distributed under the [MIT license](about/license.md):
 

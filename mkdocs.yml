@@ -35,6 +35,7 @@ nav:
     - Installation: 'user-guide/installation.md'
     - Configuration: 'user-guide/configuration.md'
     - ROILoc: 'user-guide/roiloc.md'
+    - "Uncertainty Estimations": 'user-guide/uncertainty.md'
     - Advanced: 'user-guide/advanced.md'
   - Troubleshooting: 'troubleshooting.md'
   - "What's Next?": 'whats-next.md'

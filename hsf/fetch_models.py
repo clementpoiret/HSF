@@ -3,6 +3,9 @@ from pathlib import Path
 import wget
 import xxhash
 from omegaconf import DictConfig
+from rich import print as pprint
+
+PREFIX = "[italic white]MODELS >"
 
 
 def get_hash(fname: str) -> str:
@@ -38,18 +41,17 @@ def fetch(directory: str, filename: str, url: str, xxh3_64: str) -> None:
 
     if outfile.exists():
         if get_hash(str(outfile)) == xxh3_64:
-            print(f"{filename} already exists and is up to date")
+            pprint(f"{PREFIX} {filename} already exists and is up to date")
             return
         else:
-            print(f"{filename} already exists but is not up to date")
+            pprint(f"{PREFIX} {filename} already exists but is not up to date")
             outfile.unlink()
 
-    print(f"Fetching {url}")
+    pprint(f"{PREFIX} Fetching {url}")
     wget.download(url, out=str(outfile))
-    print("\n")
+    pprint("\n")
 
     if not xxh3_64 == get_hash(str(outfile)):
-        print("xxh3_64 checksum failed")
         outfile.unlink()
         raise Exception("xxh3_64 checksum failed")
 

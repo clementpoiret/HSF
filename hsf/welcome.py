@@ -1,10 +1,10 @@
-from rich import print
+from rich import print as pprint
 
 from hsf import __version__
 
 
 def welcome():
-    print(rf"""
+    pprint(rf"""
 
     Hippocampal                            Factory
 __/\\\________/\\\_____/\\\\\\\\\\\____/\\\\\\\\\\\\\\\_        

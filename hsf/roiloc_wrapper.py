@@ -3,7 +3,10 @@ from typing import Optional
 
 import ants
 from omegaconf.dictconfig import DictConfig
+from rich import print as pprint
 from roiloc.locator import RoiLocator
+
+PREFIX = "[italic white]ROILOC >"
 
 
 def load_from_config(path: str, pattern: str) -> list:
@@ -39,8 +42,9 @@ def get_mri(mri: PosixPath, mask_pattern: Optional[str] = None) -> tuple:
             mask = ants.image_read(str(mask[0]), pixeltype="unsigned int")
         else:
             mask = None
-            print(
-                "Couldn't find brain extraction mask for the provided pattern.")
+            pprint(
+                f"{PREFIX} Couldn't find brain extraction mask for the provided pattern."
+            )
     else:
         mask = None
 

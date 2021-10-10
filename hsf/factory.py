@@ -4,7 +4,7 @@ import ants
 import hydra
 # from hydra import compose, initialize
 from omegaconf import DictConfig
-from rich import print
+from rich import print as pprint
 
 from hsf.fetch_models import fetch_models
 from hsf.roiloc_wrapper import (get_hippocampi, get_mri, load_from_config,
@@ -15,25 +15,26 @@ from hsf.welcome import welcome
 
 # initialize(config_path="hsf/conf")
 # cfg = compose(config_name="config")
+PREFIX = "[italic white]FACTORY >"
 
 
 def get_lr_hippocampi(mri: PosixPath, cfg: DictConfig) -> tuple:
     image, bet_mask = get_mri(mri, cfg.files.mask_pattern)
-    print(image)
+    pprint(image)
     original_orientation = image.orientation
 
     if original_orientation != "LPI":
-        print(
-            "[bold orange3]WARNING: image is not in LPI orientation, we encourage you to save it in LPI."
+        pprint(
+            f"{PREFIX} [bold orange3]WARNING: image is not in LPI orientation, we encourage you to save it in LPI."
         )
         image = ants.reorient_image2(image, orientation="LPI")
 
-    print("Started locating left and right hippocampi...")
+    pprint(f"{PREFIX} Started locating left and right hippocampi...")
     locator, right_mri, left_mri = get_hippocampi(mri=image,
                                                   roiloc_cfg=cfg.roiloc,
                                                   mask=bet_mask)
 
-    print("Saving left and right hippocampi (LPI orientation)...")
+    pprint(f"{PREFIX} Saving left and right hippocampi (LPI orientation)...")
     return locator, original_orientation, save_hippocampi(
         right_mri=right_mri,
         left_mri=left_mri,
@@ -48,30 +49,32 @@ def main(cfg: DictConfig) -> None:
     sessions = get_inference_sessions(
         cfg.segmentation.models_path,
         providers=cfg.hardware.execution_providers)
-    print("Successfully loaded segmentation models in memory.")
+    pprint(f"{PREFIX} Successfully loaded segmentation models in memory.")
 
     mris = load_from_config(cfg.files.path, cfg.files.pattern)
 
-    print(
+    pprint(
         "Please be aware that the segmentation is highly dependant on ROILoc to locate both hippocampi.\nROILoc will be run using the following configuration.\nIf the segmentation is of bad quality, please tune your ROILoc settings (e.g. ``margin``)."
     )
-    print(cfg.roiloc)
-    print(
+    pprint(cfg.roiloc)
+    pprint(
         "For additional details about ROILoc, please see https://github.com/clementpoiret/ROILoc"
     )
 
     N = len(mris)
-    print(f"HSF found {N} MRIs to segment following to your configuration.")
+    pprint(
+        f"{PREFIX} HSF found {N} MRIs to segment following to your configuration."
+    )
 
     for i, mri in enumerate(mris):
         locator, orientation, hippocampi = get_lr_hippocampi(mri, cfg)
 
         for j, hippocampus in enumerate(hippocampi):
-            print(f"Subject {i}/{N}, side {j}/1")
+            pprint(f"{PREFIX} Subject {i}/{N}, side {j}/1")
             hippocampus = Path(hippocampus)
             subject = mri_to_subject(hippocampus)
 
-            print("Starting segmentation...")
+            pprint(f"{PREFIX} Starting segmentation...")
             _, prediction = segment(
                 subject=subject,
                 augmentation_cfg=cfg.augmentation,
@@ -80,7 +83,7 @@ def main(cfg: DictConfig) -> None:
                 ca_mode=str(cfg.segmentation.ca_mode),
             )
 
-            print("Saving cropped segmentation in LPI orientation.")
+            pprint(f"{PREFIX} Saving cropped segmentation in LPI orientation.")
             segmentation = save_prediction(mri=hippocampus,
                                            prediction=prediction,
                                            suffix="seg_crop")
@@ -88,7 +91,9 @@ def main(cfg: DictConfig) -> None:
             native_segmentation = locator.inverse_transform(segmentation)
 
             if orientation != "LPI":
-                print("Reorienting segmentation to original orientation...")
+                pprint(
+                    f"{PREFIX} Reorienting segmentation to original orientation..."
+                )
                 native_segmentation = ants.reorient_image2(
                     native_segmentation, orientation=orientation)
 
@@ -98,8 +103,9 @@ def main(cfg: DictConfig) -> None:
 
             ants.image_write(native_segmentation, str(output_path))
 
-            output = f"Saved segmentation in native space to {str(output_path)}"
-            print(output)
+            pprint(
+                f"{PREFIX} Saved segmentation in native space to {str(output_path)}"
+            )
 
 
 def start():

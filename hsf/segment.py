@@ -138,12 +138,11 @@ def predict(subject: tio.Subject,
     """
     logits = session.run(None, {"input": subject.mri.data[None].numpy()})
     logits = to_ca_mode(torch.tensor(logits[0]), ca_mode)
-    output_tensor = logits.argmax(dim=1, keepdim=True)
 
     lm_temp = tio.LabelMap(tensor=torch.rand(1, 1, 1, 1),
                            affine=subject.mri.affine)
     subject.add_image(lm_temp, 'label')
-    subject.label.set_data(output_tensor[0])
+    subject.label.set_data(logits[0])
 
     back = subject.apply_inverse_transform(warn=True)
 
@@ -154,7 +153,7 @@ def segment(subject: tio.Subject,
             augmentation_cfg: DictConfig,
             segmentation_cfg: DictConfig,
             sessions: list,
-            ca_mode: str = "1/2/3") -> torch.Tensor:
+            ca_mode: str = "1/2/3") -> tuple:
     """
     Segments the given subject.
 
@@ -174,31 +173,26 @@ def segment(subject: tio.Subject,
     else:
         n_aug = 1
 
-    # to try: 20 augmentation for 5 models, or 20 augmentations PER model
     results = []
     for i in track(
             range(n_aug),
             description=f"Segmenting (TTA: {n_aug} | {len(sessions)} MODELS)..."
     ):
-        if i == 0:
-            augmented = subject
-        else:
-            augmented = augmentation_pipeline(subject)
+        augmented = augmentation_pipeline(subject) if i > 0 else subject
 
         sessions_predictions = [
             predict(augmented, session, ca_mode) for session in sessions
         ]
 
-        sessions_predictions = torch.stack(sessions_predictions).long()
-        sessions_result_tensor = sessions_predictions.mode(dim=0).values
-        results.append(sessions_result_tensor)
+        results.extend(sessions_predictions)
 
-    if segmentation_cfg.test_time_augmentation:
-        result_tensor = torch.stack(results).long().mode(dim=0).values
-    else:
-        result_tensor = results[0]
+    soft_predictions = torch.stack(results, dim=0)
+    hard_prediction = soft_predictions.argmax(dim=1).long().mode(dim=0).values
 
-    return result_tensor
+    print("soft", soft_predictions.shape)
+    print("hard", hard_prediction.shape)
+
+    return soft_predictions, hard_prediction
 
 
 def save_prediction(mri: PosixPath,

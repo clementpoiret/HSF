@@ -72,7 +72,7 @@ def main(cfg: DictConfig) -> None:
             subject = mri_to_subject(hippocampus)
 
             print("Starting segmentation...")
-            prediction = segment(
+            _, prediction = segment(
                 subject=subject,
                 augmentation_cfg=cfg.augmentation,
                 segmentation_cfg=cfg.segmentation.segmentation,

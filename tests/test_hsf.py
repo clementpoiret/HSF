@@ -52,6 +52,6 @@ def test_segment(tmp_path):
     session = hsf.segment.get_inference_sessions(
         tmp_path, providers=["CPUExecutionProvider"])[0]
 
-    pred = hsf.segment.predict(sub, session, "1/2/3")
+    pred = hsf.segment.predict(sub, session, "1/2/3").argmax(dim=1)
 
     hsf.segment.save_prediction(mri, pred[0])

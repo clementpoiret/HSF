@@ -64,6 +64,15 @@ hsf files.path="~/Datasets/MRI/" files.pattern="**/*T2w.nii.gz" files.mask_patte
 
 The preprocessing pipeline is kept as minimal as possible.
 
+First, it is cropped according to the following pipeline using [`ROILoc`](roiloc.md), by registering an MNI template to the image.
+As we already know the locations of the hippocampi in the MNI, we can infer the locations of the hippocampi in the subject's space.
+
+As the process is error-prone / imprecise by construction, we also apply margins and offsets to the bounding boxes.
+
+![ROILoc](../resources/roiloc.svg)
+
+To customize ROILoc parameters, please refer to its dedicated [`ROILoc` page](roiloc.md).
+
 
 ### Segmentation Models
 

@@ -44,7 +44,7 @@ jobs:
       run: poetry install
       if: steps.cache.outputs.cache-hit != 'true'
  
-    - name: Test Coverage
+    - name: Test using pytest
       run: poetry run pytest
     
     # - name: Test & Publish Code Coverage

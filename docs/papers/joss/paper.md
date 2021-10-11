@@ -59,6 +59,8 @@ bibliography: paper.bib
 
 ## Hippocampal Localization and Preprocessing
 
+![ROILoc](figures/roiloc.svg)
+
 ROILoc, ZNorm, Shape
 
 ## Hippocampal Subfields Segmentation

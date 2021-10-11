@@ -44,5 +44,13 @@ jobs:
       run: poetry install
       if: steps.cache.outputs.cache-hit != 'true'
  
-    - name: Test with pytest
-      run: poetry run pytest
+    # - name: Test with pytest
+      # run: poetry run pytest
+    
+    - name: Test & publish code coverage
+      uses: paambaati/codeclimate-action@v3.0.0
+      env:
+        CC_TEST_REPORTER_ID: ${{secrets.CC_TEST_REPORTER_ID}}
+      with:
+        coverageCommand: poetry run pytest
+        debug: true

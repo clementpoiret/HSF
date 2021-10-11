@@ -41,7 +41,7 @@ jobs:
           poetry-${{ hashFiles('**/poetry.lock') }}
 
     - name: Install Dependencies
-      run: poetry install
+      run: poetry install; poetry add coverage
       if: steps.cache.outputs.cache-hit != 'true'
  
     # - name: Test with pytest

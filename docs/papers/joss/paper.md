@@ -43,14 +43,38 @@ bibliography: paper.bib
 
 # Statement of Need
 
+- Hippocampus
+  - Pathologies
+  - Development
+- Need accurate segmentation
+  - ASHS / FreeSurfer
+    - Slow (ref), innacurate (ref)
+  - DL models
+    - No pretrained model
+    - Seems OK but no working OOB pipeline
+- Need accurate segmentation -> HSF providing end-to-end pipeline, native space, fast, robust, automated
+
+
 # Segmentation Pipeline
 
 ## Hippocampal Localization and Preprocessing
 
+ROILoc, ZNorm, Shape
+
 ## Hippocampal Subfields Segmentation
+
+ARUNet, unstructured pruning, SWA, big databases (mix public, private), T1, T2, multi acquisition center, multi res
+TTA Bagging
+
 
 ## Postprocessing and Uncertainty Estimation
 
+TTA vote, aleatoric uncertainty
+
+
 # Acknowledgements
+
+IDRIS Genci
+
 
 # References

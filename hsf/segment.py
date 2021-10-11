@@ -194,7 +194,8 @@ def segment(subject: tio.Subject,
 
 def save_prediction(mri: PosixPath,
                     prediction: torch.Tensor,
-                    suffix: str = "seg") -> ants.ANTsImage:
+                    suffix: str = "seg",
+                    astype: str = "uint8") -> ants.ANTsImage:
     """
     Saves the prediction to the given path.
 
@@ -202,6 +203,7 @@ def save_prediction(mri: PosixPath,
         mri (PosixPath): Path to the MRI data.
         prediction (torch.Tensor): The prediction.
         suffix (str): The suffix of the output file.
+        astype (str): The type of the output file.
 
     Returns:
         ants.ANTsImage: The predicted segmentation.
@@ -215,7 +217,7 @@ def save_prediction(mri: PosixPath,
 
     output_path = mri.parent / fname
 
-    segmentation = raw_segmentation.astype("uint8")
+    segmentation = raw_segmentation.astype(astype)
     ants.image_write(segmentation, str(output_path))
 
     return segmentation

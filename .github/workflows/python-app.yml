@@ -45,14 +45,14 @@ jobs:
       if: steps.cache.outputs.cache-hit != 'true'
  
     - name: Test Coverage
-      run: poetry run coverage run -m pytest
+      run: poetry run pytest
     
-    - name: Test & Publish Code Coverage
-      uses: paambaati/codeclimate-action@v3.0.0
-      env:
-        CC_TEST_REPORTER_ID: ${{ secrets.CC_TEST_REPORTER_ID }}
-      with:
-        coverageCommand: poetry run coverage xml
-        coverageLocations: |
-          ${{github.workspace}}/coverage.xml:coverage.py
-        debug: true
+    # - name: Test & Publish Code Coverage
+    #   uses: paambaati/codeclimate-action@v3.0.0
+    #   env:
+    #     CC_TEST_REPORTER_ID: ${{ secrets.CC_TEST_REPORTER_ID }}
+    #   with:
+    #     coverageCommand: poetry run coverage xml
+    #     coverageLocations: |
+    #       ${{github.workspace}}/coverage.xml:coverage.py
+    #     debug: true

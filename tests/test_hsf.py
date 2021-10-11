@@ -22,6 +22,7 @@ def test_fetching(tmp_path):
     assert xxh3 == hsf.fetch_models.get_hash(tmp_path / "model.onnx")
 
 
+# ROILoc
 @pytest.fixture(scope="session")
 def test_roiloc(tmp_path):
     """Tests that we can locate and save hippocampi."""
@@ -44,6 +45,7 @@ def test_roiloc(tmp_path):
     hsf.roiloc_wrapper.save_hippocampi(right, left, tmp_path, mris[0])
 
 
+# Segmentation
 @pytest.fixture(scope="session")
 def test_segment(tmp_path):
     """Tests that we can segment and save a hippocampus."""

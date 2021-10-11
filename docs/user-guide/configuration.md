@@ -171,3 +171,29 @@ You can configure individual transformations according to Torch.IO's documentati
 
 
 ### Hardware Acceleration
+
+Since `v0.1.2`, HSF allows the customization of execution providers though `hardware.execution_providers`,
+taking a list of execution providers in order of decreasing precedance.
+
+Please check ONNXRuntime's documentation on [Execution Providers](https://onnxruntime.ai/docs/execution-providers) for more information.
+
+Here is the default execution:
+
+```
+hsf hardware.execution_providers=["CUDAExecutionProvider","CPUExecutionProvider"]
+```
+
+By default, if a provider isn't available, the next one will be used.
+As an example, to force the use of your CPU, you can do:
+
+```
+hsf hardware.execution_providers=["CPUExecutionProvider"]
+```
+
+You can also specify provider options by providing a `List[str, dict]` instead of
+a single `str` as in the following example:
+
+```
+hsf hardware.execution_providers=[["CUDAExecutionProvider",{"device_id":0,"gpu_mem_limit":2147483648}],"CPUExecutionProvider"]
+```
+

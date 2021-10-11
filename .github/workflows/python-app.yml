@@ -41,7 +41,7 @@ jobs:
           poetry-${{ hashFiles('**/poetry.lock') }}
 
     - name: Install Dependencies
-      run: poetry install; poetry add coverage
+      run: poetry install
       if: steps.cache.outputs.cache-hit != 'true'
  
     # - name: Test with pytest
@@ -52,5 +52,5 @@ jobs:
       env:
         CC_TEST_REPORTER_ID: ${{secrets.CC_TEST_REPORTER_ID}}
       with:
-        coverageCommand: poetry run coverage run -m pytest
+        coverageCommand: coverage run -m pytest
         debug: true

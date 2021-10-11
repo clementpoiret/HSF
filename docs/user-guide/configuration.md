@@ -135,4 +135,39 @@ hsf segmentation=single_accurate segmentation.models={"custom_model.onnx":{"url"
 
 ### Test-time Augmentation
 
+Test-time augmentation (TTA) is performed by segmenting multiple altered versions of the input image.
+
+Handled by [`Torch.IO Augmentation`](https://torchio.readthedocs.io/transforms/augmentation.html), the input images
+are augmented by random affine transformations (rotation, translation, scale), flips, and elastic distortions.
+Each augmented version is segmented, then reverted to the original space. The final segmentation is simply a
+[plurality vote](https://www.wikiwand.com/en/Plurality_(voting)) of the segmentations.
+
+By default, the TTA is configured in the `conf/augmentation/default.yaml` as follows:
+
+```yaml
+flip:
+  axes: ["LR"]
+  flip_probability: 0.5
+
+affine_probability: 0.8
+affine:
+  scales: 0.2
+  degrees: 15
+  translation: 3
+  isotropic: False
+
+elastic_probability: 0.20
+elastic:
+  num_control_points: 4
+  max_displacement: 4
+  locked_borders: 0
+```
+
+You can configure individual transformations according to Torch.IO's documentation:
+
+- [`Random Flip`](https://torchio.readthedocs.io/transforms/augmentation.html#randomflip),
+- [`Random Affine`](https://torchio.readthedocs.io/transforms/augmentation.html#randomaffine),
+- [`Random Elastic Deformation`](https://torchio.readthedocs.io/transforms/augmentation.html#randomelasticdeformation).
+
+
 ### Hardware Acceleration

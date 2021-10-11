@@ -73,8 +73,65 @@ As the process is error-prone / imprecise by construction, we also apply margins
 
 To customize ROILoc parameters, please refer to its dedicated [`ROILoc` page](roiloc.md).
 
+Each crop is then Z-Normalized, and padded to ensure the shape is a multiple of 8.
+
 
 ### Segmentation Models
+
+Our segmentation models need to be downloaded prior to running the HSF pipeline.
+
+By default, they are stored in `~/HSF/models/*`. This folder is set by the argument `segmentation.models_path`.
+For example, you can override this path by running:
+
+```
+hsf segmentation.models_path="/mnt/models/"
+```
+
+In the config files, the models are hardcoded by two parameters: an URL, and an xxHash3_64 hash to ensure the correct model is loaded.
+We opted for xxHash bacause it is fast and has a very low collision rate. We removed MD5 checksum because of its known security risks.
+
+If needed, you can even use your own models by running the following example:
+
+```
+hsf segmentation=single_accurate segmentation.models={"custom_model.onnx":{"url":"https://url.to/your/model.onnx","xxh3_64":"f0f0f0f0f0f0f0f0"}}
+```
+
+!!! warning "Note on ONNX models"
+    All versions of ONNX Runtime will support ONNX opsets all the way back to (and including) opset version 7.
+    To date, ONNX Runtime 1.10.0 supports models with `7 <= opset <= 15`.
+
+    Please also be aware that input sizes aren't fixed. Therefore, please set dynamic dimensions when you export your models.
+
+    For example:
+
+    ```python
+    import torch
+
+    model = SegmentationModel()
+    model.eval()
+
+    dummy_input = torch.randn(1, 1, 16, 16, 16)
+    torch.onnx.export(model,
+                      dummy_input,
+                      "custom_model.onnx",
+                      input_names=["input"],
+                      output_names=["output"],
+                      dynamic_axes={
+                          "input": {
+                              0: "batch",
+                              2: "x",
+                              3: "y",
+                              4: "z"
+                          },
+                          "output": {
+                              0: "batch",
+                              2: "x",
+                              3: "y",
+                              4: "z"
+                          }
+                      },
+                      opset_version=13)
+    ```
 
 ### Test-time Augmentation
 

@@ -52,7 +52,9 @@ jobs:
       env:
         CC_TEST_REPORTER_ID: ${{ secrets.CC_TEST_REPORTER_ID }}
       with:
-        coverageCommand: poetry run coverage run -m pytest
+        coverageCommand: |
+          poetry run coverage run -m pytest
+          coverage xml
         coverageLocations: |
-          ${{github.workspace}}/*.coverage:coverage.py
+          ${{github.workspace}}/coverage.xml:coverage.py
         debug: true

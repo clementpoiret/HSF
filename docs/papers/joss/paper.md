@@ -59,7 +59,7 @@ bibliography: paper.bib
 
 ## Hippocampal Localization and Preprocessing
 
-![ROILoc](figures/roiloc.svg)
+![ROILoc](figures/roiloc.png)
 
 ROILoc, ZNorm, Shape
 

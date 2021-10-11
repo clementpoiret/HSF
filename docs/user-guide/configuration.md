@@ -142,7 +142,7 @@ are augmented by random affine transformations (rotation, translation, scale), f
 Each augmented version is segmented, then reverted to the original space. The final segmentation is simply a
 [plurality vote](https://www.wikiwand.com/en/Plurality_(voting)) of the segmentations.
 
-By default, the TTA is configured in the `conf/augmentation/default.yaml` as follows:
+By default, the TTA is configured in the file `conf/augmentation/default.yaml` as follows:
 
 ```yaml
 flip:

@@ -30,8 +30,14 @@ xxhash = "^2.0.2"
 rich = "^10.12.0"
 
 [tool.poetry.dev-dependencies]
-pytest = "^5.2"
-coverage = "^6.0.1"
+pytest = "^6"
+coverage = {version = "^6.0.1", extras = ["toml"]}
+
+[tool.pytest.ini_options]
+filterwarnings = ["ignore::DeprecationWarning"]
+
+[tool.coverage.report]
+omit = ["hsf/welcome.py", "hsf/factory.py"]
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]

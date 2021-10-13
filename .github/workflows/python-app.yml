@@ -47,12 +47,19 @@ jobs:
     - name: Test & Coverage
       run: poetry run coverage run --source=hsf -m pytest
     
-    - name: Publish Code Coverage
+    - name: Publish Coverage on CodeClimate
       uses: paambaati/codeclimate-action@v3.0.0
       env:
         CC_TEST_REPORTER_ID: ${{ secrets.CC_TEST_REPORTER_ID }}
       with:
         coverageCommand: poetry run coverage xml
         coverageLocations: |
-          ${{github.workspace}}/coverage.xml:coverage.py
+          ${{ github.workspace }}/coverage.xml:coverage.py
         debug: true
+
+    - name: Publish Coverage on Codacy
+      uses: codacy/codacy-coverage-reporter-action@v1.1.0
+      with:
+        project-token: ${{ secrets.CODACY_PROJECT_TOKEN }}
+        api-token: ${{ secrets.CODACY_API_TOKEN }}
+        coverage-reports: ${{ github.workspace }}/coverage.xml 

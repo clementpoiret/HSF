@@ -48,6 +48,7 @@ nav:
 
 markdown_extensions:
   - admonition
+  - footnotes
   - pymdownx.arithmatex
   - pymdownx.details
   - pymdownx.tasklist

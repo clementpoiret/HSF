@@ -330,3 +330,8 @@ If you use this work, please cite it as follows:
 ``C. Poiret, et al. (2021). clementpoiret/HSF. Zenodo. https://doi.org/10.5281/zenodo.5527122``
 
 This work licensed under MIT license was supported in part by the Fondation de France and the IDRIS/GENCI for the HPE Supercomputer Jean Zay.
+
+
+.. image:: https://api.codacy.com/project/badge/Grade/b20140a0d9474ab987cf89d6019f2aab
+   :alt: Codacy Badge
+   :target: https://app.codacy.com/gh/clementpoiret/HSF?utm_source=github.com&utm_medium=referral&utm_content=clementpoiret/HSF&utm_campaign=Badge_Grade_Settings

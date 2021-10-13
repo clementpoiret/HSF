@@ -49,7 +49,7 @@ nav:
 markdown_extensions:
   - admonition
   - footnotes
-  - pymdownx.arithmatex
+  - pymdownx.arithmatex:
       generic: true
   - pymdownx.details
   - pymdownx.tasklist

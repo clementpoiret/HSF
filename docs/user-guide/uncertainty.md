@@ -23,7 +23,7 @@ where $\hat{p}^i_m$ is the frequency of the $m$th unique value in $Y^i$.
 
 For example, here is an output uncertainty map:
 
-![Uncertainty Map](..resources/uncertainty_map.png)
+![Uncertainty Map](../resources/uncertainty_map.png)
 
 
 [^1]: https://www.wikiwand.com/en/Uncertainty_quantification

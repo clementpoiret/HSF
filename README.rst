@@ -7,14 +7,17 @@ Hippocampal Segmentation Factory (HSF)
 .. list-table::
     :header-rows: 1
 
-    * - PyPI
+    * - Python Package
       - Code Quality
       - Misc
-    * - .. image:: https://badge.fury.io/py/hsf.svg
+    * - .. image:: https://github.com/clementpoiret/HSF/actions/workflows/python-app.yml/badge.svg?branch=master
+        .. image:: https://badge.fury.io/py/hsf.svg
            :target: https://badge.fury.io/py/hsf
         .. image:: https://img.shields.io/pypi/dm/hsf
            :alt: PyPI - Downloads
       - .. image:: https://app.codacy.com/project/badge/Grade/cf02d1f84739401ba695e24f333c23b7
+           :target: https://www.codacy.com/gh/clementpoiret/HSF/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=clementpoiret/HSF&amp;utm_campaign=Badge_Grade
+        .. image:: https://app.codacy.com/project/badge/Coverage/cf02d1f84739401ba695e24f333c23b7
            :target: https://www.codacy.com/gh/clementpoiret/HSF/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=clementpoiret/HSF&amp;utm_campaign=Badge_Grade
         .. image:: https://api.codeclimate.com/v1/badges/e0bf481dcbf3eecebefd/maintainability
            :target: https://codeclimate.com/github/clementpoiret/HSF/maintainability

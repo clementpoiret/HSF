@@ -4,6 +4,8 @@ When HSF is used in `bagging` mode or with test-time augmentation (see the [conf
 it is possible to estimate the uncertainty of the predicted segmentation, notably through the *Aleatoric Uncertainty*
 which depends on noise or randomness in the input testing image.
 
+Uncertainty maps are saved in the relative directory difined by `files.output_dir`.
+
 ## Aleatoric Uncertainty
 
 Aleatoric uncertainty is also known as statistical uncertainty, and is representative of unknowns that differ each time we run the same experiment[^1].
@@ -18,6 +20,10 @@ H(Y^i|X) \approx - \sum^M_{m=1}{\hat{p}^i_m \ln \hat{p}^i_m}
 $$
 
 where $\hat{p}^i_m$ is the frequency of the $m$th unique value in $Y^i$.
+
+For example, here is an output uncertainty map:
+
+![Uncertainty Map](..resources/uncertainty_map.png)
 
 
 [^1]: https://www.wikiwand.com/en/Uncertainty_quantification

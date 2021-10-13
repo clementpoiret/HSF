@@ -15,7 +15,7 @@ def test_version():
     assert __version__ == '0.1.2'
 
 
-# Models getters
+# SETUP FIXTURES
 @pytest.fixture(scope="session")
 def models_path(tmpdir_factory):
     """Setup tmpdir."""
@@ -57,6 +57,14 @@ def config():
         "segmentation": {
             "test_time_augmentation": False,
             "test_time_num_aug": 1
+        },
+        "models": {
+            "model.onnx": {
+                "url":
+                    "https://zenodo.org/record/5524594/files/arunet_bag0.onnx?download=1",
+                "xxh3_64":
+                    "d0de65baa81d9382"
+            }
         }
     }
 
@@ -74,6 +82,24 @@ def inference_sessions(models_path):
     ]
 
     return sessions
+
+
+# TESTS
+# fetch_models
+def test_fetch_models(models_path, config):
+    """Tests that models can be (down)loaded"""
+    # Try to redownload an existing model
+    hsf.fetch_models.fetch_models(models_path, config.models)
+
+    # Delete the model if it exists
+    filepath = models_path / "model.onnx"
+    filepath.unlink()
+
+    with filepath.open("w", encoding="utf-8") as f:
+        f.write("Dummy model with wrong hash")
+
+    # Redownload when wrong hash
+    hsf.fetch_models.fetch_models(models_path, config.models)
 
 
 # ROILoc

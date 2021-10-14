@@ -10,7 +10,7 @@ import hsf.uncertainty
 import pytest
 import torch
 from hsf import __version__
-from omegaconf import DictConfig, ListConfig
+from omegaconf import DictConfig
 
 
 def test_version():

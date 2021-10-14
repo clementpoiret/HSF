@@ -1,6 +1,8 @@
+import shutil
 from pathlib import Path
 
 import ants
+import hsf.factory
 import hsf.fetch_models
 import hsf.roiloc_wrapper
 import hsf.segment
@@ -23,18 +25,43 @@ def models_path(tmpdir_factory):
     xxh3 = "d0de65baa81d9382"
 
     tmpdir_path = tmpdir_factory.mktemp("hsf")
+    tmpdir_path = Path(tmpdir_path)
 
+    # Copy sample mri
+    shutil.copy("tests/mri/tse.nii.gz", tmpdir_path / "tse.nii.gz")
+    shutil.copy("tests/mri/mask.nii.gz", tmpdir_path / "mask.nii.gz")
+
+    # Download model
     hsf.fetch_models.fetch(tmpdir_path, "model.onnx", url, xxh3)
 
     assert xxh3 == hsf.fetch_models.get_hash(tmpdir_path / "model.onnx")
 
-    return Path(tmpdir_path)
+    return tmpdir_path
 
 
 @pytest.fixture(scope="session")
-def config():
+def config(models_path):
     """Setup DictConfig."""
     configuration = {
+        "files": {
+            "path": str(models_path),
+            "pattern": "tse.nii.gz",
+            "mask_pattern": None,
+            "output_dir": "hsf_outputs",
+        },
+        "hardware": {
+            "execution_providers": [[
+                "CUDAExecutionProvider", {
+                    "device_id": 0,
+                    "gpu_mem_limit": 2147483648
+                }
+            ], "CPUExecutionProvider"]
+        },
+        "roiloc": {
+            "roi": "hippocampus",
+            "contrast": "t2",
+            "margin": [2, 0, 2]
+        },
         "augmentation": {
             "flip": {
                 "axes": ["LR"],
@@ -55,17 +82,21 @@ def config():
             },
         },
         "segmentation": {
-            "test_time_augmentation": False,
-            "test_time_num_aug": 1
-        },
-        "models": {
-            "model.onnx": {
-                "url":
-                    "https://zenodo.org/record/5524594/files/arunet_bag0.onnx?download=1",
-                "xxh3_64":
-                    "d0de65baa81d9382"
+            "ca_mode": "1/2/3",
+            "models_path": str(models_path),
+            "models": {
+                "model.onnx": {
+                    "url":
+                        "https://zenodo.org/record/5524594/files/arunet_bag0.onnx?download=1",
+                    "xxh3_64":
+                        "d0de65baa81d9382"
+                }
+            },
+            "segmentation": {
+                "test_time_augmentation": False,
+                "test_time_num_aug": 1
             }
-        }
+        },
     }
 
     return DictConfig(configuration)
@@ -74,23 +105,32 @@ def config():
 @pytest.fixture(scope="session")
 def inference_sessions(models_path):
     """Tests that models can be loaded"""
-    providers = [["CPUExecutionProvider"], ListConfig(["CPUExecutionProvider"])]
+    provider = ["CPUExecutionProvider"]
 
-    sessions = [
-        hsf.segment.get_inference_sessions(models_path, providers=p)[0]
-        for p in providers
-    ]
+    sessions = hsf.segment.get_inference_sessions(models_path,
+                                                  providers=provider)
 
     return sessions
 
 
 # TESTS
+# Main script called by the `hsf` command
+def test_main(config):
+    """Tests that the main script can be called."""
+    hsf.factory.main(config)
+
+
+def test_main_compute_uncertainty(models_path):
+    """Tests that the main script can compute uncertainty."""
+    soft_pred = torch.randn(5, 6, 448, 30, 448)
+    soft_pred = torch.softmax(soft_pred, dim=1)
+
+    hsf.factory.compute_uncertainty(models_path / "tse.nii.gz", soft_pred)
+
+
 # fetch_models
 def test_fetch_models(models_path, config):
     """Tests that models can be (down)loaded"""
-    # Try to redownload an existing model
-    hsf.fetch_models.fetch_models(models_path, config.models)
-
     # Delete the model if it exists
     filepath = models_path / "model.onnx"
     filepath.unlink()
@@ -99,17 +139,21 @@ def test_fetch_models(models_path, config):
         f.write("Dummy model with wrong hash")
 
     # Redownload when wrong hash
-    hsf.fetch_models.fetch_models(models_path, config.models)
+    hsf.fetch_models.fetch_models(models_path, config.segmentation.models)
 
 
-# ROILoc
+# # ROILoc
 def test_roiloc(models_path):
     """Tests that we can locate and save hippocampi."""
-    mris = hsf.roiloc_wrapper.load_from_config("tests/mri", "*.nii.gz")
+    mris = hsf.roiloc_wrapper.load_from_config(models_path, "tse.nii.gz")
     assert mris
 
-    mri, mask = hsf.roiloc_wrapper.get_mri(mris[0])
+    mri, mask = hsf.roiloc_wrapper.get_mri(mris[0], mask_pattern="mask.nii.gz")
+    assert isinstance(mask, ants.ANTsImage)
+    mri, mask = hsf.roiloc_wrapper.get_mri(mris[0],
+                                           mask_pattern="no_mask.nii.gz")
     assert isinstance(mri, ants.ANTsImage)
+    assert mask == None
 
     _, right, left = hsf.roiloc_wrapper.get_hippocampi(mri, {
         "contrast": "t2",
@@ -129,21 +173,22 @@ def test_segment(models_path, config, inference_sessions):
     """Tests that we can segment and save a hippocampus."""
     mri = models_path / "tse_right_hippocampus.nii.gz"
     sub = hsf.segment.mri_to_subject(mri)
+    aug = hsf.segment.get_augmentation_pipeline(config.augmentation)
+    sub = aug(sub)
 
-    for ca_mode in ["1/2/3", "1/23", "123"]:
+    for ca_mode in ["1/23", "123"]:
         _, pred = hsf.segment.segment(sub, config.augmentation,
-                                      config.segmentation, inference_sessions,
-                                      ca_mode)
+                                      config.segmentation.segmentation,
+                                      inference_sessions, ca_mode)
 
     hsf.segment.save_prediction(mri, pred)
 
 
 def test_uncertainty():
     """Tests that uncertainty can be computed."""
-    for n_classes in [1, 3]:
-        sample_probs = torch.randn(1, n_classes, 16, 16, 16)
-        sample_probs = torch.softmax(sample_probs, dim=1)
+    n_classes = 1
+    sample_probs = torch.randn(1, n_classes, 16, 16, 16)
 
-        unc = hsf.uncertainty.voxelwise_uncertainty(sample_probs)
+    unc = hsf.uncertainty.voxelwise_uncertainty(sample_probs)
 
-        assert unc.shape == (16, 16, 16)
+    assert unc.shape == (16, 16, 16)

@@ -37,7 +37,7 @@ coverage = {version = "^6.0.1", extras = ["toml"]}
 filterwarnings = ["ignore::DeprecationWarning"]
 
 [tool.coverage.report]
-omit = ["hsf/welcome.py", "hsf/factory.py"]
+omit = ["hsf/welcome.py"]
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]

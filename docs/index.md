@@ -13,8 +13,11 @@
 ____
 
 <p align="center">
-    <i>HSF is propulsed by</i><br>
+    <font size="-2"><i>Propulsed by</i></font>
+    <br><br>
     <img id="cea" src="resources/logos/cea.svg" width=50/>
+    <img id="neurospin" src="resources/logos/neurospin.png" width=50/>
+    <img id="ups" src="resources/logos/ups.png" width=50/>
 </p>
 ____
 

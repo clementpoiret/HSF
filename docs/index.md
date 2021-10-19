@@ -16,7 +16,7 @@ ____
     <br>
     <img id="cea" src="resources/logos/cea.svg" width=40/>
     <img id="neurospin" src="resources/logos/neurospin.png" width=110/>
-    <img id="ups" src="resources/logos/up.png" width=110/>
+    <img id="up" src="resources/logos/up.png" width=110/>
     <img id="ups" src="resources/logos/ups.png" width=110/>
     <img id="idris" src="resources/logos/idris.png" width=70/>
     <img id="genci" src="resources/logos/genci.png" width=35/>

@@ -16,10 +16,10 @@ ____
     <font size="-1"><i>Propulsed by</i></font>
     <br><br>
     <img id="cea" src="resources/logos/cea.svg" width=50/>
-    <img id="neurospin" src="resources/logos/neurospin.png" width=90/>
-    <img id="ups" src="resources/logos/ups.png" width=80/>
-    <img id="idris" src="resources/logos/idris.jpg" width=75/>
-    <img id="genci" src="resources/logos/genci.jpeg" width=45/>
+    <img id="neurospin" src="resources/logos/neurospin.png" width=100/>
+    <img id="ups" src="resources/logos/ups.png" width=90/>
+    <img id="idris" src="resources/logos/idris.png" width=75/>
+    <img id="genci" src="resources/logos/genci.png" width=30/>
 </p>
 ____
 

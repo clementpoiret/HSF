@@ -15,11 +15,11 @@ ____
 <p align="center">
     <font size="-1"><i>Propulsed by</i></font>
     <br><br>
-    <img id="cea" src="resources/logos/cea.svg" height=5/>
-    <img id="neurospin" src="resources/logos/neurospin.png" height=5/>
-    <img id="ups" src="resources/logos/ups.png" height=5/>
-    <img id="idris" src="resources/logos/idris.jpg" height=5/>
-    <img id="genci" src="resources/logos/genci.jpeg" height=5/>
+    <img id="cea" src="resources/logos/cea.svg" width=50/>
+    <img id="neurospin" src="resources/logos/neurospin.png" width=60/>
+    <img id="ups" src="resources/logos/ups.png" width=50/>
+    <img id="idris" src="resources/logos/idris.jpg" width=50/>
+    <img id="genci" src="resources/logos/genci.jpeg" width=50/>
 </p>
 ____
 

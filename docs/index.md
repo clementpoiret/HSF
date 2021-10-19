@@ -7,7 +7,6 @@
     <br>
     <b>Current HSF version:</b> 0.1.2 <i>pre-release</i><br>
     <b>Current Models version:</b> 1.0.0
-    <br><br>
 </p>
 
 ____
@@ -18,10 +17,10 @@ ____
     <img id="cea" src="resources/logos/cea.svg" width=45/>
     <img id="neurospin" src="resources/logos/neurospin.png" width=110/>
     <img id="ups" src="resources/logos/ups.png" width=110/>
-    <img id="idris" src="resources/logos/idris.png" width=75/>
-    <img id="genci" src="resources/logos/genci.png" width=30/>
-    <img id="hydra" src="resources/logos/hydra.png" width=75/>
-    <img id="onnx" src="resources/logos/onnx.png" width=45/>
+    <img id="idris" src="resources/logos/idris.png" width=70/>
+    <img id="genci" src="resources/logos/genci.png" width=35/>
+    <img id="hydra" src="resources/logos/hydra.png" width=55/>
+    <img id="onnx" src="resources/logos/onnx.png" width=40/>
 </p>
 ____
 

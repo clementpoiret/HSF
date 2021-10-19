@@ -1,4 +1,4 @@
-#logo {
+#cea {
     -webkit-filter: grayscale(100%);
     -webkit-transition: all .5s ease-in-out;
     -moz-filter: grayscale(100%);
@@ -7,7 +7,97 @@
     -o-transition: all .5s ease-in-out;
 }
 
-#logo:hover {
+#cea:hover {
+    -webkit-filter: grayscale(0%);
+    -webkit-transition: all .5s ease-in-out;
+    -moz-filter: grayscale(0%);
+    -moz-transition: all .5s ease-in-out;
+    -o-filter: grayscale(0%);
+    -o-transition: all .5s ease-in-out;
+}
+
+#neurospin {
+    -webkit-filter: grayscale(100%);
+    -webkit-transition: all .5s ease-in-out;
+    -moz-filter: grayscale(100%);
+    -moz-transition: all .5s ease-in-out;
+    -o-filter: grayscale(100%);
+    -o-transition: all .5s ease-in-out;
+}
+
+#neurospin:hover {
+    -webkit-filter: grayscale(0%);
+    -webkit-transition: all .5s ease-in-out;
+    -moz-filter: grayscale(0%);
+    -moz-transition: all .5s ease-in-out;
+    -o-filter: grayscale(0%);
+    -o-transition: all .5s ease-in-out;
+}
+
+#up {
+    -webkit-filter: grayscale(100%);
+    -webkit-transition: all .5s ease-in-out;
+    -moz-filter: grayscale(100%);
+    -moz-transition: all .5s ease-in-out;
+    -o-filter: grayscale(100%);
+    -o-transition: all .5s ease-in-out;
+}
+
+#up:hover {
+    -webkit-filter: grayscale(0%);
+    -webkit-transition: all .5s ease-in-out;
+    -moz-filter: grayscale(0%);
+    -moz-transition: all .5s ease-in-out;
+    -o-filter: grayscale(0%);
+    -o-transition: all .5s ease-in-out;
+}
+
+#ups {
+    -webkit-filter: grayscale(100%);
+    -webkit-transition: all .5s ease-in-out;
+    -moz-filter: grayscale(100%);
+    -moz-transition: all .5s ease-in-out;
+    -o-filter: grayscale(100%);
+    -o-transition: all .5s ease-in-out;
+}
+
+#ups:hover {
+    -webkit-filter: grayscale(0%);
+    -webkit-transition: all .5s ease-in-out;
+    -moz-filter: grayscale(0%);
+    -moz-transition: all .5s ease-in-out;
+    -o-filter: grayscale(0%);
+    -o-transition: all .5s ease-in-out;
+}
+
+#idris {
+    -webkit-filter: grayscale(100%);
+    -webkit-transition: all .5s ease-in-out;
+    -moz-filter: grayscale(100%);
+    -moz-transition: all .5s ease-in-out;
+    -o-filter: grayscale(100%);
+    -o-transition: all .5s ease-in-out;
+}
+
+#idris:hover {
+    -webkit-filter: grayscale(0%);
+    -webkit-transition: all .5s ease-in-out;
+    -moz-filter: grayscale(0%);
+    -moz-transition: all .5s ease-in-out;
+    -o-filter: grayscale(0%);
+    -o-transition: all .5s ease-in-out;
+}
+
+#genci {
+    -webkit-filter: grayscale(100%);
+    -webkit-transition: all .5s ease-in-out;
+    -moz-filter: grayscale(100%);
+    -moz-transition: all .5s ease-in-out;
+    -o-filter: grayscale(100%);
+    -o-transition: all .5s ease-in-out;
+}
+
+#genci:hover {
     -webkit-filter: grayscale(0%);
     -webkit-transition: all .5s ease-in-out;
     -moz-filter: grayscale(0%);

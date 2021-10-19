@@ -13,11 +13,13 @@
 ____
 
 <p align="center">
-    <font size="-2"><i>Propulsed by</i></font>
+    <font size="-1"><i>Propulsed by</i></font>
     <br><br>
-    <img id="cea" src="resources/logos/cea.svg" width=50/>
-    <img id="neurospin" src="resources/logos/neurospin.png" width=50/>
-    <img id="ups" src="resources/logos/ups.png" width=50/>
+    <img id="logo" src="resources/logos/cea.svg" height=50/>
+    <img id="logo" src="resources/logos/neurospin.png" height=50/>
+    <img id="logo" src="resources/logos/ups.png" height=50/>
+    <img id="logo" src="resources/logos/idris.jpg" height=50/>
+    <img id="logo" src="resources/logos/genci.jpeg" height=50/>
 </p>
 ____
 

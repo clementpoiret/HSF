@@ -1,4 +1,4 @@
-#cea {
+#logo {
     -webkit-filter: grayscale(100%);
     -webkit-transition: all .5s ease-in-out;
     -moz-filter: grayscale(100%);
@@ -7,7 +7,7 @@
     -o-transition: all .5s ease-in-out;
 }
 
-#cea:hover {
+#logo:hover {
     -webkit-filter: grayscale(0%);
     -webkit-transition: all .5s ease-in-out;
     -moz-filter: grayscale(0%);

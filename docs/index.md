@@ -14,13 +14,13 @@ ____
 <p align="center">
     <font size="-1"><i>Propulsed by</i></font>
     <br>
-    <img id="cea" src="resources/logos/cea.svg" width=45/>
+    <img id="cea" src="resources/logos/cea.svg" width=40/>
     <img id="neurospin" src="resources/logos/neurospin.png" width=110/>
     <img id="ups" src="resources/logos/ups.png" width=110/>
     <img id="idris" src="resources/logos/idris.png" width=70/>
     <img id="genci" src="resources/logos/genci.png" width=35/>
     <img id="hydra" src="resources/logos/hydra.png" width=55/>
-    <img id="onnx" src="resources/logos/onnx.png" width=40/>
+    <img id="onnx" src="resources/logos/onnx.png" width=35/>
 </p>
 ____
 

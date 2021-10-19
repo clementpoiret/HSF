@@ -105,3 +105,39 @@
     -o-filter: grayscale(0%);
     -o-transition: all .5s ease-in-out;
 }
+
+#hydra {
+    -webkit-filter: grayscale(100%);
+    -webkit-transition: all .5s ease-in-out;
+    -moz-filter: grayscale(100%);
+    -moz-transition: all .5s ease-in-out;
+    -o-filter: grayscale(100%);
+    -o-transition: all .5s ease-in-out;
+}
+
+#hydra:hover {
+    -webkit-filter: grayscale(0%);
+    -webkit-transition: all .5s ease-in-out;
+    -moz-filter: grayscale(0%);
+    -moz-transition: all .5s ease-in-out;
+    -o-filter: grayscale(0%);
+    -o-transition: all .5s ease-in-out;
+}
+
+#onnx {
+    -webkit-filter: grayscale(100%);
+    -webkit-transition: all .5s ease-in-out;
+    -moz-filter: grayscale(100%);
+    -moz-transition: all .5s ease-in-out;
+    -o-filter: grayscale(100%);
+    -o-transition: all .5s ease-in-out;
+}
+
+#onnx:hover {
+    -webkit-filter: grayscale(0%);
+    -webkit-transition: all .5s ease-in-out;
+    -moz-filter: grayscale(0%);
+    -moz-transition: all .5s ease-in-out;
+    -o-filter: grayscale(0%);
+    -o-transition: all .5s ease-in-out;
+}

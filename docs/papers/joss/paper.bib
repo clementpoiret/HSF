@@ -59,3 +59,37 @@
   abstract     = {The importance of the hippocampus in the study of several neurodegenerative diseases such as Alzheimer's disease makes it a structure of great interest in neuroimaging. However, few segmentation methods have been proposed to measure its subfields due to its complex structure and the lack of high resolution magnetic resonance (MR) data. In this work, we present a new pipeline for automatic hippocampus subfield segmentation using two available hippocampus subfield delineation protocols that can work with both high and standard resolution data. The proposed method is based on multi-atlas label fusion technology that benefits from a novel multicontrast patch match search process (using high resolution T1-weighted and T2-weighted images). The proposed method also includes as post-processing a new neural network-based error correction step to minimize systematic segmentation errors. The method has been evaluated on both high and standard resolution images and compared to other state-of-the-art methods showing better results in terms of accuracy and execution time.},
   langid       = {english}
 }
+
+@article{qiuFeasibilityAutomaticSegmentation2019,
+  title        = {Feasibility of {{Automatic Segmentation}} of {{Hippocampus Based}} on {{Deep Learning}} in {{Hippocampus}}-{{Sparing Radiotherapy}}},
+  author       = {Qiu, Q. and Gong, G. and Wang, L. and Duan, J. and Yin, Y.},
+  date         = {2019-09},
+  journaltitle = {International Journal of Radiation Oncology*Biology*Physics},
+  shortjournal = {International Journal of Radiation Oncology*Biology*Physics},
+  volume       = {105},
+  number       = {1},
+  pages        = {E137-E138},
+  issn         = {03603016},
+  doi          = {10.1016/j.ijrobp.2019.06.2177},
+  url          = {https://linkinghub.elsevier.com/retrieve/pii/S0360301619330123},
+  urldate      = {2019-10-01},
+  abstract     = {Purpose/Objective(s): Incidence of liver cancer is continuously increasing. American Cancer Society predicts about 42,030 new cases of liver cancer (29,480 in men and 12,550 in women) and 31,780 (21,600 men and 10,180 women) deaths due to liver cancer in 2019. There is a consensus that smoking is one of the known risk factors for liver cancer. Studies showed that current smokers have higher risk than former smokers. The purpose of this study to check a reduction in liver cancer risk by varying smoking status (from current to former) through a multi-parameterized neural network (NN). Materials/Methods: A multi-parameterized neural network (NN) was trained and tested with the National Health Interview Survey (NHIS) data collected from 1997 to 2017 and the Prostate, Lung, Colorectal, Ovarian cancer screening trail data collected from 1993 to 2001. Among a total of 795,163 persons interviewed, 478 were diagnosed with liver cancer. The features used as inputs for NN include age, race, BMI, race, Hispanic ethnicity, exercise habits, smoking, and drinking habits, diabetes, emphysema, stroke, hypertension, heart disease, arthritis, another cancer, family history of cancer. The NN was trained on 70\% of the data and tested on 30\% and the tested population was stratified as low, medium, and high risk for the liver cancer. Both training and testing datasets were stratified for low, medium, and high risk groups. Amongst high-risk group, 17 persons were selected those were obese (BMI {$>$} 0.30), current smokers, relatively heavy drinkers (drinks {$>$} 100 days/year) and not diagnosed for liver cancer at the survey time. The smoking status was changed from current smoker to former smoker in the input features of NN and the variation in their risks was studied. Results: The areas under the curve of the conventional receiver operating characteristic plots for our neural network are 0.83 and 0.85 for the training and testing datasets, respectively. A considerable reduction (maximum reduction is 77.7\%) in the risk values of the selected 17 people were observed by changing their status from current smoker to former smokers. Amongst these people, 35\% (6 people) were shifted from high risk group to medium risk group. Conclusion: Normally, NN is used either for prediction or diagnosis. However, this study is using NN to simulate the variation of cancer risk with changes in habits/life style. The results indicate that the use of a NN based on personal health information cannot only be used for the stratification of large population for liver cancer risk but can also be used for simulating the cancer risk with varying lifestyle.},
+  langid       = {english}
+}
+
+@article{zhuDilatedDenseUNet2019,
+  title        = {Dilated {{Dense U}}-{{Net}} for {{Infant Hippocampus Subfield Segmentation}}},
+  author       = {Zhu, Hancan and Shi, Feng and Wang, Li and Hung, Sheng-Che and Chen, Meng-Hsiang and Wang, Shuai and Lin, Weili and Shen, Dinggang},
+  date         = {2019-04-24},
+  journaltitle = {Frontiers in Neuroinformatics},
+  shortjournal = {Front. Neuroinform.},
+  volume       = {13},
+  pages        = {30},
+  issn         = {1662-5196},
+  doi          = {10.3389/fninf.2019.00030},
+  url          = {https://www.frontiersin.org/article/10.3389/fninf.2019.00030/full},
+  urldate      = {2020-09-18},
+  abstract     = {Accurate and automatic segmentation of infant hippocampal subfields from magnetic resonance (MR) images is an important step for studying memory related infant neurological diseases. However, existing hippocampal subfield segmentation methods were generally designed based on adult subjects, and would compromise performance when applied to infant subjects due to insufficient tissue contrast and fast changing structural patterns of early hippocampal development. In this paper, we propose a new fully convolutional network (FCN) for infant hippocampal subfield segmentation by embedding the dilated dense network in the U-net, namely DUnet. The embedded dilated dense network can generate multi-scale features while keeping high spatial resolution, which is useful in fusing the low-level features in the contracting path with the high-level features in the expanding path. To further improve the performance, we group every pair of convolutional layers with one residual connection in the DUnet, and obtain the Residual DUnet (ResDUnet). Experimental results show that our proposed DUnet and ResDUnet improve the average Dice coefficient by 2.1 and 2.5\% for infant hippocampal subfield segmentation, respectively, when compared with the classic 3D U-net. The results also demonstrate that our methods outperform other state-of-the-art methods.},
+  langid       = {english}
+}
+

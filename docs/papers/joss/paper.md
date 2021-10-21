@@ -41,11 +41,14 @@ bibliography: paper.bib
 
 # Summary
 
+Researchers can use their own models
+
 # Statement of Need
 
 - Hippocampus
+  - Healthy -> lifespan
   - Pathologies
-  - Development
+  - Structure complexe, petite
 - Need accurate segmentation
   - ASHS / FreeSurfer
     - Slow (ref), innacurate (ref)
@@ -54,8 +57,9 @@ bibliography: paper.bib
     - Seems OK but no working OOB pipeline
 - Need accurate segmentation -> HSF providing end-to-end pipeline, native space, fast, robust, automated
 
-
 # Segmentation Pipeline
+
+![ROILoc](figures/hsf.png)
 
 ## Hippocampal Localization and Preprocessing
 

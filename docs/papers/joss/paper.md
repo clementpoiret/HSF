@@ -45,21 +45,19 @@ Researchers can use their own models
 
 # Statement of Need
 
-- Hippocampus
-  - Healthy -> lifespan
-  - Pathologies
-  - Structure complexe, petite
-- Need accurate segmentation
-  - ASHS / FreeSurfer
-    - Slow (ref), innacurate (ref)
-  - DL models
-    - No pretrained model
-    - Seems OK but no working OOB pipeline
-- Need accurate segmentation -> HSF providing end-to-end pipeline, native space, fast, robust, automated
+The hippocampus plays a major role in specific functions of the brain. Divided in multiple hippocampal subfields - namely the Cornu Ammonis, the Dentate Gyrus and the Subiculum - it is actively involved in episodic memory, learning, and decision making. Thus, those substructures are determining an important part of one's behavior during his whole lifespan from the emergence of episofic memory in children to age-dependant cognitive decline. Hippocampal subfields has been shown to be implied in pathological conditions such as Alzheimer's disease, or Temporal lobe epilepsy.
+
+Therefore, their exist a need for a precise and accurate delineation of those subfields in order to study both healthy and pathological conditions. This delineation process appears to be challenging as the hippocampus is a small and complex structure. Even manual segmentation, still considered as a gold-standard method, is an error-prone process due to inconsistant guidelines and the need for high-definition MRIs.
+
+To date, there exists (semi-)automated methods for the segmentation of the hippocampal subfields (e.g. ref), but they are either slow (ref) or innacurate (ref), making them unsuited for research or clinical applications. While those methodologies are actually considered as "legacy methods" with respect to the actual literature of semantic segmentation, Deep Learning models have been validated on this complex task (ref), but they are still reserved to specific populations of researchers / engineers because either models are not public and need to be reimplemented from scratch (e.g. Zhu), or need to be re-trained because pretrained models are not made available, or because they are trained on a specific and uniform dataset, thus causing generalization issues on images acquired with different acquisition parameters (e.g. resolution, contrast, scanner).
+
+This lack of uniformity and ease of use of hippocampal segmentation models leaves a gap in the range of technical options available to researchers and cliniciants. By developing and published our Hippocampal Segmentation Factory (HSF), we hope to fill this gap and help the scientific community to better study the hippocampal subfields.
 
 # Segmentation Pipeline
 
-![ROILoc](figures/hsf.png)
+The HSF pipeline is constituted of 3 main steps: 1/ a preprocessing step handled by ROILoc to extract the hippocampi from a given MRI, 2/ an augmentation pipeline, and 3/ a segmentation by multiple expert models in order to produce both a segmentation and an uncertainty map (figure \ref{HSF}).
+
+![Overview of the Hippocampal Segmentation Factory segmentation pipeline.\label{HSF}](figures/hsf.png)
 
 ## Hippocampal Localization and Preprocessing
 

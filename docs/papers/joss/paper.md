@@ -61,20 +61,22 @@ The `HSF` pipeline is constituted of 3 main steps: 1/ a preprocessing step handl
 
 ## Hippocampal Localization and Preprocessing
 
+In order to limit the computational impact of `HSF`, we use a preprocessing step to extract the hippocampi from the MRI. This step is performed by a pipeline we called `ROILoc` (for ROI localization).
+
+To do so, ROILoc registers the `MNI152 09c Sym` template [@fonovUnbiasedNonlinearAverage2009] to the T1w or T2w input MRI. As we know the coordinates of the hippocampus in the MNI space thanks to the CerebrA atlas [@maneraCerebrARegistrationManual2020], this registration process allows us to infer rough coordinates of the hippocampus in native space. `ROILoc` then crops the MRI into two volumes corresponding to the right and left hippocampi (figure \ref{ROILoc}).
+
 ![ROILoc pipeline. The pipeline is a registration based pipeline to locate a specific region of interest (ROI) like the hippocampus, and crop a given MRI around its bounding boxes.\label{ROILoc}](figures/roiloc.png)
 
-ROILoc, ZNorm, Shape
+To finish the preprocessing, the resulting crops are Z-Normalized, and padded to obtain shapes which are multiple of 8.
 
 ## Hippocampal Subfields Segmentation
 
 ARUNet, unstructured pruning, SWA, big databases (mix public, private), T1, T2, multi acquisition center, multi res
 TTA Bagging
 
-
 ## Postprocessing and Uncertainty Estimation
 
 TTA vote, aleatoric uncertainty
-
 
 # Acknowledgements
 

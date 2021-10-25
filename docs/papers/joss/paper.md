@@ -1,5 +1,5 @@
 ---
-title: 'HSF for a Fast, Robust, and Automated Segmentation of Hippocampal Subfields in MRI'
+title: 'HSF as a Future-Proof Solution to Hippocampal Subfields Segmentation in MRI'
 tags:
   - python
   - mri
@@ -73,6 +73,9 @@ To finish the preprocessing, the resulting crops are Z-Normalized, and padded to
 
 ARUNet, unstructured pruning, SWA, big databases (mix public, private), T1, T2, multi acquisition center, multi res
 TTA Bagging
+
+SENIOR [@haegerImagingAgingBrain2020]
+SHATAU [@lagardeDistinctAmyloidTau2021]
 
 ## Postprocessing and Uncertainty Estimation
 

@@ -41,7 +41,11 @@ bibliography: paper.bib
 
 # Summary
 
-Researchers can use their own models
+The hippocampus is a key player of mnesic functions and has been shown to be implied in diverse pathologies such as mild cognitive impairment or Alzheimer's disease. Studying the anatomo-functional properties of the hippocampus and its subfields is a mandatory path to understand such conditions and requires reliable and robust segmentations of MRI data. Moreover, the growing size of publicly available datasets calls for faster and more efficient segmentation algorithms. As the current methodologies are shown to be either imprecise, slow or inconvenient, we propose a novel tool called the Hippocampal Segmentation Factory (`HSF`) to segment the hippocampal subfields in T1w or T2w MRIs.
+
+`HSF` is designed to be a fully customizable end-to-end pipeline, handling tasks from the preprocessing of raw anatomical images, to the segmentation of the subfields through specialized and highly efficient Deep Learning models on any hardware acceleration platform such as CUDA, TensorRT or OpenVINO. `HSF` also supports the state-of-the-art DeepSparse compute engine, providing GPU-class performances on CPU.
+
+Even if we use ever-improving models regularly trained with SotA methods with an increasing amount of manually labeled MRIs, we propose `HSF` as a future-proof tool where researchers can codelessly test and use their own ONNX models through a simple CLI argument.
 
 # Statement of Need
 

@@ -2,6 +2,8 @@
 Hippocampal Segmentation Factory (HSF)
 ======================================
 
+Exhaustive documentation available at: `hsf.rtfd.io <https://hsf.rtfd.io/>`_
+
 **Current Models version:** 1.0.0
 
 .. list-table::
@@ -204,117 +206,11 @@ Models
 * Initial release.
 
 
-Frequently asked questions
+Documentation
 ==========================
 
-How to specify where to store ONNX models?
-------------------------------------------
-
-Just override the ``segmentation.models_path`` parameter in the configuration like this:
-
-``hsf segmentation.models_path="~/my_models"``
-
-This parameter defaults to ``~/.hsf/models``.
-
-
-How to improve segmentation quality?
-------------------------------------
-
-If the segmentation is not good enough, you can try to improve it with the following steps:
-
-* Try to augment the number of TTAs,
-* Try to use a different ONNX model (by adding its ONNX to ``~/.hsf/models``),
-
-If the segmentation is clearly absent or outside the hippocampus, it is because ROILoc failed.
-This is caused by ANTs having troubles to perform registration, leading to a wrong bounding box.
-
-Generally, performing a brain extraction step, our using another ``transform_type`` (e.g. ``SyN``)
-solves this problem.
-
-Also check that the margins are high engough, otherwise you might be missing some subfields
-(crop effect). If your margins are already larges, but part of the hippocampus stays outside,
-you might want to try to increase the ``rightoffset`` and ``leftoffset`` parameters.
-
-The offset parameters are lists of 3 integers, one for each axis. They specify the offset
-1/ from left to right, 2/ from posterior to anterior, and 3/ from inferior to superior.
-
-
-How to help us improve segmentation quality?
---------------------------------------------
-
-If you found a way to improve our segmentation quality (e.g. by tweaking TTA), please open
-an issue or make a PR on GitHub.
-
-Additionally data is the new gold. If you have incorrect segmentations, feel free to
-correct them, and then send them to us. The data will be kept private,
-stored in secured infrastructures, and will be used in the next training iteration of HSF.
-We would be very grateful.
-
-Please open an issue on GitHub so we can agree on how to transfer the segmentations.
-
-We always seek for new datasets, so if you have a dataset with manual segmentations of
-hippocampi, or heared about a new released dataset, please let us know.
-
-As soon as we obtained a relatively good amount of new segmentations (maybe 10 to 20 new
-hippocampi), we will retrain our models, and we will release a new version of HSF. You
-will then be able to benefit from the improved segmentation by running
-``pip install -U hsf`` as soon as the new version is released.
-
-
-Which MRI modalities are usable in HSF?
----------------------------------------
-
-We trained HSF using T1 (MPRAGE & MP2RAGE) and T2 (mostly TSE) modalities.
-
-HSF should work with isotropic and non-isotropic images, but we do not encourage the segmentation
-on 1mm iso images as the resolution is too low to distinguish between subfields.
-
-We trained on CoroT2 with resolutions as low as 0.125*0.125*1.2mm.
-
-You can of course try with other settings, feel free to report your results :)
-
-
-Custom models
--------------
-
-You can use your own ONNX models by placing them in ``~/.hsf/models``, and
-providing the correct configuration (path & xxh3_64).
-
-You can also just place your models there, and use our ``bagging*`` presets,
-they will be included in the plurality votes.
-
-
-Hardware management and Execution Providers
--------------------------------------------
-
-Since v0.1.2, HSF allows the customization of execution providers though
-``hardware.execution_providers``, taking a list of execution providers 
-in order of decreasing precedance.
-
-Please check ONNXRuntime's documentation on
-`Execution Providers <https://onnxruntime.ai/docs/execution-providers>`_
-for more information.
-
-Here is the default execution:
-
-``hsf hardware.execution_providers=["CUDAExecutionProvider","CPUExecutionProvider"]``
-
-By default, if a provider isn't available, the next one will be used. As an example,
-to force the use of your CPU, you can do:
-
-``hsf hardware.execution_providers=["CPUExecutionProvider"]``
-
-You can also specify provider options by providing a ``List[str, dict]`` instead of
-a single ``str`` as in the following example:
-
-``hsf hardware.execution_providers=[["CUDAExecutionProvider",{"device_id":0,"gpu_mem_limit":2147483648}],"CPUExecutionProvider"]``
-
-
-Performance tunning
--------------------
-
-Please refer to ONNXRuntime's documentation for setting-up the correct environment,
-to benefit from the performance and scalability of hardware accelerations.
+For more details about HSF's configuration and internal parameters, please refer to
+our `documentation <https://hsf.rtfd.io/>`_.
 
 
 Authorship, Affiliations and Citations

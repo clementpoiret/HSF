@@ -8,11 +8,11 @@ from omegaconf import DictConfig
 from rich import print as pprint
 from roiloc.locator import RoiLocator
 
+from hsf.engines import get_inference_sessions
 from hsf.fetch_models import fetch_models
 from hsf.roiloc_wrapper import (get_hippocampi, get_mri, load_from_config,
                                 save_hippocampi)
-from hsf.segment import (get_inference_sessions, mri_to_subject,
-                         save_prediction, segment)
+from hsf.segment import mri_to_subject, save_prediction, segment
 from hsf.uncertainty import voxelwise_uncertainty
 from hsf.welcome import welcome
 
@@ -134,7 +134,7 @@ def main(cfg: DictConfig) -> None:
 
     sessions = get_inference_sessions(
         cfg.segmentation.models_path,
-        providers=cfg.hardware.execution_providers)
+        providers=cfg.hardware.engine_settings.execution_providers)
     pprint(f"{PREFIX} Successfully loaded segmentation models in memory.")
 
     mris = load_from_config(cfg.files.path, cfg.files.pattern)

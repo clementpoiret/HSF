@@ -3,5 +3,5 @@ defaults:
   - roiloc: default_corot2
   - segmentation: bagging_accurate
   - augmentation: default
-  - hardware: default
+  - hardware: onnxruntime
   - override hydra/help: hsf

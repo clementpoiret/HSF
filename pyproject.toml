@@ -28,6 +28,7 @@ wget = "^3.2"
 antspyx = "^0.2.9"
 xxhash = "^2.0.2"
 rich = "^10.12.0"
+deepsparse = "^0.8.0"
 
 [tool.poetry.dev-dependencies]
 pytest = "^6"

@@ -50,12 +50,15 @@ def config(models_path):
             "output_dir": "hsf_outputs",
         },
         "hardware": {
-            "execution_providers": [[
-                "CUDAExecutionProvider", {
-                    "device_id": 0,
-                    "gpu_mem_limit": 2147483648
-                }
-            ], "CPUExecutionProvider"]
+            "engine": "onnxruntime",
+            "engine_settings": {
+                "execution_providers": [[
+                    "CUDAExecutionProvider", {
+                        "device_id": 0,
+                        "gpu_mem_limit": 2147483648
+                    }
+                ], "CPUExecutionProvider"]
+            }
         },
         "roiloc": {
             "roi": "hippocampus",
@@ -107,7 +110,7 @@ def inference_sessions(models_path):
     """Tests that models can be loaded"""
     provider = ["CPUExecutionProvider"]
 
-    sessions = hsf.segment.get_inference_sessions(models_path,
+    sessions = hsf.engines.get_inference_sessions(models_path,
                                                   providers=provider)
 
     return sessions

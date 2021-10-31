@@ -1,0 +1,3 @@
+engine: onnxruntime
+engine_settings:
+  execution_providers: ['CUDAExecutionProvider', 'CPUExecutionProvider']

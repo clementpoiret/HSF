@@ -27,35 +27,26 @@ def deepsparse_support() -> str:
         return "not supported"
 
 
-def get_inference_sessions(models_path: PosixPath, providers: list) -> list:
+def get_inference_engines(models_path: PosixPath, engine_name: str,
+                          engine_settings: DictConfig) -> list:
     """
-    Returns ONNX runtime sessions.
+    Returns Inference Engines.
 
     Args:
         models_path (PosixPath): Path to the models.
+        engine_name (str): Name of the engine. Can be "onnxruntime" or "deepsparse".
+        engine_settings (DictConfig): Engine settings.
 
     Returns:
-        List[ort.InferenceSession]: ONNX runtime sessions.
+        List[InferenceEngine]: Inference Engines.
     """
-
-    def _correct_provider(provider):
-        if isinstance(provider, str):
-            return provider
-        elif isinstance(provider, ListConfig):
-            provider = list(provider)
-            assert len(provider) == 2
-            provider[1] = dict(provider[1])
-
-            return tuple(provider)
-
     p = Path(models_path).expanduser()
     models = list(p.glob("*.onnx"))
 
-    providers = [_correct_provider(provider) for provider in providers]
-
     return [
-        ort.InferenceSession(str(model_path), providers=providers)
-        for model_path in models
+        InferenceEngine(engine_name=engine_name,
+                        engine_settings=engine_settings,
+                        model=model) for model in models
     ]
 
 

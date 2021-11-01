@@ -1,11 +1,12 @@
 from pathlib import PosixPath
 
 import ants
-import onnxruntime as ort
 import torch
 import torchio as tio
 from omegaconf.dictconfig import DictConfig
 from rich.progress import track
+
+from hsf.engines import InferenceEngine
 
 
 def mri_to_subject(mri: PosixPath) -> tio.Subject:
@@ -89,21 +90,21 @@ def to_ca_mode(logits: torch.Tensor, ca_mode: str = "1/2/3") -> torch.Tensor:
 
 
 def predict(subject: tio.Subject,
-            session: ort.InferenceSession,
+            engine: InferenceEngine,
             ca_mode: str = "1/2/3") -> torch.Tensor:
     """
     Predict a segmentation from a subject.
 
     Args:
         subject (tio.Subject): Loaded torchio subject.
-        session (ort.InferenceSession): ONNXRuntime session.
+        engine (InferenceEngine): HSF's Inference Engine.
         ca_mode (str, optional): The cornu ammoni division mode.
             Defaults to "1/2/3".
 
     Returns:
         torch.Tensor: Segmentation.
     """
-    logits = session.run(None, {"input": subject.mri.data[None].numpy()})
+    logits = engine(subject.mri.data[None].numpy())
     logits = to_ca_mode(torch.tensor(logits[0]), ca_mode)
 
     lm_temp = tio.LabelMap(tensor=torch.rand(1, 1, 1, 1),
@@ -119,7 +120,7 @@ def predict(subject: tio.Subject,
 def segment(subject: tio.Subject,
             augmentation_cfg: DictConfig,
             segmentation_cfg: DictConfig,
-            sessions: list,
+            engines: list,
             ca_mode: str = "1/2/3") -> tuple:
     """
     Segments the given subject.
@@ -128,7 +129,7 @@ def segment(subject: tio.Subject,
         subject (tio.Subject): The subject to segment.
         augmentation_cfg (DictConfig): Augmentation configuration.
         segmentation_cfg (DictConfig): Segmentation configuration.
-        sessions (List[ort.InferenceSession]): ONNX runtime sessions.
+        engines (List[InferenceEnging]): Inference Engines.
         ca_mode (str): The cornu ammoni division mode. Defaults to "1/2/3".
 
     Returns:
@@ -143,15 +144,15 @@ def segment(subject: tio.Subject,
     results = []
     for i in track(
             range(n_aug),
-            description=f"Segmenting (TTA: {n_aug} | {len(sessions)} MODELS)..."
+            description=f"Segmenting (TTA: {n_aug} | {len(engines)} MODELS)..."
     ):
         augmented = augmentation_pipeline(subject) if i > 0 else subject
 
-        sessions_predictions = [
-            predict(augmented, session, ca_mode) for session in sessions
+        engines_predictions = [
+            predict(augmented, engine, ca_mode) for engine in engines
         ]
 
-        results.extend(sessions_predictions)
+        results.extend(engines_predictions)
 
     soft_predictions = torch.stack(results, dim=0)
     hard_prediction = soft_predictions.argmax(dim=1).long().mode(dim=0).values

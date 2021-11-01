@@ -8,7 +8,7 @@ from omegaconf import DictConfig
 from rich import print as pprint
 from roiloc.locator import RoiLocator
 
-from hsf.engines import get_inference_sessions
+from hsf.engines import get_inference_engines
 from hsf.fetch_models import fetch_models
 from hsf.roiloc_wrapper import (get_hippocampi, get_mri, load_from_config,
                                 save_hippocampi)
@@ -55,13 +55,13 @@ def get_lr_hippocampi(mri: PosixPath, cfg: DictConfig) -> tuple:
         original_mri_path=mri)
 
 
-def predict(mri: PosixPath, sessions: list, cfg: DictConfig) -> tuple:
+def predict(mri: PosixPath, engines: list, cfg: DictConfig) -> tuple:
     """
     Predict the hippocampal segmentation for a given MRI.
 
     Args:
         mri (PosixPath): Path to the MRI.
-        sessions (list): List of ONNX Runtime sessions.
+        engines (list): List of ONNX Runtime engines.
         cfg (DictConfig): Configuration.
 
     Returns:
@@ -74,7 +74,7 @@ def predict(mri: PosixPath, sessions: list, cfg: DictConfig) -> tuple:
         subject=subject,
         augmentation_cfg=cfg.augmentation,
         segmentation_cfg=cfg.segmentation.segmentation,
-        sessions=sessions,
+        engines=engines,
         ca_mode=str(cfg.segmentation.ca_mode),
     )
 
@@ -132,9 +132,10 @@ def save(mri: PosixPath, hippocampus: PosixPath, hard_pred: torch.Tensor,
 def main(cfg: DictConfig) -> None:
     fetch_models(cfg.segmentation.models_path, cfg.segmentation.models)
 
-    sessions = get_inference_sessions(
+    engines = get_inference_engines(
         cfg.segmentation.models_path,
-        providers=cfg.hardware.engine_settings.execution_providers)
+        engine_name=cfg.hardware.engine,
+        engine_settings=cfg.hardware.engine_settings)
     pprint(f"{PREFIX} Successfully loaded segmentation models in memory.")
 
     mris = load_from_config(cfg.files.path, cfg.files.pattern)
@@ -159,7 +160,7 @@ def main(cfg: DictConfig) -> None:
             hippocampus = Path(hippocampus)
 
             pprint(f"{PREFIX} Subject {i+1}/{N}, side {j+1}/2")
-            soft_pred, hard_pred = predict(hippocampus, sessions, cfg)
+            soft_pred, hard_pred = predict(hippocampus, engines, cfg)
 
             if soft_pred.shape[0] > 1:
                 compute_uncertainty(hippocampus, soft_pred)

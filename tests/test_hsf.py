@@ -113,7 +113,7 @@ def deepsparse_inference_engines(models_path):
     settings = DictConfig({"num_cores": 0, "num_sockets": 0, "batch_size": 1})
 
     engines = hsf.engines.get_inference_engines(models_path,
-                                                engine_name="onnxruntime",
+                                                engine_name="deepsparse",
                                                 engine_settings=settings)
 
     return engines

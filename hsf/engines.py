@@ -70,7 +70,6 @@ class InferenceEngine:
             support = deepsparse_support()
             print(f"DeepSparse's optimizations support: {support}")
             set_engine = self.set_deepsparse_engine
-            raise NotImplementedError
         elif engine_name == "onnxruntime":
             set_engine = self.set_ort_engine
 
@@ -81,7 +80,7 @@ class InferenceEngine:
             return self.engine.run(None, {"input": x})
 
         elif self.engine_name == "deepsparse":
-            raise NotImplementedError
+            return self.engine.run([x])
 
     def set_deepsparse_engine(self, model: PosixPath):
         """
@@ -90,7 +89,11 @@ class InferenceEngine:
         Args:
             model (PosixPath): Path to the model.
         """
-        raise NotImplementedError
+        self.engine = deepsparse.compile_model(
+            str(model),
+            batch_size=self.engine_settings.batch_size,
+            num_cores=self.engine_settings.num_cores,
+            num_sockets=self.engine_settings.num_sockets)
 
     def set_ort_engine(self, model):
         """

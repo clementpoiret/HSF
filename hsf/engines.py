@@ -62,24 +62,52 @@ def get_inference_sessions(models_path: PosixPath, providers: list) -> list:
 class InferenceEngine:
     """
     Base class for inference engines.
+
+    Args:
+        engine_name (str): Name of the engine.
+        engine_settings (DictConfig): Settings for the engine.
+        model (PosixPath): Path to the model.
     """
 
-    def __init__(self, engine: str, engine_settings: DictConfig,
-                 models_path: PosixPath):
-        self.engine = engine
+    def __init__(self, engine_name: str, engine_settings: DictConfig,
+                 model: PosixPath):
+        self.engine_name = engine_name
         self.engine_settings = engine_settings
+        self.model = model
 
-        if engine == "deepsparse":
+        if engine_name == "deepsparse":
             support = deepsparse_support()
             print(f"DeepSparse's optimizations support: {support}")
+            set_engine = self.set_deepsparse_engine
+            raise NotImplementedError
+        elif engine_name == "onnxruntime":
+            set_engine = self.set_ort_engine
 
-        p = Path(models_path).expanduser()
-        self.models = list(p.glob("*.onnx"))
+        set_engine(model)
 
-    def __call__(self):
+    def __call__(self, x):
+        if self.engine_name == "onnxruntime":
+            return self.engine.run(None, {"input": x})
+
+        elif self.engine_name == "deepsparse":
+            raise NotImplementedError
+
+    def set_deepsparse_engine(self, model: PosixPath):
+        """
+        Sets the DeepSparse engine.
+
+        Args:
+            model (PosixPath): Path to the model.
+        """
         raise NotImplementedError
 
-    def get_ort_engines(self):
+    def set_ort_engine(self, model):
+        """
+        Sets the ONNXRuntime engine.
+
+        Args:
+            model (PosixPath): Path to the model.
+        """
 
         def _correct_provider(provider):
             if isinstance(provider, str):
@@ -95,11 +123,4 @@ class InferenceEngine:
             _correct_provider(provider)
             for provider in self.engine_settings.execution_providers
         ]
-
-        return [
-            ort.InferenceSession(str(model_path), providers=providers)
-            for model_path in self.models
-        ]
-
-    def get_deepsparse_engines(self):
-        raise NotImplementedError
+        self.engine = ort.InferenceSession(str(model), providers=providers)

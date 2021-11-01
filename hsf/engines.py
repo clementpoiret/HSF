@@ -31,6 +31,15 @@ def deepsparse_support() -> str:
         return "not supported"
 
 
+def print_deepsparse_support():
+    """
+    Prints DeepSparse Support Status.
+    """
+    print(
+        "DeepSparse Optimization Status (minimal: AVX2 | partial: AVX512 | full: AVX512 VNNI):",
+        deepsparse_support())
+
+
 def get_inference_engines(models_path: PosixPath, engine_name: str,
                           engine_settings: DictConfig) -> list:
     """
@@ -71,8 +80,7 @@ class InferenceEngine:
         self.model = model
 
         if engine_name == "deepsparse":
-            support = deepsparse_support()
-            print(f"DeepSparse's optimizations support: {support}")
+            print_deepsparse_support()
             set_engine = self.set_deepsparse_engine
         elif engine_name == "onnxruntime":
             set_engine = self.set_ort_engine

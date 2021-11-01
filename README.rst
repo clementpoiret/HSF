@@ -192,7 +192,7 @@ HSF
 **Version 1.0.0 (WIP)**
 
 * Support for DeepSparse backend (CPU inference only),
-* Introduced ***HSF's Model Hub***,
+* Introduced **HSF's Model Hub**,
 * Support for batch inference (all backends),
 * Bug fixes and optimizations.
 

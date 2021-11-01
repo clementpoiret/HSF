@@ -106,14 +106,15 @@ def config(models_path):
 
 
 @pytest.fixture(scope="session")
-def inference_sessions(models_path):
-    """Tests that models can be loaded"""
-    provider = ["CPUExecutionProvider"]
+def ort_inference_engines(models_path):
+    """Tests that models can be loaded using ORT"""
+    settings = DictConfig({"execution_providers": ["CPUExecutionProvider"]})
 
-    sessions = hsf.engines.get_inference_sessions(models_path,
-                                                  providers=provider)
+    engines = hsf.engines.get_inference_engines(models_path,
+                                                engine_name="onnxruntime",
+                                                engine_settings=settings)
 
-    return sessions
+    return engines
 
 
 # TESTS
@@ -172,7 +173,7 @@ def test_roiloc(models_path):
 
 
 # Segmentation
-def test_segment(models_path, config, inference_sessions):
+def test_segment(models_path, config, ort_inference_engines):
     """Tests that we can segment and save a hippocampus."""
     mri = models_path / "tse_right_hippocampus.nii.gz"
     sub = hsf.segment.mri_to_subject(mri)
@@ -182,7 +183,7 @@ def test_segment(models_path, config, inference_sessions):
     for ca_mode in ["1/23", "123"]:
         _, pred = hsf.segment.segment(sub, config.augmentation,
                                       config.segmentation.segmentation,
-                                      inference_sessions, ca_mode)
+                                      ort_inference_engines, ca_mode)
 
     hsf.segment.save_prediction(mri, pred)
 

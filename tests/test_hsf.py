@@ -2,6 +2,7 @@ import shutil
 from pathlib import Path
 
 import ants
+import hsf.engines
 import hsf.factory
 import hsf.fetch_models
 import hsf.roiloc_wrapper
@@ -57,7 +58,8 @@ def config(models_path):
                         "device_id": 0,
                         "gpu_mem_limit": 2147483648
                     }
-                ], "CPUExecutionProvider"]
+                ], "CPUExecutionProvider"],
+                "batch_size": 1
             }
         },
         "roiloc": {
@@ -106,9 +108,9 @@ def config(models_path):
 
 
 @pytest.fixture(scope="session")
-def ort_inference_engines(models_path):
+def deepsparse_inference_engines(models_path):
     """Tests that models can be loaded using ORT"""
-    settings = DictConfig({"execution_providers": ["CPUExecutionProvider"]})
+    settings = DictConfig({"num_cores": 0, "num_sockets": 0, "batch_size": 1})
 
     engines = hsf.engines.get_inference_engines(models_path,
                                                 engine_name="onnxruntime",
@@ -121,6 +123,7 @@ def ort_inference_engines(models_path):
 # Main script called by the `hsf` command
 def test_main(config):
     """Tests that the main script can be called."""
+    hsf.engines.print_deepsparse_support()
     hsf.factory.main(config)
 
 
@@ -173,7 +176,7 @@ def test_roiloc(models_path):
 
 
 # Segmentation
-def test_segment(models_path, config, ort_inference_engines):
+def test_segment(models_path, config, deepsparse_inference_engines):
     """Tests that we can segment and save a hippocampus."""
     mri = models_path / "tse_right_hippocampus.nii.gz"
     sub = hsf.segment.mri_to_subject(mri)
@@ -183,7 +186,7 @@ def test_segment(models_path, config, ort_inference_engines):
     for ca_mode in ["1/23", "123"]:
         _, pred = hsf.segment.segment(sub, config.augmentation,
                                       config.segmentation.segmentation,
-                                      ort_inference_engines, ca_mode)
+                                      deepsparse_inference_engines, ca_mode)
 
     hsf.segment.save_prediction(mri, pred)
 

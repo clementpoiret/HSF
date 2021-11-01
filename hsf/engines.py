@@ -18,12 +18,16 @@ def deepsparse_support() -> str:
     vnni = deepsparse.cpu.cpu_vnni_compatible()
 
     if vnni:
+        # Optimal for int8 quantized NN
         return "full"
     elif avx512:
+        # AVX512 vector instruction set for fast NN inference
         return "partial"
     elif avx2:
+        # AVX2 vector instruction set slower than AVX512
         return "minimal"
     else:
+        # No AVX2/512 or VNNI -> Risk of slow inference time
         return "not supported"
 
 

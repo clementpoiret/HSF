@@ -4,7 +4,6 @@ HSF uses [`Hydra`](https://hydra.cc) to manage its configuration.
 
 > Hydra is an open-source Python framework that simplifies the development of research and other complex applications. The key feature is the ability to dynamically create a hierarchical configuration by composition and override it through config files and the command line. The name Hydra comes from its ability to run multiple similar jobs - much like a Hydra with multiple heads.
 
-
 ## How to use Hydra?
 
 HSF is configured using the following config groups:
@@ -20,7 +19,8 @@ conf
 │   │   default.yaml
 │
 └───hardware
-│   │   default.yaml
+│   │   onnxruntime.yaml
+│   │   deepsparse.yaml
 │
 └───roiloc
 │   │   default_corot2.yaml
@@ -39,11 +39,9 @@ Each individual option can be overriden, e.g. `hsf roiloc.margin=[16,8,16]`
 
 You can also add specific configs absent from the default yaml files (e.g. `hsf +augmentation.elastic.image_interpolation=sitkBSpline`)
 
-
 ## Configuration details
 
 Every `*.yaml` file defines a set of parameters influencing the segmentation, as detailed below.
-
 
 ### Inputs & Outputs
 
@@ -55,10 +53,9 @@ I/O are managed through the `files.*` arguments. Default parameters are defined 
 
 The following example will recursively search all `*T2w.nii.gz` files in the `~Datasets/MRI/` folder, for search a `*T2w_bet_mask.nii.gz` located next to each T2w images:
 
-```
+```sh
 hsf files.path="~/Datasets/MRI/" files.pattern="**/*T2w.nii.gz" files.mask_pattern="*T2w_bet_mask.nii.gz
 ```
-
 
 ### Preprocessing pipeline
 
@@ -75,7 +72,6 @@ To customize ROILoc parameters, please refer to its dedicated [`ROILoc` page](ro
 
 Each crop is then Z-Normalized, and padded to ensure the shape is a multiple of 8.
 
-
 ### Segmentation Models
 
 Our segmentation models need to be downloaded prior to running the HSF pipeline.
@@ -83,7 +79,7 @@ Our segmentation models need to be downloaded prior to running the HSF pipeline.
 By default, they are stored in `~/HSF/models/*`. This folder is set by the argument `segmentation.models_path`.
 For example, you can override this path by running:
 
-```
+```sh
 hsf segmentation.models_path="/mnt/models/"
 ```
 
@@ -92,7 +88,7 @@ We opted for xxHash bacause it is fast and has a very low collision rate. We rem
 
 If needed, you can even use your own models by running the following example:
 
-```
+```sh
 hsf segmentation=single_accurate segmentation.models={"custom_model.onnx":{"url":"https://url.to/your/model.onnx","xxh3_64":"f0f0f0f0f0f0f0f0"}}
 ```
 
@@ -169,31 +165,81 @@ You can configure individual transformations according to Torch.IO's documentati
 - [`Random Affine`](https://torchio.readthedocs.io/transforms/augmentation.html#randomaffine),
 - [`Random Elastic Deformation`](https://torchio.readthedocs.io/transforms/augmentation.html#randomelasticdeformation).
 
-
 ### Hardware Acceleration
 
-Since `v0.1.2`, HSF allows the customization of execution providers though `hardware.execution_providers`,
-taking a list of execution providers in order of decreasing precedance.
+HSF's Inference Engines can use multiple backends: [`ONNXRuntime`](https://onnxruntime.ai) and [`DeepSparse`](https://neuralmagic.com/) (since `v1.0.0`).
 
+#### ONNXRuntime
+
+`ONNXRuntime` is the default backend and supports almost all major execution providers (e.g. `OpenVINO`, `DirectML` or `CUDA`).
 Please check ONNXRuntime's documentation on [Execution Providers](https://onnxruntime.ai/docs/execution-providers) for more information.
+
+Since `v0.1.2`, HSF allows the customization of execution providers through `hardware.engine_settings.execution_providers`,
+taking a list of execution providers in order of decreasing precedance.
 
 Here is the default execution:
 
-```
-hsf hardware.execution_providers=["CUDAExecutionProvider","CPUExecutionProvider"]
+```sh
+hsf hardware.engine_settings.execution_providers=["CUDAExecutionProvider","CPUExecutionProvider"]
 ```
 
 By default, if a provider isn't available, the next one will be used.
 As an example, to force the use of your CPU, you can do:
 
-```
-hsf hardware.execution_providers=["CPUExecutionProvider"]
+```sh
+hsf hardware.engine_settings.execution_providers=["CPUExecutionProvider"]
 ```
 
 You can also specify provider options by providing a `List[str, dict]` instead of
 a single `str` as in the following example:
 
-```
-hsf hardware.execution_providers=[["CUDAExecutionProvider",{"device_id":0,"gpu_mem_limit":2147483648}],"CPUExecutionProvider"]
+```sh
+hsf hardware.engine_settings.execution_providers=[["CUDAExecutionProvider",{"device_id":0,"gpu_mem_limit":2147483648}],"CPUExecutionProvider"]
 ```
 
+#### DeepSparse
+
+Since `v1.0.0`, HSF supports [`DeepSparse`](https://neuralmagic.com/) as a backend. It allows GPU-class speed on CPU thanks
+to pruned and int8 quantized models.
+
+To provide such a speedup, your CPU needs to have specific vector instructions sets (AVX2, AVX512, AVX512-VNNI).
+
+Currently, DeepSparse's optimizations are limited to the following CPUs (taken from [GitHub](https://github.com/neuralmagic/deepsparse)):
+
+|                                      x86 Extension                                       |                                                                                                                                                 Microarchitectures                                                                                                                                                 | Activation Sparsity | Kernel Sparsity | Sparse Quantization |
+| :--------------------------------------------------------------------------------------: | :----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------: | :-----------------: | :-------------: | :-----------------: |
+|   [AMD AVX2](https://en.wikipedia.org/wiki/Advanced_Vector_Extensions#CPUs_with_AVX2)    |                                                                                                             [Zen 2](https://en.wikipedia.org/wiki/Zen_2), [Zen 3](https://en.wikipedia.org/wiki/Zen_3)                                                                                                             |    not supported    |    optimized    |    not supported    |
+|  [Intel AVX2](https://en.wikipedia.org/wiki/Advanced_Vector_Extensions#CPUs_with_AVX2)   |                                                                           [Haswell](<https://en.wikipedia.org/wiki/Haswell_(microarchitecture)>), [Broadwell](<https://en.wikipedia.org/wiki/Broadwell_(microarchitecture)>), and newer                                                                            |    not supported    |    optimized    |    not supported    |
+|         [Intel AVX-512](https://en.wikipedia.org/wiki/AVX-512#CPUs_with_AVX-512)         |                                                                         [Skylake](<https://en.wikipedia.org/wiki/Skylake_(microarchitecture)>), [Cannon Lake](<https://en.wikipedia.org/wiki/Cannon_Lake_(microarchitecture)>), and newer                                                                          |      optimized      |    optimized    |      emulated       |
+| [Intel AVX-512](https://en.wikipedia.org/wiki/AVX-512#CPUs_with_AVX-512) VNNI (DL Boost) | [Cascade Lake](<https://en.wikipedia.org/wiki/Cascade_Lake_(microarchitecture)>), [Ice Lake](<https://en.wikipedia.org/wiki/Ice_Lake_(microprocessor)>), [Cooper Lake](<https://en.wikipedia.org/wiki/Cooper_Lake_(microarchitecture)>), [Tiger Lake](<https://en.wikipedia.org/wiki/Tiger_Lake_(microprocessor)>) |      optimized      |    optimized    |      optimized      |
+
+In order to check if it is worth trying to use DeepSparse, you can run the following command:
+
+```sh
+deepsparse_support
+```
+
+This command will return 4 possible states:
+
+- `not supported`: Your CPU doesn't have any relevant instruction set. HSF is likely to run very slow,
+- `minimal`: Your CPU has the `AVX2` instruction set, meaning you can benefit from Kernel Sparsity,
+- `partial`: Your CPU has the `AVX512` instruction set, meaning you can benefit from Activation and Kernel Sparsity,
+- `full`: Your CPU has the `AVX512-VNNI` instruction set, meaning you can benefit from Activation and Kernel Sparsity, plus Sparse Quantization.
+
+To switch to the DeepSparse backend, you can simply run:
+
+```sh
+hsf hardware=deepsparse
+```
+
+!!! tip "Specific Models for DeepSparse"
+    To benefit from DeepSparse's optimizations, ***you have to use specific models***.
+    For example, models can be pruned (e.g. weights are removed to obtain an optimal sub-model),
+    or Quantized (e.g. weights, biases and activations are quantized to 8-bit).
+
+    Since HSF v1.0.0, we provide sparsified and quantized models. Therefore, to fully benefit from
+    DeepSparse, you can our sparsified bootstrapped models trained with Quantization Aware Training (QAT):
+
+    ```sh
+    hsf hardware=deepsparse segmentation=bagging_sparseqat
+    ```

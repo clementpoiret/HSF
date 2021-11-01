@@ -1,3 +1,6 @@
+# Original models from Poiret, et al., 2021.
+# Uses a single model without test-time augmentation.
+
 ca_mode: "1/2/3"
 models_path: "~/.hsf/models/single/"
 models:

@@ -63,6 +63,11 @@ OpenVINO, TensorRT, NUPHAR, Vitis AI, ACL, ArmNN, MIGraphX, and Rockchip NPU.
 Please be aware that we do not tested all possible configurations, as HSF
 has been tested only on CPU and CUDA on Linux (Debian-based and Arch-based distros).
 
+Since v1.0.0, HSF also provides a `DeepSparse backend <https://neuralmagic.com/technology/>`_
+which can be used in conjunction with pruned and int8 quantized models
+to deliver a much faster CPU inference speed (see [Hardware Acceleration](user-guide/configuration.md)
+section).
+
 
 Table of Contents...
 ====================
@@ -184,6 +189,13 @@ Changelogs
 HSF
 ---
 
+**Version 1.0.0 (WIP)**
+
+* Support for DeepSparse backend (CPU inference only),
+* Introduced ***HSF's Model Hub***,
+* Support for batch inference (all backends),
+* Bug fixes and optimizations.
+
 **Version 0.1.2**
 
 * Added build-in support for offsets to recenter the hippocampus in ROILoc,
@@ -200,6 +212,14 @@ HSF
 
 Models
 ------
+
+**Version 2.0.0 (WIP)**
+
+* Trained with more T1w and T2w MRIs,
+* Trained on more hippocampal sclerosis and Alzheimer's disease cases,
+* Updated training pipeline (hyperparameter tuning),
+* `single` models are now independant from bags,
+* `bagging` have `sparse` and `sparseqat` versions for sparsification and Quantization Aware Training.
 
 **Version 1.0.0**
 

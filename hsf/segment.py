@@ -1,11 +1,13 @@
 from pathlib import PosixPath
 
 import ants
+import numpy as np
 import torch
 import torchio as tio
 from omegaconf.dictconfig import DictConfig
 from rich.progress import track
 
+from hsf.augmentation import get_augmented_subject
 from hsf.engines import InferenceEngine
 
 
@@ -28,27 +30,6 @@ def mri_to_subject(mri: PosixPath) -> tio.Subject:
     ])
 
     return preprocessing_pipeline(subject)
-
-
-def get_augmentation_pipeline(augmentation_cfg: DictConfig) -> tio.Compose:
-    """
-    Returns the augmentation pipeline.
-
-    Args:
-        augmentation_cfg (DictConfig): Augmentation configuration.
-
-    Returns:
-        tio.Compose: The augmentation pipeline.
-    """
-    flip = tio.RandomFlip(**augmentation_cfg.flip)
-    resample = tio.OneOf({
-        tio.RandomAffine(**augmentation_cfg.affine):
-            augmentation_cfg.affine_probability,
-        tio.RandomElasticDeformation(**augmentation_cfg.elastic):
-            augmentation_cfg.elastic_probability
-    })
-
-    return tio.Compose((flip, resample))
 
 
 def to_ca_mode(logits: torch.Tensor, ca_mode: str = "1/2/3") -> torch.Tensor:
@@ -89,39 +70,43 @@ def to_ca_mode(logits: torch.Tensor, ca_mode: str = "1/2/3") -> torch.Tensor:
         )
 
 
-def predict(subject: tio.Subject,
+def predict(mris: list,
             engine: InferenceEngine,
             ca_mode: str = "1/2/3") -> torch.Tensor:
     """
     Predict a segmentation from a subject.
 
     Args:
-        subject (tio.Subject): Loaded torchio subject.
+        mris (List[tio.Subject]): List of loaded torchio mris.
         engine (InferenceEngine): HSF's Inference Engine.
         ca_mode (str, optional): The cornu ammoni division mode.
             Defaults to "1/2/3".
 
     Returns:
-        torch.Tensor: Segmentation.
+        torch.Tensor: Segmentations.
     """
-    logits = engine(subject.mri.data[None].numpy())
+    inp = np.stack([mri.mri.data.numpy() for mri in mris])
+    logits = engine(inp)
     logits = to_ca_mode(torch.tensor(logits[0]), ca_mode)
 
-    lm_temp = tio.LabelMap(tensor=torch.rand(1, 1, 1, 1),
-                           affine=subject.mri.affine)
-    subject.add_image(lm_temp, 'label')
-    subject.label.set_data(logits[0])
+    results = []
+    for lab, aug in zip(logits, mris):
+        lm_temp = tio.LabelMap(tensor=torch.rand(1, 1, 1, 1),
+                               affine=aug.mri.affine)
+        aug.add_image(lm_temp, 'label')
+        aug.label.set_data(lab)
+        back = aug.apply_inverse_transform(warn=True)
+        results.extend(back.label.data)
 
-    back = subject.apply_inverse_transform(warn=True)
-
-    return back.label.data
+    return torch.stack(results, dim=0)
 
 
 def segment(subject: tio.Subject,
             augmentation_cfg: DictConfig,
             segmentation_cfg: DictConfig,
             engines: list,
-            ca_mode: str = "1/2/3") -> tuple:
+            ca_mode: str = "1/2/3",
+            batch_size: int = 1) -> tuple:
     """
     Segments the given subject.
 
@@ -129,27 +114,30 @@ def segment(subject: tio.Subject,
         subject (tio.Subject): The subject to segment.
         augmentation_cfg (DictConfig): Augmentation configuration.
         segmentation_cfg (DictConfig): Segmentation configuration.
-        engines (List[InferenceEnging]): Inference Engines.
+        engines (List[InferenceEngine]): Inference Engines.
         ca_mode (str): The cornu ammoni division mode. Defaults to "1/2/3".
+        batch_size (int): Batch size. Defaults to 1.
 
     Returns:
         torch.Tensor: The segmented subject.
     """
-    if segmentation_cfg.test_time_augmentation:
-        augmentation_pipeline = get_augmentation_pipeline(augmentation_cfg)
-        n_aug = segmentation_cfg.test_time_num_aug
-    else:
-        n_aug = 1
+    subjects = get_augmented_subject(subject, augmentation_cfg,
+                                     segmentation_cfg)
+
+    # batched_inputs = [
+    #     inputs[x:x + batch_size] for x in range(0, inputs.shape[0], batch_size)
+    # ]
+    batched_subjects = [
+        subjects[x:x + batch_size] for x in range(0, len(subjects), batch_size)
+    ]
 
     results = []
-    for i in track(
-            range(n_aug),
-            description=f"Segmenting (TTA: {n_aug} | {len(engines)} MODELS)..."
-    ):
-        augmented = augmentation_pipeline(subject) if i > 0 else subject
-
+    for sub in track(
+            batched_subjects,
+            description=
+            f"Segmenting (TTA: {len(subjects)} | {len(engines)} MODELS)..."):
         engines_predictions = [
-            predict(augmented, engine, ca_mode) for engine in engines
+            predict(sub, engine, ca_mode) for engine in engines
         ]
 
         results.extend(engines_predictions)

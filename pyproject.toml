@@ -20,7 +20,7 @@ hsf = 'hsf.factory:start'
 deepsparse_support = 'hsf.engines:print_deepsparse_support'
 
 [tool.poetry.dependencies]
-python = "~3.9"
+python = "^3.7.1"
 torchio = "^0.18.56"
 roiloc = "^0.2.5"
 onnxruntime = "^1.8.1"

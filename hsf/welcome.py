@@ -52,12 +52,12 @@ __/\\\________/\\\_____/\\\\\\\\\\\____/\\\\\\\\\\\\\\\_
         """)
 
     if parse(__version__) < get_version():
-        pprint("""
-      A new version of HSF is available.
-      You can update it by running:
-      $ pip install --upgrade hsf
-      """)
+        pprint(f"""
+        A new version of HSF is available (v{str(get_version())}).
+        You can update it by running:
+        $ pip install --upgrade hsf
+        """)
     else:
         pprint("""
-      You are using the latest version of HSF.
-      """)
+        You are using the latest version of HSF.
+        """)

@@ -59,7 +59,7 @@ def config(models_path):
                         "gpu_mem_limit": 2147483648
                     }
                 ], "CPUExecutionProvider"],
-                "batch_size": 1
+                "batch_size": 2
             }
         },
         "roiloc": {
@@ -98,8 +98,8 @@ def config(models_path):
                 }
             },
             "segmentation": {
-                "test_time_augmentation": False,
-                "test_time_num_aug": 1
+                "test_time_augmentation": True,
+                "test_time_num_aug": 5
             }
         },
     }
@@ -180,7 +180,7 @@ def test_segment(models_path, config, deepsparse_inference_engines):
     """Tests that we can segment and save a hippocampus."""
     mri = models_path / "tse_right_hippocampus.nii.gz"
     sub = hsf.segment.mri_to_subject(mri)
-    aug = hsf.segment.get_augmentation_pipeline(config.augmentation)
+    aug = hsf.augmentation.get_augmentation_pipeline(config.augmentation)
     sub = aug(sub)
 
     for ca_mode in ["1/23", "123"]:

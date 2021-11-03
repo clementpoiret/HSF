@@ -75,11 +75,17 @@ To finish the preprocessing, the resulting crops are Z-Normalized, and padded to
 
 ## Hippocampal Subfields Segmentation
 
-ARUNet, unstructured pruning, SWA, big databases (mix public, private), T1, T2, multi acquisition center, multi res
-TTA Bagging
+Out-of-the-box, `HSF` proposes a "Model Hub" offering multiple pretrained models. Our built-in models are based on a Residual UNet architecture with a self-attention mechanism similar to the one introduced in by @oktayAttentionUNetLearning2018. In order to provide highly generalizable segmentation models, we gathered and uniformized 4 private and 8 public datasets of manually segmented hippocampal subfields in T1w and T2w MRIs coming from different acquisition centers, at different resolutions and different magnetic fields:
 
-SENIOR [@haegerImagingAgingBrain2020]
-SHATAU [@lagardeDistinctAmyloidTau2021]
+* 3 Teslas (@winterburnNovelVivoAtlas2013, @kulaga-yoskovitzMulticontrastSubmillimetricTesla2015; @yushkevichAutomatedVolumetryRegional2015; @hindyLinkingPatternCompletion2016; @bouyeureHippocampalSubfieldVolumes2021),
+* 4 Teslas [@yushkevichNearlyAutomaticSegmentation2010],
+* and 7 Teslas (@wisseAutomatedHippocampalSubfield2016; @berronProtocolManualSegmentation2017; @haegerImagingAgingBrain2020; @opheim7TEpilepsyTask2020; @shawOptimisingMRICharacterisation2020; @lagardeDistinctAmyloidTau2021).
+
+Contrary to other automated segmentation tools constituting the state-of-the-art, `HSF` learned to segment from more than 700 manually annotated hippocampi of individuals from 4 to 84 years old, either healthy, with temporal lobe epilepsy, hippocampal sclerosis, mild cognitive impairment, or Alzheimer's disease.
+
+In addition to standard feed-forward inference mode, `HSF` supports bootstrap aggregation and test-time augmentation strategies, offering robust segmentations.
+
+Our "Model Hub" is proposed with a rolling release policy, which means that we will continuously update our models with new datasets, either gathered internally or provided by independant researchers, and new state-of-the-art training techniques. Moreover, anyone can contribute to the Model Hub by exporting their own ONNX models and submitting a new configuration file to the `HSF` repository. The newly proposed models will then be directly available to the end-user through CLI.
 
 ## Postprocessing and Uncertainty Estimation
 
@@ -87,6 +93,8 @@ TTA vote, aleatoric uncertainty
 
 # Acknowledgements
 
-We would like to thanks the IDRIS and the Genci who allowed us to access the HPE Jean Zay supercomputer.
+We would like to thank the IDRIS and the Genci who allowed us to access the HPE Jean Zay supercomputer.
+
+We also thank M. Bottlaender for giving us access to T1w and T2w MRI from the SENIOR cohort, and M. Faillot for helping us manually segment the hippocampus.
 
 # References

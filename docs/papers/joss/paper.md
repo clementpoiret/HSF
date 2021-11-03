@@ -67,7 +67,7 @@ The `HSF` pipeline is constituted of 3 main steps: 1/ a preprocessing step handl
 
 In order to limit the computational impact of `HSF`, we use a preprocessing step to extract the hippocampi from the MRI. This step is performed by a pipeline we called `ROILoc` (for ROI localization).
 
-To do so, ROILoc registers the `MNI152 09c Sym` template [@fonovUnbiasedNonlinearAverage2009] to the T1w or T2w input MRI. As we know the coordinates of the hippocampus in the MNI space thanks to the CerebrA atlas [@maneraCerebrARegistrationManual2020], this registration process allows us to infer rough coordinates of the hippocampus in native space. `ROILoc` then crops the MRI into two volumes corresponding to the right and left hippocampi (figure \ref{ROILoc}).
+To do so, ROILoc registers the `MNI152 09c Sym` template [@fonovUnbiasedNonlinearAverage2009] to the T1w or T2w input MRI. As we know the coordinates of the hippocampi in the MNI space thanks to the CerebrA atlas [@maneraCerebrARegistrationManual2020], this registration process allows us to infer rough coordinates of the hippocampus in native space. `ROILoc` then crops the MRI into two volumes corresponding to the right and left hippocampi (figure \ref{ROILoc}).
 
 ![ROILoc pipeline. The pipeline is a registration based pipeline to locate a specific region of interest (ROI) like the hippocampus, and crop a given MRI around its bounding boxes.\label{ROILoc}](figures/roiloc.png)
 
@@ -75,7 +75,7 @@ To finish the preprocessing, the resulting crops are Z-Normalized, and padded to
 
 ## Hippocampal Subfields Segmentation
 
-Out-of-the-box, `HSF` proposes a "Model Hub" offering multiple pretrained models. Our built-in models are based on a Residual UNet architecture with a self-attention mechanism similar to the one introduced in by @oktayAttentionUNetLearning2018. In order to provide highly generalizable segmentation models, we gathered and uniformized 4 private and 8 public datasets of manually segmented hippocampal subfields in T1w and T2w MRIs coming from different acquisition centers, at different resolutions and different magnetic fields:
+`HSF` proposes a "Model Hub" offering multiple pretrained models. Our built-in models are based on a Residual UNet architecture with a self-attention mechanism similar to the one introduced in by @oktayAttentionUNetLearning2018. In order to provide highly generalizable segmentation models, we gathered and uniformized 4 private and 8 public datasets of manually segmented hippocampal subfields in T1w and T2w MRIs coming from different acquisition centers, at different resolutions and different magnetic fields:
 
 * 3 Teslas (@winterburnNovelVivoAtlas2013, @kulaga-yoskovitzMulticontrastSubmillimetricTesla2015; @yushkevichAutomatedVolumetryRegional2015; @hindyLinkingPatternCompletion2016; @bouyeureHippocampalSubfieldVolumes2021),
 * 4 Teslas [@yushkevichNearlyAutomaticSegmentation2010],
@@ -83,9 +83,9 @@ Out-of-the-box, `HSF` proposes a "Model Hub" offering multiple pretrained models
 
 Contrary to other automated segmentation tools constituting the state-of-the-art, `HSF` learned to segment from more than 700 manually annotated hippocampi of individuals from 4 to 84 years old, either healthy, with temporal lobe epilepsy, hippocampal sclerosis, mild cognitive impairment, or Alzheimer's disease.
 
-In addition to standard feed-forward inference mode, `HSF` supports bootstrap aggregation and test-time augmentation strategies, offering robust segmentations.
+In addition to standard feed-forward inference mode, `HSF` supports bootstrap aggregation and test-time augmentation strategies (figure \ref{HSF}), offering robust segmentations.
 
-Our "Model Hub" is proposed with a rolling release policy, which means that we will continuously update our models with new datasets, either gathered internally or provided by independant researchers, and new state-of-the-art training techniques. Moreover, anyone can contribute to the Model Hub by exporting their own ONNX models and submitting a new configuration file to the `HSF` repository. The newly proposed models will then be directly available to the end-user through CLI.
+Our "Model Hub" is proposed with a rolling release policy, which means that we will continuously update our models with new datasets, either gathered internally or provided by independent researchers, and new state-of-the-art training techniques. Moreover, anyone can contribute to the Model Hub by exporting their own ONNX models and submitting a new configuration file to the `HSF` repository. The newly proposed models will then be directly available to the end-user through CLI.
 
 ## Postprocessing and Uncertainty Estimation
 

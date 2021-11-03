@@ -43,9 +43,9 @@ bibliography: paper.bib
 
 The hippocampus is a key player of mnesic functions and has been shown to be implied in diverse pathologies such as mild cognitive impairment or Alzheimer's disease. Studying the anatomo-functional properties of the hippocampus and its subfields is a mandatory path to understand such conditions and requires reliable and robust segmentations of MRI data. Moreover, the growing size of publicly available datasets calls for faster and more efficient segmentation algorithms. As the current methodologies are shown to be either imprecise, slow or inconvenient, we propose a novel tool called the Hippocampal Segmentation Factory (`HSF`) to segment the hippocampal subfields in T1w or T2w MRIs.
 
-`HSF` is designed to be a fully customizable end-to-end pipeline, handling tasks from the preprocessing of raw anatomical images, to the segmentation of the subfields through specialized and highly efficient Deep Learning models on any hardware acceleration platform such as CUDA, TensorRT or OpenVINO. `HSF` also supports the state-of-the-art DeepSparse compute engine, providing GPU-class performances on CPU.
+`HSF` is designed to be a fully customizable end-to-end pipeline, handling tasks from the preprocessing of raw anatomical images, to the segmentation of the subfields through specialized and highly efficient Deep Learning models comprised in a "Model Hub" on any hardware acceleration platform such as CUDA, TensorRT or OpenVINO. `HSF` also supports the state-of-the-art DeepSparse compute engine, providing GPU-class performances on CPU.
 
-Even if we use ever-improving models regularly trained with SotA methods with an increasing amount of manually labeled MRIs, we propose `HSF` as a future-proof tool where researchers can codelessly test and use their own ONNX models through a simple CLI argument.
+Our rolling-release Model Hub aims at facilitating the transition from lab-trained models to the end-user. While our built-in models are regularly retrained with an increasing amount of manually labeled MRIs, any other independent researchers can codelessly test and use and distribute their own ONNX models to the end-user through a simple CLI argument.
 
 # Statement of Need
 
@@ -89,7 +89,7 @@ Our "Model Hub" is proposed with a rolling release policy, which means that we w
 
 ## Postprocessing and Uncertainty Estimation
 
-As the default inference mode uses bootstrap aggregation and test-time augmentation, passing a single hippocampus through the pipeline produces multiple probabilistic segmentations, which are combined with a plurality voting strategy to produce a final segmentation. Having multiple probabilistic segmentations allows us to estimate the uncertainty of the segmentation which can help to analyze the segmentation quality *a posteriori*.
+As the default inference mode uses bootstrap aggregation and test-time augmentation, passing a single hippocampus through the pipeline produces multiple probabilistic segmentations, which are combined with a plurality voting strategy to produce a final segmentation. Having multiple probabilistic segmentations allows us to estimate the statistical uncertainty of the segmentation which can help to analyze the segmentation quality *a posteriori*.
 
 Given a set $Y$ of $i$ predictions, in HSF the voxel-wise Aleatoric Uncertainty [@wangAleatoricUncertaintyEstimation2019] $H(Y^i|X)$ is defined as:
 

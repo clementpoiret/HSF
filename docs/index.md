@@ -22,6 +22,7 @@ ____
     <img id="genci" src="resources/logos/genci.png" width=35/>
     <img id="hydra" src="resources/logos/hydra.png" width=55/>
     <img id="onnx" src="resources/logos/onnx.png" width=35/>
+    <img id="neuralmagic" src="resources/logos/neuralmagic.png" width=35/>
 </p>
 ____
 
@@ -68,6 +69,11 @@ and the following hardware accelerations: CPU, CUDA, DirectML, OneDNN,
 OpenVINO, TensorRT, NUPHAR, Vitis AI, ACL, ArmNN, MIGraphX, and Rockchip NPU.
 Please be aware that we do not tested all possible configurations, as HSF
 has been tested only on CPU and CUDA on Linux (Debian-based and Arch-based distros).
+
+Since v1.0.0, HSF also provides a [DeepSparse backend](https://neuralmagic.com/technology/)
+which can be used in conjunction with pruned and int8 quantized models
+to deliver a much faster CPU inference speed (see [Hardware Acceleration](user-guide/configuration.md)
+section).
 
 ____
 

@@ -2,6 +2,7 @@ import shutil
 from pathlib import Path
 
 import ants
+import hsf.engines
 import hsf.factory
 import hsf.fetch_models
 import hsf.roiloc_wrapper
@@ -57,7 +58,8 @@ def config(models_path):
                         "device_id": 0,
                         "gpu_mem_limit": 2147483648
                     }
-                ], "CPUExecutionProvider"]
+                ], "CPUExecutionProvider"],
+                "batch_size": 2
             }
         },
         "roiloc": {
@@ -96,8 +98,8 @@ def config(models_path):
                 }
             },
             "segmentation": {
-                "test_time_augmentation": False,
-                "test_time_num_aug": 1
+                "test_time_augmentation": True,
+                "test_time_num_aug": 5
             }
         },
     }
@@ -106,20 +108,22 @@ def config(models_path):
 
 
 @pytest.fixture(scope="session")
-def inference_sessions(models_path):
-    """Tests that models can be loaded"""
-    provider = ["CPUExecutionProvider"]
+def deepsparse_inference_engines(models_path):
+    """Tests that models can be loaded using ORT"""
+    settings = DictConfig({"num_cores": 0, "num_sockets": 0, "batch_size": 1})
 
-    sessions = hsf.engines.get_inference_sessions(models_path,
-                                                  providers=provider)
+    engines = hsf.engines.get_inference_engines(models_path,
+                                                engine_name="deepsparse",
+                                                engine_settings=settings)
 
-    return sessions
+    return engines
 
 
 # TESTS
 # Main script called by the `hsf` command
 def test_main(config):
     """Tests that the main script can be called."""
+    hsf.engines.print_deepsparse_support()
     hsf.factory.main(config)
 
 
@@ -172,17 +176,17 @@ def test_roiloc(models_path):
 
 
 # Segmentation
-def test_segment(models_path, config, inference_sessions):
+def test_segment(models_path, config, deepsparse_inference_engines):
     """Tests that we can segment and save a hippocampus."""
     mri = models_path / "tse_right_hippocampus.nii.gz"
     sub = hsf.segment.mri_to_subject(mri)
-    aug = hsf.segment.get_augmentation_pipeline(config.augmentation)
+    aug = hsf.augmentation.get_augmentation_pipeline(config.augmentation)
     sub = aug(sub)
 
     for ca_mode in ["1/23", "123"]:
         _, pred = hsf.segment.segment(sub, config.augmentation,
                                       config.segmentation.segmentation,
-                                      inference_sessions, ca_mode)
+                                      deepsparse_inference_engines, ca_mode)
 
     hsf.segment.save_prediction(mri, pred)
 

@@ -1,3 +1,6 @@
+# Original models from Poiret, et al., 2021.
+# Uses bootstrap aggregating without test-time augmentation.
+
 ca_mode: "1/2/3"
 models_path: "~/.hsf/models/bagging/"
 models:

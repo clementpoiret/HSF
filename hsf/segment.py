@@ -124,9 +124,6 @@ def segment(subject: tio.Subject,
     subjects = get_augmented_subject(subject, augmentation_cfg,
                                      segmentation_cfg)
 
-    # batched_inputs = [
-    #     inputs[x:x + batch_size] for x in range(0, inputs.shape[0], batch_size)
-    # ]
     batched_subjects = [
         subjects[x:x + batch_size] for x in range(0, len(subjects), batch_size)
     ]

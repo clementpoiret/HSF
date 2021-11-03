@@ -3,10 +3,10 @@ app_name: "Hippocampal Segmentation Factory (HSF)"
 
 # Help header, customize to describe your app to your users
 header: |
-  ${hydra.help.app_name} is powered by Hydra, ONNX, ONNXRuntime, and has been made possible by the HPE Jean Zay Supercomputer (IDRIS, GENCI, France).
+  ${hydra.help.app_name} is powered by Hydra, ONNX, ONNXRuntime, DeepSparse, and has been made possible by the HPE Jean Zay Supercomputer (IDRIS, GENCI, France).
 footer: |
-  Inference sessions are provided by ONNX (https://onnx.ai), and ONNXRuntime (https://onnxruntime.ai).
-  Please refer to ONNXRuntime's documentation for setting-up the correct environment, to benefit from the performance and scalability of hardware accelerations.
+  Inference sessions are provided by ONNX (https://onnx.ai), ONNXRuntime (https://onnxruntime.ai), and DeepSparse (https://neuralmagic.com).
+  Please refer to ONNXRuntime's (or DeepSparse's) documentation for setting-up the correct environment, to benefit from the performance and scalability of hardware accelerations.
   Configuration powered by Hydra (https://hydra.cc)
   Use --hydra-help to view Hydra specific help
 # Basic Hydra flags:

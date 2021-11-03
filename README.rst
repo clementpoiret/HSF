@@ -78,9 +78,9 @@ Table of Contents...
 Installation
 ============
 
-To install the package, first setup an environment suitable for `ONNX Runtime <https://onnxruntime.ai>`_.
+To install the package, first setup an environment suitable for your backend (e.g. `ONNX Runtime <https://onnxruntime.ai>`_).
 
-If the ONNX Runtime isn't properly configured, you might be stuck running inference sessions on CPU, which is not optimal.
+If the environment isn't properly configured, you might be stuck running inference sessions on CPU, which is not optimal unless you use the DeepSparse backend.
 
 Then, simply run:
 

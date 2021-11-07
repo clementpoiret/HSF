@@ -4,7 +4,7 @@ Hippocampal Segmentation Factory (HSF)
 
 Exhaustive documentation available at: `hsf.rtfd.io <https://hsf.rtfd.io/>`_
 
-**Current Models version:** 1.0.0
+**Current Models version:** 2.0.0
 
 .. list-table::
     :header-rows: 1

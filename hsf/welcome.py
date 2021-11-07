@@ -51,12 +51,10 @@ __/\\\________/\\\_____/\\\\\\\\\\\____/\\\\\\\\\\\\\\\_
         """)
     latest = get_version('https://pypi.python.org/pypi/HSF/json')
     if parse(__version__) < latest:
-        pprint(f"""
-            A new version of HSF is available (v{str(latest)}).
-            You can update it by running:
-            $ pip install --upgrade hsf
+        pprint(rf"""
+A new version of HSF is available (v{str(latest)}).
+You can update it by running:
+$ pip install --upgrade hsf
         """)
     else:
-        pprint("""
-            You are using the latest version of HSF.
-        """)
+        pprint("You are using the latest version of HSF.")

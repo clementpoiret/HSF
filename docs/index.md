@@ -6,7 +6,8 @@
     <font size="+2"><b>Hippocampal</b> <i>Segmentation</i> Factory</font>
     <br>
     <b>Current HSF version:</b> 1.0.0<br>
-    <b>Current Models version:</b> 2.0.0
+    <b>Built-in Models version:</b> 2.0.0<br>
+    <b>Models in the Hub:</b> 4
 </p>
 
 ____
@@ -37,7 +38,6 @@ the segmentation of the hippocampal subfields in raw MRI volumes.
 
 ![Header](resources/header.svg)
 
-
 ## Purpose & Use Cases
 
 The main idea is to have a click-button tool that allows the user to
@@ -55,11 +55,18 @@ an homogeneous segmentation from the anterior hippocampus (head), to
 the posterior hippocampus (tail), without assigning a specific head
 or tail class.
 
+HSF results from a collaborative effort:
+
+1 - We are continuously working on improving the segmentation of the subfields,
+mainly by adding new manually segmented MRIs (feel free to send us yours if you can, thanks!)
+2 - HSF proposes a "Model Hub", meaning that anyone can distribute their own ONNX segmentation
+model. Just send us a small `*.yaml` config file, and the end-user will effortlessly be able to
+use HSF with your model.
+
 Please note that the tool is still under development and is not yet
 ready for production use. It uses multiple expert deep learning models
 trained on 600+ manually segmented hippocampi (see the [F.A.Q. section](faq.md))
 which are not yet fully polished.
-
 
 ## Technical Features
 

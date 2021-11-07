@@ -12,14 +12,15 @@ def get_version(url_pattern='https://pypi.python.org/pypi/HSF/json'):
     req = requests.get(url_pattern)
     version = parse('0')
 
-    if req.status_code == requests.codes.ok:
-        j = json.loads(req.text.encode(req.encoding))
-        releases = j.get('releases', [])
+    if req.encoding:
+        if req.status_code == requests.codes.ok:
+            j = json.loads(req.text.encode(req.encoding))
+            releases = j.get('releases', [])
 
-        for release in releases:
-            ver = parse(release)
-            if not ver.is_prerelease:
-                version = max(version, ver)
+            for release in releases:
+                ver = parse(release)
+                if not ver.is_prerelease:
+                    version = max(version, ver)
 
     return version
 
@@ -48,15 +49,14 @@ __/\\\________/\\\_____/\\\\\\\\\\\____/\\\\\\\\\\\\\\\_
                 *************************************
 
         """)
-
-    if parse(__version__) < get_version(
-            'https://pypi.python.org/pypi/HSF/json'):
+    latest = get_version('https://pypi.python.org/pypi/HSF/json')
+    if parse(__version__) < latest:
         pprint(f"""
-        A new version of HSF is available (v{str(get_version())}).
-        You can update it by running:
-        $ pip install --upgrade hsf
+            A new version of HSF is available (v{str(latest)}).
+            You can update it by running:
+            $ pip install --upgrade hsf
         """)
     else:
         pprint("""
-        You are using the latest version of HSF.
+            You are using the latest version of HSF.
         """)

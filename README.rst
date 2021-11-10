@@ -197,11 +197,12 @@ Changelogs
 HSF
 ---
 
-**Version 1.0.0 (WIP)**
+**Version 1.0.0 (UNRELEASED)**
 
 * Support for DeepSparse backend (CPU inference only),
 * Introduced **HSF's Model Hub**,
 * Support for batch inference (all backends),
+* Check for updates at startup,
 * Bug fixes and optimizations.
 
 **Version 0.1.2**
@@ -221,7 +222,7 @@ HSF
 Models
 ------
 
-**Version 2.0.0 (WIP)**
+**Version 2.0.0 (UNRELEASED)**
 
 * Trained with more T1w and T2w MRIs,
 * Trained on more hippocampal sclerosis and Alzheimer's disease cases,

@@ -1,4 +1,5 @@
 import json
+from urllib.request import urlopen
 
 import requests
 from packaging.version import parse
@@ -7,7 +8,7 @@ from rich import print as pprint
 from hsf import __version__
 
 
-def get_version(url_pattern='https://pypi.python.org/pypi/HSF/json'):
+def get_version(url_pattern: str = 'https://pypi.python.org/pypi/HSF/json'):
     """Returns version of HSF on pypi.python.org using json."""
     req = requests.get(url_pattern)
     version = parse('0')
@@ -23,6 +24,16 @@ def get_version(url_pattern='https://pypi.python.org/pypi/HSF/json'):
                     version = max(version, ver)
 
     return version
+
+
+def print_changelog(
+    last_stable_changelog:
+    str = "https://raw.githubusercontent.com/clementpoiret/HSF/master/LAST_CHANGELOG.md"
+) -> None:
+    textpage = urlopen(last_stable_changelog)
+    text = str(textpage.read(), 'utf-8')
+
+    pprint(text)
 
 
 def welcome():
@@ -56,5 +67,6 @@ A new version of HSF is available (v{str(latest)}).
 You can update it by running:
 $ pip install --upgrade hsf
         """)
+        print_changelog()
     else:
         pprint("You are using the latest version of HSF.")

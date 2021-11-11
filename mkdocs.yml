@@ -63,6 +63,9 @@ markdown_extensions:
       permalink: true
 
 extra:
+  analytics:
+    provider: google
+    property: G-6H39VQ9BCW
   version:
     provider: mike
 

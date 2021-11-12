@@ -197,7 +197,7 @@ Changelogs
 HSF
 ---
 
-**Version 1.0.0 (UNRELEASED)**
+**Version 1.0.0**
 
 * Support for DeepSparse backend (CPU inference only),
 * Introduced **HSF's Model Hub**,
@@ -222,13 +222,12 @@ HSF
 Models
 ------
 
-**Version 2.0.0 (UNRELEASED)**
+**Version 2.0.0**
 
 * Trained with more T1w and T2w MRIs,
 * Trained on more hippocampal sclerosis and Alzheimer's disease cases,
 * Updated training pipeline (hyperparameter tuning),
-* `single` models are now independant from bags,
-* `bagging` have `sparse` and `sparseqat` versions for sparsification and Quantization Aware Training.
+* `single` models are now independant from bags.
 
 **Version 1.0.0**
 

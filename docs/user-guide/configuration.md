@@ -237,9 +237,9 @@ hsf hardware=deepsparse
     For example, models can be pruned (e.g. weights are removed to obtain an optimal sub-model),
     or Quantized (e.g. weights, biases and activations are quantized to 8-bit).
 
-    Since HSF v1.0.0, we provide sparsified and quantized models. Therefore, to fully benefit from
-    DeepSparse, you can our sparsified bootstrapped models trained with Quantization Aware Training (QAT):
+<!-- Since HSF v1.0.0, we provide sparsified and quantized models. Therefore, to fully benefit from
+DeepSparse, you can our sparsified bootstrapped models trained with Quantization Aware Training (QAT):
 
-    ```sh
-    hsf hardware=deepsparse segmentation=bagging_sparseqat
-    ```
+```sh
+hsf hardware=deepsparse segmentation=bagging_sparseqat
+``` -->

@@ -6,7 +6,7 @@ HSF provides a model hub that allows ***anyone*** to distribute their own segmen
 Those models are listed below, and directly accessible from the CLI, as in the example below:
 
 ```sh
-hsf segmentation=bagging_sparseqat
+hsf segmentation=single_accurate
 ```
 
 **Default model**: `bagging_accurate`
@@ -48,7 +48,7 @@ All the models are using the same `ARUnet` architecture, which will be detailed 
     Test-time augmentation also allows the computation of an uncertainty map to analyze
     the quality of the resulting segmentation.
 
-??? example "`bagging_sparse` and `bagging_sparseqat` models"
+<!-- ??? example "`bagging_sparse` and `bagging_sparseqat` models"
 
     Those are the two most advanced methods. Inference is done with 5 models trained
     on different subsets of the dataset (random sampling with replacement).
@@ -69,7 +69,7 @@ All the models are using the same `ARUnet` architecture, which will be detailed 
     instruction set, your best bet is to use the `bagging_sparseqat` segmentation method.
 
     Test-time augmentation also allows the computation of an uncertainty map to analyze
-    the quality of the resulting segmentation.
+    the quality of the resulting segmentation. -->
 
 ## Third-party Segmentation Models
 

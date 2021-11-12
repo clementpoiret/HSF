@@ -16,7 +16,7 @@ Current maintainers:
 
 ## HSF
 
-### Version 1.0.0 (UNRELEASED)
+### Version 1.0.0 (2021-11-12)
 
 * Support for DeepSparse backend (CPU inference only),
 * Introduced **HSF's Model Hub**,
@@ -39,7 +39,7 @@ Current maintainers:
 
 ## Models
 
-### Version 2.0.0 (UNRELEASED)
+### Version 2.0.0 (2021-11-12)
 
 * Trained with more T1w and T2w MRIs,
 * Trained on more hippocampal sclerosis and Alzheimer's disease cases,

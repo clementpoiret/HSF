@@ -13,5 +13,4 @@
 * Trained with more T1w and T2w MRIs,
 * Trained on more hippocampal sclerosis and Alzheimer's disease cases,
 * Updated training pipeline (hyperparameter tuning),
-* `single` models are now independant from bags,
-* `bagging` have `sparse` and `sparseqat` versions for sparsification and Quantization Aware Training.
+* `single` models are now independant from bags.

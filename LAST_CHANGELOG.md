@@ -2,6 +2,7 @@
 
 ## Software
 
+* Added Uncertainty Maps for post-hoc analysis of segmentation results,
 * Support for DeepSparse backend (CPU inference only),
 * Introduced **HSF's Model Hub**,
 * Support for batch inference (all backends),

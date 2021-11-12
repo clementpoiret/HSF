@@ -6,6 +6,11 @@ from suggestions to bug reports, feature requests, and even code contributions.
 `HSF` is designed to be your last tool needed for hippocampal segmentation, we want it fully customizable, and we want you to be able
 to use it as a tool for your own research, even on your own segmentation models. Feel free to make `HSF` it a way it is useful for you.
 
+Branches:
+
+* `master`: the main branch containing stable releases,
+* `develop`: the branch containing the latest development version.
+
 ## Improving `HSF`
 
 ### Coding conventions

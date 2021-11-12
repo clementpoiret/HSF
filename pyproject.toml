@@ -7,7 +7,7 @@ license = "MIT"
 readme = "README.rst"
 keywords = ["mri", "brain", "hippocampus", "segmentation", "deep learning"]
 classifiers = [
-    "Development Status :: 4 - Beta",
+    "Development Status :: 5 - Production/Stable",
     "License :: OSI Approved :: MIT License",
     "Topic :: Scientific/Engineering :: Bio-Informatics",
     "Topic :: Scientific/Engineering :: Image Processing"

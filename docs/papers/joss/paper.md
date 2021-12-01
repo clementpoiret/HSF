@@ -92,7 +92,7 @@ Our "Model Hub" is proposed with a rolling release policy, which means that we w
 
 ## Postprocessing and Uncertainty Estimation
 
-As the default inference mode uses bootstrap aggregation and test-time augmentation, passing a single hippocampus through the pipeline produces multiple probabilistic segmentations, which are combined with a plurality voting strategy to produce a final segmentation. Having multiple probabilistic segmentations allows us to estimate the statistical uncertainty of the segmentation which can help to analyze the segmentation quality *a posteriori*.
+As the default inference mode uses bootstrap aggregation and test-time augmentation, passing a single hippocampus through the pipeline produces multiple probabilistic segmentations, which are combined with a plurality voting strategy to produce a final segmentation. Having multiple probabilistic segmentations allows us to estimate the statistical uncertainty of the segmentation (figure \ref{uncertainty}) which can help to analyze the segmentation quality *a posteriori*.
 
 Given a set $Y$ of $i$ predictions, in HSF the voxel-wise Aleatoric Uncertainty [@wangAleatoricUncertaintyEstimation2019] $H(Y^i|X)$ is defined as:
 
@@ -101,6 +101,8 @@ H(Y^i|X) \approx - \sum^M_{m=1}{\hat{p}^i_m \ln \hat{p}^i_m}
 $$
 
 where $\hat{p}^i_m$ is the frequency of the $m$th unique value in $Y^i$.
+
+![Example voxel-wise aleatoric uncertainty. Voxel-wise uncertainty computed from probabilistic segmentations outputted by HSF on a test observation.\label{uncertainty}](figures/uncertainty.png){width=800px}
 
 # Acknowledgements
 

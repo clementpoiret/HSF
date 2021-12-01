@@ -23,6 +23,7 @@ authors:
   - name: Frédéric Lemaître
     affiliation: 4
   - name: Marion Noulhiane^[corresponding author]
+    orcid: 0000-0003-2832-0332
     affiliation: "1, 2"
 affiliations:
  - name: NeuroSpin, UNIACT, CEA Saclay, France

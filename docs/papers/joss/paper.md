@@ -102,7 +102,7 @@ $$
 
 where $\hat{p}^i_m$ is the frequency of the $m$th unique value in $Y^i$.
 
-![Example voxel-wise aleatoric uncertainty. Voxel-wise uncertainty computed from probabilistic segmentations outputted by HSF on a test observation.\label{uncertainty}](figures/uncertainty.png){width=800px}
+![Example voxel-wise aleatoric uncertainty. Intensity of red voxels represents the the uncertainty given probabilistic segmentations outputted by HSF on a test observation.\label{uncertainty}](figures/uncertainty.png){width=800px}
 
 # Acknowledgements
 

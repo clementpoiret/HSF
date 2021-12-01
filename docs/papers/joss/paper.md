@@ -86,7 +86,7 @@ Contrary to other automated segmentation tools constituting the state-of-the-art
 
 In addition to standard feed-forward inference mode, `HSF` supports bootstrap aggregation and test-time augmentation strategies (figure \ref{HSF}), offering robust segmentations of which an example is depicted figure \ref{sample}.
 
-![Example of hippocampal subfields segmentation. The segmentation results from HSF's segmentation models on a test observation.\label{sample}](figures/sample.png){width=450px}
+![Example of hippocampal subfields segmentation. The segmentation results from HSF's segmentation models on a test observation.\label{sample}](figures/sample.png){width=900px}
 
 Our "Model Hub" is proposed with a rolling release policy, which means that we will continuously update our models with new datasets, either collected internally or provided by independent researchers, and new state-of-the-art training techniques (e.g. sparsification and `int8` quantization). Moreover, anyone can contribute to the Model Hub by exporting their ONNX models and submitting a corresponding configuration file to the `HSF` repository. Newly proposed models will then be directly available to the end-user through CLI.
 

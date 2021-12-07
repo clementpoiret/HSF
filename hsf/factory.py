@@ -1,4 +1,5 @@
 from pathlib import Path, PosixPath
+from typing import Generator
 
 import ants
 import hydra
@@ -55,13 +56,13 @@ def get_lr_hippocampi(mri: PosixPath, cfg: DictConfig) -> tuple:
         original_mri_path=mri)
 
 
-def predict(mri: PosixPath, engines: list, cfg: DictConfig) -> tuple:
+def predict(mri: PosixPath, engines: Generator, cfg: DictConfig) -> tuple:
     """
     Predict the hippocampal segmentation for a given MRI.
 
     Args:
         mri (PosixPath): Path to the MRI.
-        engines (list): List of ONNX Runtime engines.
+        engines (Generator): Generator of InferenceEngines.
         cfg (DictConfig): Configuration.
 
     Returns:

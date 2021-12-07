@@ -116,7 +116,7 @@ def deepsparse_inference_engines(models_path):
                                                 engine_name="deepsparse",
                                                 engine_settings=settings)
 
-    return engines
+    return list(engines)
 
 
 # TESTS

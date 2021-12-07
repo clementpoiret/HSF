@@ -1,4 +1,5 @@
 from pathlib import PosixPath
+from typing import Generator
 
 import ants
 import numpy as np
@@ -105,7 +106,7 @@ def segment(subject: tio.Subject,
             augmentation_cfg: DictConfig,
             segmentation_cfg: DictConfig,
             n_engines: int,
-            engines: list,
+            engines: Generator,
             ca_mode: str = "1/2/3",
             batch_size: int = 1) -> tuple:
     """
@@ -115,7 +116,7 @@ def segment(subject: tio.Subject,
         subject (tio.Subject): The subject to segment.
         augmentation_cfg (DictConfig): Augmentation configuration.
         segmentation_cfg (DictConfig): Segmentation configuration.
-        engines (List[InferenceEngine]): Inference Engines.
+        engines (Generator[InferenceEngine]): Inference Engines.
         ca_mode (str): The cornu ammoni division mode. Defaults to "1/2/3".
         batch_size (int): Batch size. Defaults to 1.
 

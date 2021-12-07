@@ -1,4 +1,5 @@
 from pathlib import Path, PosixPath
+from typing import Generator
 
 import deepsparse
 import onnxruntime as ort
@@ -41,7 +42,7 @@ def print_deepsparse_support():
 
 
 def get_inference_engines(models_path: PosixPath, engine_name: str,
-                          engine_settings: DictConfig) -> list:
+                          engine_settings: DictConfig) -> Generator:
     """
     Returns Inference Engines.
 
@@ -56,11 +57,10 @@ def get_inference_engines(models_path: PosixPath, engine_name: str,
     p = Path(models_path).expanduser()
     models = list(p.glob("*.onnx"))
 
-    return [
-        InferenceEngine(engine_name=engine_name,
-                        engine_settings=engine_settings,
-                        model=model) for model in models
-    ]
+    for model in models:
+        yield InferenceEngine(engine_name=engine_name,
+                              engine_settings=engine_settings,
+                              model=model)
 
 
 class InferenceEngine:

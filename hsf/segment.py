@@ -104,6 +104,7 @@ def predict(mris: list,
 def segment(subject: tio.Subject,
             augmentation_cfg: DictConfig,
             segmentation_cfg: DictConfig,
+            n_engines: int,
             engines: list,
             ca_mode: str = "1/2/3",
             batch_size: int = 1) -> tuple:
@@ -129,16 +130,15 @@ def segment(subject: tio.Subject,
     ]
 
     results = []
-    for sub in track(
-            batched_subjects,
-            description=
-            f"Segmenting (TTA: {len(subjects)} | {len(engines)} MODELS)..."):
-        engines_predictions = [
-            predict(sub, engine, ca_mode) for engine in engines
-        ]
-
-        results.extend(*engines_predictions)
-
+    n = 0
+    for engine in engines:
+        n += 1
+        for sub in track(
+                batched_subjects,
+                description=
+                f"Segmenting (TTA: {len(subjects)} | MODEL {n}/{n_engines})..."
+        ):
+            results.extend(predict(sub, engine, ca_mode))
     soft_predictions = torch.stack(results, dim=0)
     hard_prediction = soft_predictions.argmax(dim=1).long().mode(dim=0).values
 

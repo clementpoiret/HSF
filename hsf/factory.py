@@ -73,6 +73,7 @@ def predict(mri: PosixPath, engines: list, cfg: DictConfig) -> tuple:
     return segment(subject=subject,
                    augmentation_cfg=cfg.augmentation,
                    segmentation_cfg=cfg.segmentation.segmentation,
+                   n_engines=len(cfg.segmentation.models),
                    engines=engines,
                    ca_mode=str(cfg.segmentation.ca_mode),
                    batch_size=cfg.hardware.engine_settings.batch_size)
@@ -132,13 +133,9 @@ def main(cfg: DictConfig) -> None:
     fetch_models(cfg.segmentation.models_path, cfg.segmentation.models)
 
     if cfg.hardware.engine == "deepsparse":
-        assert cfg.segmentation.test_time_num_aug % cfg.hardware.engine_settings.batch_size == 0, "test_time_num_aug must be a multiple of batch_size for deepsparse"
-
-    engines = get_inference_engines(
-        cfg.segmentation.models_path,
-        engine_name=cfg.hardware.engine,
-        engine_settings=cfg.hardware.engine_settings)
-    pprint(f"{PREFIX} Successfully loaded segmentation models in memory.")
+        tta = cfg.segmentation.segmentation.test_time_num_aug
+        bs = cfg.hardware.engine_settings.batch_size
+        assert tta % bs == 0, "test_time_num_aug must be a multiple of batch_size for deepsparse"
 
     mris = load_from_config(cfg.files.path, cfg.files.pattern)
 
@@ -159,6 +156,11 @@ def main(cfg: DictConfig) -> None:
         locator, orientation, hippocampi = get_lr_hippocampi(mri, cfg)
 
         for j, hippocampus in enumerate(hippocampi):
+            engines = get_inference_engines(
+                cfg.segmentation.models_path,
+                engine_name=cfg.hardware.engine,
+                engine_settings=cfg.hardware.engine_settings)
+
             hippocampus = Path(hippocampus)
 
             pprint(f"{PREFIX} Subject {i+1}/{N}, side {j+1}/2")

@@ -109,7 +109,7 @@ def config(models_path):
 
 @pytest.fixture(scope="session")
 def deepsparse_inference_engines(models_path):
-    """Tests that models can be loaded using ORT"""
+    """Tests that models can be loaded using DeepSparse"""
     settings = DictConfig({"num_cores": 0, "num_sockets": 0, "batch_size": 1})
 
     engines = hsf.engines.get_inference_engines(models_path,
@@ -184,9 +184,14 @@ def test_segment(models_path, config, deepsparse_inference_engines):
     sub = aug(sub)
 
     for ca_mode in ["1/23", "123"]:
-        _, pred = hsf.segment.segment(sub, config.augmentation,
-                                      config.segmentation.segmentation,
-                                      deepsparse_inference_engines, ca_mode)
+        _, pred = hsf.segment.segment(
+            subject=sub,
+            augmentation_cfg=config.augmentation,
+            segmentation_cfg=config.segmentation.segmentation,
+            n_engines=1,
+            engines=deepsparse_inference_engines,
+            ca_mode=ca_mode,
+            batch_size=1)
 
     hsf.segment.save_prediction(mri, pred)
 

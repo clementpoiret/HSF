@@ -196,6 +196,10 @@ Changelogs
 HSF
 ---
 
+**Version 1.0.1**
+
+* Fix batch size issue
+
 **Version 1.0.0**
 
 * Added Uncertainty Maps for post-hoc analysis of segmentation results,

@@ -16,6 +16,10 @@ Current maintainers:
 
 ## HSF
 
+### Version 1.0.1 (2021-12-07)
+
+* Fixed batch size issue
+
 ### Version 1.0.0 (2021-11-12)
 
 * Added Uncertainty Maps for post-hoc analysis of segmentation results,

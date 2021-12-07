@@ -70,13 +70,12 @@ def predict(mri: PosixPath, engines: list, cfg: DictConfig) -> tuple:
     subject = mri_to_subject(mri)
 
     pprint(f"{PREFIX} Starting segmentation...")
-    return segment(
-        subject=subject,
-        augmentation_cfg=cfg.augmentation,
-        segmentation_cfg=cfg.segmentation.segmentation,
-        engines=engines,
-        ca_mode=str(cfg.segmentation.ca_mode),
-    )
+    return segment(subject=subject,
+                   augmentation_cfg=cfg.augmentation,
+                   segmentation_cfg=cfg.segmentation.segmentation,
+                   engines=engines,
+                   ca_mode=str(cfg.segmentation.ca_mode),
+                   batch_size=cfg.hardware.engine_settings.batch_size)
 
 
 def compute_uncertainty(mri: PosixPath, soft_pred: torch.Tensor) -> None:
@@ -131,6 +130,9 @@ def save(mri: PosixPath, hippocampus: PosixPath, hard_pred: torch.Tensor,
 @hydra.main(config_path="conf", config_name="config")
 def main(cfg: DictConfig) -> None:
     fetch_models(cfg.segmentation.models_path, cfg.segmentation.models)
+
+    if cfg.hardware.engine == "deepsparse":
+        assert cfg.segmentation.test_time_num_aug % cfg.hardware.engine_settings.batch_size == 0, "test_time_num_aug must be a multiple of batch_size for deepsparse"
 
     engines = get_inference_engines(
         cfg.segmentation.models_path,

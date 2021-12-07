@@ -96,9 +96,9 @@ def predict(mris: list,
         aug.add_image(lm_temp, 'label')
         aug.label.set_data(lab)
         back = aug.apply_inverse_transform(warn=True)
-        results.extend(back.label.data)
+        results.append(back.label.data)
 
-    return torch.stack(results, dim=0)
+    return results
 
 
 def segment(subject: tio.Subject,
@@ -137,7 +137,7 @@ def segment(subject: tio.Subject,
             predict(sub, engine, ca_mode) for engine in engines
         ]
 
-        results.extend(engines_predictions)
+        results.extend(*engines_predictions)
 
     soft_predictions = torch.stack(results, dim=0)
     hard_prediction = soft_predictions.argmax(dim=1).long().mode(dim=0).values

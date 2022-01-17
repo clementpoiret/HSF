@@ -17,24 +17,22 @@ authors:
   - name: Cécile Boniteau
     affiliation: "1, 2"
   - name: Antoine Grigis
-    affiliation: 3
+    affiliation: 1
   - name: Edouard Duchesnay
-    affiliation: 3
+    affiliation: 1
   - name: Frédéric Lemaître
-    affiliation: 4
+    affiliation: 3
   - name: Marion Noulhiane^[corresponding author]
     orcid: 0000-0003-2832-0332
     affiliation: "1, 2"
 affiliations:
- - name: NeuroSpin, UNIACT, CEA Saclay, France
+ - name: NeuroSpin, CEA, Université Paris-Saclay, France
    index: 1
- - name: Inserm U1141, Paris University, France
+ - name: Université de Paris, France
    index: 2
- - name: NeuroSpin, BAOBAB, CEA Saclay, France
-   index: 3
  - name: CETAPS EA n°3832, Université de Rouen, France
-   index: 4  
-date: 02 October 2021
+   index: 3
+date: 17 January 2022
 bibliography: paper.bib
 
 
@@ -80,7 +78,9 @@ To finish the preprocessing, the resulting crops are Z-Normalized, and padded to
 
 * 3 Teslas (@winterburnNovelVivoAtlas2013, @kulaga-yoskovitzMulticontrastSubmillimetricTesla2015; @yushkevichAutomatedVolumetryRegional2015; @hindyLinkingPatternCompletion2016; @bouyeureHippocampalSubfieldVolumes2021),
 * 4 Teslas [@yushkevichNearlyAutomaticSegmentation2010],
-* and 7 Teslas (@wisseAutomatedHippocampalSubfield2016; @berronProtocolManualSegmentation2017; @haegerImagingAgingBrain2020; @opheim7TEpilepsyTask2020; @shawOptimisingMRICharacterisation2020; @lagardeDistinctAmyloidTau2021).
+* and 7 Teslas (HiPlay7[^1]; @wisseAutomatedHippocampalSubfield2016; @berronProtocolManualSegmentation2017; @haegerImagingAgingBrain2020; @shawOptimisingMRICharacterisation2020; @lagardeDistinctAmyloidTau2021).
+
+[^1]: ANR N°2-2017-0013; Manual Segmentation on X controls and Y TLE; 1mm T1w and 0.125\*0.125\*1.2mm T2w MRIs.
 
 Contrary to other automated segmentation tools constituting the state-of-the-art, `HSF` learned to segment from more than 700 manually annotated hippocampi of individuals from 4 to 84 years old, either healthy, with temporal lobe epilepsy, mild cognitive impairment, or Alzheimer's disease.
 

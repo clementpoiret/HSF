@@ -62,7 +62,7 @@ The `HSF` pipeline is constituted of 3 main steps: 1/ a preprocessing step handl
 
 ![Overview of the Hippocampal Segmentation Factory segmentation pipeline.\label{HSF}](figures/hsf.png)
 
-## Hippocampal Localization and Preprocessing
+## 1. Hippocampal Localization and Preprocessing
 
 In order to limit the computational impact of `HSF`, we used a preprocessing step to extract the hippocampi from the MRI. This step is performed by a pipeline called `ROILoc` (for ROI localization).
 
@@ -72,7 +72,9 @@ To do so, ROILoc registers the `MNI152 09c Sym` template [@fonovUnbiasedNonlinea
 
 To finish the preprocessing, the resulting crops are Z-Normalized, and padded to obtain shapes which are multiple of 8.
 
-## Hippocampal Subfields Segmentation
+## 2. Hippocampal Subfields Segmentation
+
+In addition to a feed-forward inference mode, `HSF` supports bootstrap aggregation and test-time augmentation strategies (figure \ref{HSF}), offering robust segmentations of which an example is depicted figure \ref{sample}. Prior to the segmentation, cropped hippocampi are going through a customizable augmentation pipeline comprising random lateral flips, affine transformations, and elastic deformations.
 
 `HSF` proposes a "Model Hub" offering multiple pretrained models. Our built-in models are based on a Residual UNet architecture with a self-attention mechanism similar to the one introduced in by @oktayAttentionUNetLearning2018. In order to provide highly generalizable segmentation models, we gathered and uniformized 4 private and 8 public datasets of manually segmented subfields in T1w and T2w MRIs coming from different acquisition centers, at different resolutions and different magnetic fields:
 
@@ -80,17 +82,15 @@ To finish the preprocessing, the resulting crops are Z-Normalized, and padded to
 * 4 Teslas [@yushkevichNearlyAutomaticSegmentation2010],
 * and 7 Teslas (HiPlay7[^1]; @wisseAutomatedHippocampalSubfield2016; @berronProtocolManualSegmentation2017; @haegerImagingAgingBrain2020; @shawOptimisingMRICharacterisation2020; @lagardeDistinctAmyloidTau2021).
 
-[^1]: ANR N°2-2017-0013; Manual Segmentation on X controls and Y TLE; 1mm T1w and 0.125\*0.125\*1.2mm T2w MRIs.
+[^1]: ANR-16-NEUC-0001-01; Manual Segmentation on 23 controls and 4 Temporal Lobe Epilepsies; 1mm T1w and 0.125\*0.125\*1.2mm T2w MRIs.
 
 Contrary to other automated segmentation tools constituting the state-of-the-art, `HSF` learned to segment from more than 700 manually annotated hippocampi of individuals from 4 to 84 years old, either healthy, with temporal lobe epilepsy, mild cognitive impairment, or Alzheimer's disease.
-
-In addition to standard feed-forward inference mode, `HSF` supports bootstrap aggregation and test-time augmentation strategies (figure \ref{HSF}), offering robust segmentations of which an example is depicted figure \ref{sample}.
 
 ![Example of hippocampal subfields segmentation. The segmentation results from HSF's segmentation models on a test observation.\label{sample}](figures/sample.png){width=800px}
 
 Our "Model Hub" is proposed with a rolling release policy, which means that we will continuously update our models with new datasets, either collected internally or provided by independent researchers, and new state-of-the-art training techniques (e.g. sparsification and `int8` quantization). Moreover, anyone can contribute to the Model Hub by exporting their ONNX models and submitting a corresponding configuration file to the `HSF` repository. Newly proposed models will then be directly available to the end-user through CLI.
 
-## Postprocessing and Uncertainty Estimation
+## 3. Postprocessing and Uncertainty Estimation
 
 As the default inference mode uses bootstrap aggregation and test-time augmentation, passing a single hippocampus through the pipeline produces multiple probabilistic segmentations, which are combined with a plurality voting strategy to produce a final segmentation. Having multiple probabilistic segmentations allows us to estimate the statistical uncertainty of the segmentation (figure \ref{uncertainty}) which can help to analyze the segmentation quality *a posteriori*.
 
@@ -106,8 +106,8 @@ where $\hat{p}^i_m$ is the frequency of the $m$th unique value in $Y^i$.
 
 # Acknowledgements
 
-We thank the IDRIS and the Genci who allowed us to access the HPE Jean Zay supercomputer.
+We thank the IDRIS and the Genci who allowed us to access the HPE Jean Zay supercomputer. We also thank M. Bottlaender for giving us access to T1w and T2w MRI from the SENIOR cohort, and M. Faillot for helping us manually segment the hippocampus.
 
-We also thank M. Bottlaender for giving us access to T1w and T2w MRI from the SENIOR cohort, and M. Faillot for helping us manually segment the hippocampus.
+The research leading to these results has received funding from the Fondation de France, and the joint NSF/NIH/ANR program "Collaborative Research in Computational Neuroscience" (project HIPLAY7, grant number ANR-16-NEUC-0001-01).
 
 # References

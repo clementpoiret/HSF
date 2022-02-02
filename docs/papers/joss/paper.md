@@ -21,6 +21,7 @@ authors:
   - name: Edouard Duchesnay
     affiliation: 1
   - name: Frédéric Lemaître
+    orcid: 0000-0003-4424-0981
     affiliation: "3, 4"
   - name: Marion Noulhiane^[corresponding author]
     orcid: 0000-0003-2832-0332

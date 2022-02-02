@@ -21,7 +21,7 @@ authors:
   - name: Edouard Duchesnay
     affiliation: 1
   - name: Frédéric Lemaître
-    affiliation: 3
+    affiliation: "3, 4"
   - name: Marion Noulhiane^[corresponding author]
     orcid: 0000-0003-2832-0332
     affiliation: "1, 2"
@@ -32,6 +32,8 @@ affiliations:
    index: 2
  - name: CETAPS EA n°3832, Université de Rouen, France
    index: 3
+ - name: CRIOBE, USR 3278, CNRS-EPHE-UPVD, Mooréa, Polynésie Française
+   index: 4
 date: 17 January 2022
 bibliography: paper.bib
 

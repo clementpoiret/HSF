@@ -43,7 +43,7 @@ bibliography: paper.bib
 
 # Summary
 
-The hippocampus is organized by distinct hippocampal subfields which are differently involved in learning and memory processes and widely implicated in neurological pathologies at different ages of life, such as neonatal hypoxia, temporal lobe epilepsy, or Alzheimer’s disease. Studying the anatomo-functional properties of the hippocampus and its subfields is a mandatory path to understand such conditions and requires reliable and robust segmentations of MRI data. Moreover, the growing size of publicly available datasets calls for faster and more efficient segmentation algorithms. As the current methodologies are shown to be either imprecise, slow or inconvenient, we developped a novel tool called the Hippocampal Segmentation Factory (`HSF`) to automatically segment the hippocampal subfields in T1w or T2w MRIs.
+The hippocampus is organized by distinct hippocampal subfields which are differently involved in learning and memory processes and widely implicated in neurological pathologies at different ages of life, such as neonatal hypoxia, temporal lobe epilepsy, or Alzheimer’s disease. Studying the anatomo-functional properties of the hippocampus and its subfields is a mandatory path to understand such conditions and requires reliable and robust segmentation of MRI data. Moreover, the growing size of publicly available datasets calls for faster and more efficient segmentation algorithms. As the current methodologies are shown to be either imprecise, slow or inconvenient, we developed a novel tool called the Hippocampal Segmentation Factory (`HSF`) to automatically segment the hippocampal subfields in T1w or T2w MRIs.
 
 `HSF` is designed to be a fully customizable end-to-end pipeline, handling tasks from the preprocessing of raw anatomical images, to the segmentation of the hippocampal subfields through specialized and highly efficient Deep Learning models comprised in a "Model Hub" on any hardware acceleration platform such as CUDA, TensorRT or OpenVINO. `HSF` also supports the DeepSparse compute engine to benefit from the AVX512(VNNI) vector instruction set.
 
@@ -51,13 +51,13 @@ Our rolling-release Model Hub aims at facilitating the transition from lab-train
 
 # Statement of Need
 
-The hippocampus is organized by distinct hippocampal subfields, namely Cornus Ammonis (CA1-3), the Dentate Gyrus, and the Subiculum which are differently involved in learning and memory processes and widely implicated in neurological pathologies at different ages of life, such as neonatal hypoxia, temporal lobe epilepsy, or Alzheimer’s disease [@todaRoleAdultHippocampal2019].
+The hippocampus is organized by distinct hippocampal subfields, namely Cornus Ammonis (CA1-3), Dentate Gyrus, and Subiculum which are differently involved in learning and memory processes and widely implicated in neurological pathologies at different ages of life, such as neonatal hypoxia, temporal lobe epilepsy, or Alzheimer’s disease [@todaRoleAdultHippocampal2019].
 
-Obtaining a precise and accurate delineation of the hippocampal subfields in order to study both healthy and pathological conditions is a methodologcal challenge in neuroimagery, because these are small and complex structures [@duvernoyHumanHippocampus2013]. Even the very time-consuming manual segmentation, still considered as a gold-standard method, is an error-prone process due to inconsistent guidelines and the need for high-definition MRIs.
+Obtaining a precise and accurate delineation of the hippocampal subfields in order to study both healthy and pathological conditions is a methodological challenge in neuroimagery, because these are small and complex structures [@duvernoyHumanHippocampus2013]. Even the very time-consuming manual segmentation, still considered a gold-standard method, is an error-prone process due to inconsistent guidelines and the need for high-definition MRIs.
 
-To date, there exist (semi-)automated methods for the segmentation of the hippocampal subfields (e.g. @yushkevichAutomatedVolumetryRegional2015, @iglesiasComputationalAtlasHippocampal2015, @romeroHIPSNewHippocampus2017), but those are either slow (e.g.: 8~12 hours to segment a new MRI with `FreeSurfer`) or producing noisy and approximative segmentations, making them unsuited for research or clinical applications. While those methodologies are actually considered as "legacy methods" with respect to the current literature of semantic segmentation, Deep Learning models have been validated on this complex task [@qiuFeasibilityAutomaticSegmentation2019; @zhuDilatedDenseUNet2019], but are still reserved to specific populations of researchers/engineers because implementations are either not public (e.g. @zhuDilatedDenseUNet2019), pretrained models are not made available, or because they are trained on specific and uniform datasets, thus causing generalization issues on images acquired with different parameters like resolution or contrast.
+To date, there exist (semi-)automated methods for the segmentation of the hippocampal subfields (e.g. @yushkevichAutomatedVolumetryRegional2015, @iglesiasComputationalAtlasHippocampal2015, @romeroHIPSNewHippocampus2017), but those are either slow (e.g.: 8~12 hours to segment a new MRI with `FreeSurfer`) or producing noisy and approximative segmentations, making them unsuited for research or clinical applications. While those methodologies are considered as "legacy methods" with respect to the current literature of semantic segmentation, Deep Learning models have been validated on this complex task [@qiuFeasibilityAutomaticSegmentation2019; @zhuDilatedDenseUNet2019], but are still reserved to specific populations of researchers/engineers because implementations are either not public (e.g. @zhuDilatedDenseUNet2019), pre-trained models are not made available, or because they are trained on specific and uniform datasets, thus causing generalization issues on images acquired with different parameters like resolution or contrast.
 
-This lack of uniformity and ease of use of hippocampal segmentation models leaves a gap in the range of technical options available to researchers and clinicians. By releasing `HSF`, we aim to fill this gap and contribute with the scientific communtiy further study of the hippocampal subfileds.
+This lack of uniformity and ease of use of hippocampal segmentation models leaves a gap in the range of technical options available to researchers and clinicians. By releasing `HSF`, we aim to fill this gap and contribute with the scientific community's further study of the hippocampal subfields.
 
 # Segmentation Pipeline
 
@@ -69,7 +69,7 @@ The `HSF` pipeline is constituted of 3 main steps: 1/ a preprocessing step handl
 
 In order to limit the computational impact of `HSF`, we used a preprocessing step to extract the hippocampi from the MRI. This step is performed by a pipeline called `ROILoc` (for ROI localization).
 
-To do so, ROILoc registers the `MNI152 09c Sym` template [@fonovUnbiasedNonlinearAverage2009] to the T1w or T2w input MRI. Knowing the coordinates of the hippocampi in the MNI space thanks to the CerebrA atlas [@maneraCerebrARegistrationManual2020], this registration process allows to infer rough coordinates of the hippocampus in native space. `ROILoc` then crops the MRI into two volumes corresponding to the right and left hippocampi (figure \ref{ROILoc}).
+To do so, ROILoc registers the `MNI152 09c Sym` template [@fonovUnbiasedNonlinearAverage2009] to the T1w or T2w input MRI. Knowing the coordinates of the hippocampi in the MNI space thanks to the CerebrA atlas [@maneraCerebrARegistrationManual2020], this registration process allows infering rough coordinates of the hippocampus in native space. `ROILoc` then crops the MRI into two volumes corresponding to the right and left hippocampi (figure \ref{ROILoc}).
 
 ![ROILoc pipeline. The pipeline is a registration based pipeline to locate a specific region of interest (ROI) like the hippocampus, and crop a given MRI around its bounding boxes.\label{ROILoc}](figures/roiloc.png)
 
@@ -77,9 +77,9 @@ To finish the preprocessing, the resulting crops are Z-Normalized, and padded to
 
 ## 2. Hippocampal Subfields Segmentation
 
-In addition to a feed-forward inference mode, `HSF` supports bootstrap aggregation and test-time augmentation strategies (figure \ref{HSF}), offering robust segmentations of which an example is depicted figure \ref{sample}. Prior to the segmentation, cropped hippocampi are going through a customizable augmentation pipeline comprising random lateral flips, affine transformations, and elastic deformations.
+In addition to a feed-forward inference mode, `HSF` supports bootstrap aggregation and test-time augmentation strategies (figure \ref{HSF}), offering robust segmentations of which an example is depicted in figure \ref{sample}. Prior to the segmentation, cropped hippocampi are going through a customizable augmentation pipeline comprising random lateral flips, affine transformations, and elastic deformations.
 
-`HSF` proposes a "Model Hub" offering multiple pretrained models. Our built-in models are based on a Residual UNet architecture with a self-attention mechanism similar to the one introduced in by @oktayAttentionUNetLearning2018. In order to provide highly generalizable segmentation models, we gathered and uniformized 4 private and 8 public datasets of manually segmented subfields in T1w and T2w MRIs coming from different acquisition centers, at different resolutions and different magnetic fields:
+`HSF` proposes a "Model Hub" offering multiple pre-trained models. Our built-in models are based on a Residual UNet architecture with a self-attention mechanism similar to the one introduced in by @oktayAttentionUNetLearning2018. In order to provide highly generalizable segmentation models, we gathered and uniformized 4 private and 8 public datasets of manually segmented subfields in T1w and T2w MRIs coming from different acquisition centers, at different resolutions and different magnetic fields:
 
 * 3 Teslas (@winterburnNovelVivoAtlas2013, @kulaga-yoskovitzMulticontrastSubmillimetricTesla2015; @yushkevichAutomatedVolumetryRegional2015; @hindyLinkingPatternCompletion2016; @bouyeureHippocampalSubfieldVolumes2021),
 * 4 Teslas [@yushkevichNearlyAutomaticSegmentation2010],
@@ -97,7 +97,7 @@ To conclude, our "Model Hub" is proposed with a rolling release policy, which me
 
 As the default inference mode uses bootstrap aggregation and test-time augmentation, passing a single hippocampus through the pipeline produces multiple probabilistic segmentations, which are combined with a plurality voting strategy to produce a final segmentation. Having multiple probabilistic segmentations allows us to estimate the statistical uncertainty of the segmentation (figure \ref{uncertainty}) which can help to analyze the segmentation quality *a posteriori*.
 
-Given a set $Y$ of $i$ predictions, in HSF the voxel-wise Aleatoric Uncertainty [@wangAleatoricUncertaintyEstimation2019] $H(Y^i|X)$ is defined as:
+Given a set $Y$ of $i$ predictions, in HSF, the voxel-wise Aleatoric Uncertainty [@wangAleatoricUncertaintyEstimation2019] $H(Y^i|X)$ is defined as:
 
 $$
 H(Y^i|X) \approx - \sum^M_{m=1}{\hat{p}^i_m \ln \hat{p}^i_m}

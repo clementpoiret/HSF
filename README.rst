@@ -196,6 +196,10 @@ Changelogs
 HSF
 ---
 
+**Version 1.1.0**
+
+*WIP*
+
 **Version 1.0.1**
 
 * Fix batch size issue

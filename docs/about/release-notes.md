@@ -16,6 +16,10 @@ Current maintainers:
 
 ## HSF
 
+### Version 1.1.0 (N/A)
+
+*WIP*
+
 ### Version 1.0.1 (2021-12-07)
 
 * Fixed batch size issue

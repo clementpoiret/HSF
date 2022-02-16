@@ -48,6 +48,11 @@ Current maintainers:
 
 ## Models
 
+### Version 2.1.0 (N/A)
+
+* Corrected incorrect T1w labels used for training,
+* Trained on slightly more data (T1w @1.5T & 3T, T2w; Healthy, Epilepsy & Alzheimer)
+
 ### Version 2.0.0 (2021-11-12)
 
 * Trained with more T1w and T2w MRIs,

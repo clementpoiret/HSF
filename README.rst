@@ -4,7 +4,7 @@ Hippocampal Segmentation Factory (HSF)
 
 Exhaustive documentation available at: `hsf.rtfd.io <https://hsf.rtfd.io/>`_
 
-**Current Models version:** 2.0.0
+**Current Models version:** 2.1.0
 
 .. list-table::
     :header-rows: 1
@@ -229,6 +229,11 @@ HSF
 
 Models
 ------
+
+**Version 2.1.0**
+
+* Corrected incorrect T1w labels used for training,
+* Trained on slightly more data (T1w @1.5T & 3T, T2w; Healthy, Epilepsy & Alzheimer)
 
 **Version 2.0.0**
 

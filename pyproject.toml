@@ -26,10 +26,10 @@ roiloc = "^0.2.5"
 onnxruntime = "^1.8.1"
 hydra-core = "^1.1.1"
 wget = "^3.2"
-antspyx = "^0.2.9"
+antspyx = ">0.2.9"
 xxhash = "^2.0.2"
-rich = "^10.12.0"
-deepsparse = "^0.8.0"
+rich = "^11.0.0"
+deepsparse = ">0.8.0, <1.0.0"
 
 [tool.poetry.dev-dependencies]
 pytest = "^6"

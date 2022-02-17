@@ -22,8 +22,8 @@ def test_version():
 @pytest.fixture(scope="session")
 def models_path(tmpdir_factory):
     """Setup tmpdir."""
-    url = "https://zenodo.org/record/5524594/files/arunet_bag0.onnx?download=1"
-    xxh3 = "d0de65baa81d9382"
+    url = "https://zenodo.org/record/6107275/files/arunet_2.1.0_single-optimized.onnx?download=1"
+    xxh3 = "5b0dfb69fa535215"
 
     tmpdir_path = tmpdir_factory.mktemp("hsf")
     tmpdir_path = Path(tmpdir_path)

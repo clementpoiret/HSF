@@ -6,7 +6,7 @@ models_path: "~/.hsf/models/single/"
 models:
   arunet_bag_0.onnx:
     url: "https://zenodo.org/record/6107275/files/arunet_2.1.0_single-optimized.onnx?download=1"
-    xxh3_64: "5b0dfb69fa535215"
+    xxh3_64: "a7674056b6ac85ff"
 
 segmentation:
   test_time_augmentation: True

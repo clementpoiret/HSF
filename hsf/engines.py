@@ -104,8 +104,7 @@ class InferenceEngine:
         self.engine = deepsparse.compile_model(
             str(model),
             batch_size=self.engine_settings.batch_size,
-            num_cores=self.engine_settings.num_cores,
-            num_sockets=self.engine_settings.num_sockets)
+            num_cores=self.engine_settings.num_cores)
 
     def set_ort_engine(self, model):
         """

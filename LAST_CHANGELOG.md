@@ -2,5 +2,8 @@
 
 ## Software
 
-* Fixed batch_size not properly set,
-* Memory optimizations.
+* Updated dependencies
+
+## Models
+
+* New single and bagging models with more data and less biases (Tails of T1w MRIs)

@@ -48,6 +48,10 @@ Current maintainers:
 
 ## Models
 
+### Version 2.1.1 (2022-03-03)
+
+* Fixed some tails in 3T CoroT2w images (MemoDev)
+
 ### Version 2.1.0 (N/A)
 
 * Corrected incorrect T1w labels used for training,

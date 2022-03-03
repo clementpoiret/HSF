@@ -4,7 +4,7 @@ Hippocampal Segmentation Factory (HSF)
 
 Exhaustive documentation available at: `hsf.rtfd.io <https://hsf.rtfd.io/>`_
 
-**Current Models version:** 2.1.0
+**Current Models version:** 2.1.1
 
 .. list-table::
     :header-rows: 1
@@ -229,6 +229,10 @@ HSF
 
 Models
 ------
+
+**Version 2.1.1**
+
+* Fixed some tails in 3T CoroT2w images (MemoDev)
 
 **Version 2.1.0**
 

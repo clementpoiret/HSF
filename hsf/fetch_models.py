@@ -1,11 +1,18 @@
+import logging
 from pathlib import Path
 
 import wget
 import xxhash
 from omegaconf import DictConfig
-from rich import print as pprint
+from rich.logging import RichHandler
 
-PREFIX = "[italic white]MODELS >"
+FORMAT = "%(message)s"
+logging.basicConfig(level="NOTSET",
+                    format=FORMAT,
+                    datefmt="[%X]",
+                    handlers=[RichHandler()])
+
+log = logging.getLogger(__name__)
 
 
 def get_hash(fname: str) -> str:
@@ -41,15 +48,15 @@ def fetch(directory: str, filename: str, url: str, xxh3_64: str) -> None:
 
     if outfile.exists():
         if get_hash(str(outfile)) == xxh3_64:
-            pprint(f"{PREFIX} {filename} already exists and is up to date")
+            log.info(f"{filename} already exists and is up to date")
             return
         else:
-            pprint(f"{PREFIX} {filename} already exists but is not up to date")
+            log.info(f"{filename} already exists but is not up to date")
             outfile.unlink()
 
-    pprint(f"{PREFIX} Fetching {url}")
+    log.info(f"Fetching {url}")
     wget.download(url, out=str(outfile))
-    pprint("\n")
+    print("\n")
 
     if not xxh3_64 == get_hash(str(outfile)):
         outfile.unlink()

@@ -1,24 +1,25 @@
 # Original models from Poiret, et al., 2021.
 # Uses bootstrap aggregating without test-time augmentation.
+# Current version: 2.1.1
 
 ca_mode: "1/2/3"
 models_path: "~/.hsf/models/bagging/"
 models:
   arunet_bag_0.onnx:
-    url: "https://zenodo.org/record/6140534/files/arunet_2.1.0_bag0-optimized.onnx?download=1"
-    xxh3_64: "4db9903b6e69d5ae"
+    url: "https://zenodo.org/record/6324990/files/arunet_2.1.1_bag0-optimized.onnx?download=1"
+    xxh3_64: "ad9ae355206fba52"
   arunet_bag_1.onnx:
-    url: "https://zenodo.org/record/6140534/files/arunet_2.1.0_bag1-optimized.onnx?download=1"
-    xxh3_64: "1fae33c617959dfd"
+    url: "https://zenodo.org/record/6324990/files/arunet_2.1.1_bag1-optimized.onnx?download=1"
+    xxh3_64: "5a6d21cd55e9ccea"
   arunet_bag_2.onnx:
-    url: "https://zenodo.org/record/6140534/files/arunet_2.1.0_bag2-optimized.onnx?download=1"
-    xxh3_64: "824b507115dee8b0"
+    url: "https://zenodo.org/record/6324990/files/arunet_2.1.1_bag2-optimized.onnx?download=1"
+    xxh3_64: "fd1d5ad84630418a"
   arunet_bag_3.onnx:
-    url: "https://zenodo.org/record/6140534/files/arunet_2.1.0_bag3-optimized.onnx?download=1"
-    xxh3_64: "dd42773bea91e805"
+    url: "https://zenodo.org/record/6324990/files/arunet_2.1.1_bag3-optimized.onnx?download=1"
+    xxh3_64: "36046d34bd750742"
   arunet_bag_4.onnx:
-    url: "https://zenodo.org/record/6140534/files/arunet_2.1.0_bag4-optimized.onnx?download=1"
-    xxh3_64: "e7085e8fecf41324"
+    url: "https://zenodo.org/record/6324990/files/arunet_2.1.1_bag4-optimized.onnx?download=1"
+    xxh3_64: "343c299cc81c256d"
 
 segmentation:
   test_time_augmentation: False

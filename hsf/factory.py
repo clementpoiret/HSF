@@ -56,7 +56,7 @@ def get_lr_hippocampi(mri: PosixPath, cfg: DictConfig) -> tuple:
                                                   roiloc_cfg=cfg.roiloc,
                                                   mask=bet_mask)
 
-    log.info(f"Saving left and right hippocampi (LPI orientation)...")
+    log.info("Saving left and right hippocampi (LPI orientation)...")
     return locator, original_orientation, save_hippocampi(
         right_mri=right_mri,
         left_mri=left_mri,
@@ -78,7 +78,7 @@ def predict(mri: PosixPath, engines: Generator, cfg: DictConfig) -> tuple:
     """
     subject = mri_to_subject(mri)
 
-    log.info(f"Starting segmentation...")
+    log.info("Starting segmentation...")
     return segment(subject=subject,
                    augmentation_cfg=cfg.augmentation,
                    segmentation_cfg=cfg.segmentation.segmentation,

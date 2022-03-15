@@ -22,7 +22,7 @@ deepsparse_support = 'hsf.engines:print_deepsparse_support'
 [tool.poetry.dependencies]
 python = "^3.7.1"
 torchio = "^0.18.56"
-roiloc = "^0.2.5"
+roiloc = "^0.2.7"
 onnxruntime = "^1.8.1"
 hydra-core = "^1.1.1"
 wget = "^3.2"

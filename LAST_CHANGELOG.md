@@ -2,6 +2,7 @@
 
 ## Software
 
+* Fixed ANTs overloading /tmp directory
 * Updated dependencies
 
 ## Models

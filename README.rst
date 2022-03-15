@@ -198,7 +198,7 @@ HSF
 
 **Version 1.1.0**
 
-*WIP*
+* Bug fixes and optimizations
 
 **Version 1.0.1**
 

@@ -18,7 +18,7 @@ Current maintainers:
 
 ### Version 1.1.0 (N/A)
 
-*WIP*
+* Bug fixes and optimizations
 
 ### Version 1.0.1 (2021-12-07)
 

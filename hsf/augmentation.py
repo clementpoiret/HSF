@@ -49,7 +49,7 @@ def get_augmented_subject(subject: tio.Subject, augmentation_cfg: DictConfig,
         with Pool() as pool:
             subjects = pool.map(augmentation_pipeline, subjects)
         subjects.append(subject)
-    else:
-        subjects = [subject]
 
-    return subjects
+        return subjects
+    else:
+        return [subject]

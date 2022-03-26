@@ -1,4 +1,4 @@
-from multiprocessing import Pool
+from multiprocessing.pool import ThreadPool
 
 import torchio as tio
 from omegaconf.dictconfig import DictConfig
@@ -46,7 +46,7 @@ def get_augmented_subject(subject: tio.Subject, augmentation_cfg: DictConfig,
 
     if n_aug > 1:
         subjects = [subject] * n_aug
-        with Pool() as pool:
+        with ThreadPool() as pool:
             subjects = pool.map(augmentation_pipeline, subjects)
         subjects.append(subject)
 

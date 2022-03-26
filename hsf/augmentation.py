@@ -1,7 +1,17 @@
+import logging
 from multiprocessing.pool import ThreadPool
 
 import torchio as tio
 from omegaconf.dictconfig import DictConfig
+from rich.logging import RichHandler
+
+FORMAT = "%(message)s"
+logging.basicConfig(level="NOTSET",
+                    format=FORMAT,
+                    datefmt="[%X]",
+                    handlers=[RichHandler()])
+
+log = logging.getLogger(__name__)
 
 
 def get_augmentation_pipeline(augmentation_cfg: DictConfig) -> tio.Compose:
@@ -39,15 +49,16 @@ def get_augmented_subject(subject: tio.Subject, augmentation_cfg: DictConfig,
         subjects (List[tio.Subject]): Augmented tio subject.
     """
     if segmentation_cfg.test_time_augmentation:
-        augmentation_pipeline = get_augmentation_pipeline(augmentation_cfg)
+        augment = get_augmentation_pipeline(augmentation_cfg)
         n_aug = segmentation_cfg.test_time_num_aug
     else:
         n_aug = 1
 
     if n_aug > 1:
+        log.info(f"Augmenting {n_aug} times...")
         subjects = [subject] * n_aug
-        with ThreadPool() as pool:
-            subjects = pool.map(augmentation_pipeline, subjects)
+        with ThreadPool(n_aug) as pool:
+            subjects = pool.map(augment, subjects)
         subjects.append(subject)
 
         return subjects

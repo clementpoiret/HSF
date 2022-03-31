@@ -1,11 +1,14 @@
 import logging
 from pathlib import PosixPath
-from typing import Optional
+from typing import Optional, Tuple
 
 import ants
 from omegaconf import DictConfig
 from rich.logging import RichHandler
 from roiloc._cache import handle_cache
+from roiloc.locator import RoiLocator
+
+from hsf.roiloc_wrapper import save_hippocampi
 
 FORMAT = "%(message)s"
 logging.basicConfig(level="NOTSET",
@@ -85,3 +88,31 @@ def register(mri: PosixPath,
         ants.image_write(registered, str(output_dir / fname))
 
         return output_dir / fname
+
+
+def get_additional_hippocampi(mri: PosixPath, second_contrast: PosixPath,
+                              locator: RoiLocator,
+                              cfg: DictConfig) -> Tuple[PosixPath]:
+    """
+    Get the additional hippocampi from a given mri.
+
+    Args:
+        mri (PosixPath): Path to the MRI.
+        second_contrast (PosixPath): Path to the second MRI.
+        locator (RoiLocator): RoiLocator instance.
+        cfg (DictConfig): Configuration.
+
+    Returns:
+        Tuple[PosixPath]: Paths to the additional hippocampi.
+    """
+    image = ants.image_read(str(second_contrast), reorient="LPI")
+
+    right_mri, left_mri = locator.transform(image)
+
+    extensions = "".join(second_contrast.suffixes)
+    fname = mri.name.replace(extensions, "") + "_second-contrast.nii.gz"
+
+    return save_hippocampi(right_mri=right_mri,
+                           left_mri=left_mri,
+                           dir_name=cfg.files.output_dir,
+                           original_mri_path=mri.parent / fname)

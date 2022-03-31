@@ -1,6 +1,6 @@
 import logging
 from pathlib import Path, PosixPath
-from typing import Generator
+from typing import Generator, Optional
 
 import ants
 import hydra
@@ -12,7 +12,8 @@ from roiloc.locator import RoiLocator
 
 from hsf.engines import get_inference_engines
 from hsf.fetch_models import fetch_models
-from hsf.multispectrality import get_second_contrast, register
+from hsf.multispectrality import (get_additional_hippocampi,
+                                  get_second_contrast, register)
 from hsf.roiloc_wrapper import (get_hippocampi, get_mri, load_from_config,
                                 save_hippocampi)
 from hsf.segment import mri_to_subject, save_prediction, segment
@@ -65,22 +66,27 @@ def get_lr_hippocampi(mri: PosixPath, cfg: DictConfig) -> tuple:
         original_mri_path=mri)
 
 
-def predict(mri: PosixPath, engines: Generator, cfg: DictConfig) -> tuple:
+def predict(mri: PosixPath, second_mri: Optional[PosixPath], engines: Generator,
+            cfg: DictConfig) -> tuple:
     """
     Predict the hippocampal segmentation for a given MRI.
 
     Args:
         mri (PosixPath): Path to the MRI.
+        second_mri (PosixPath): Path to the second MRI.
         engines (Generator): Generator of InferenceEngines.
         cfg (DictConfig): Configuration.
 
     Returns:
         tuple: Tuple containing soft and hard segmentations.
     """
-    subject = mri_to_subject(mri)
+    if second_mri:
+        subjects = [mri_to_subject(mri), mri_to_subject(second_mri)]
+    else:
+        subjects = [mri_to_subject(mri)]
 
     log.info("Starting segmentation...")
-    return segment(subject=subject,
+    return segment(subjects=subjects,
                    augmentation_cfg=cfg.augmentation,
                    segmentation_cfg=cfg.segmentation.segmentation,
                    n_engines=len(cfg.segmentation.models),
@@ -166,21 +172,29 @@ def main(cfg: DictConfig) -> None:
 
     for i, mri in enumerate(mris):
         second_contrast = get_second_contrast(mri, pattern)
-        if second_contrast:
-            second_contrast = register(mri, second_contrast, cfg)
 
         locator, orientation, hippocampi = get_lr_hippocampi(mri, cfg)
 
-        for j, hippocampus in enumerate(hippocampi):
+        if second_contrast:
+            second_contrast = register(mri, second_contrast, cfg)
+            additional_hippocampi = get_additional_hippocampi(
+                mri, second_contrast, locator, cfg)
+        else:
+            additional_hippocampi = [None, None]
+
+        for j, hippocampus in enumerate(zip(hippocampi, additional_hippocampi)):
             engines = get_inference_engines(
                 cfg.segmentation.models_path,
                 engine_name=cfg.hardware.engine,
                 engine_settings=cfg.hardware.engine_settings)
 
-            hippocampus = Path(hippocampus)
+            first_hippocampus = Path(hippocampus[0])
+            second_hippocampus = Path(
+                hippocampus[1]) if second_contrast else None
 
             log.info(f"Subject {i+1}/{N}, side {j+1}/2")
-            soft_pred, hard_pred = predict(hippocampus, engines, cfg)
+            soft_pred, hard_pred = predict(first_hippocampus,
+                                           second_hippocampus, engines, cfg)
 
             if soft_pred.shape[0] > 1:
                 compute_uncertainty(hippocampus, soft_pred)

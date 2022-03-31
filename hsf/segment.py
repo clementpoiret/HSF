@@ -1,5 +1,6 @@
+import itertools
 from pathlib import PosixPath
-from typing import Generator
+from typing import Generator, List
 
 import ants
 import numpy as np
@@ -18,6 +19,7 @@ def mri_to_subject(mri: PosixPath) -> tio.Subject:
 
     Args:
         mri (PosixPath): Path to the MRI data.
+        second_mri (Optional[PosixPath]): Path to the second MRI data.
 
     Returns:
         tio.Subject: The preprocessed MRI data.
@@ -87,6 +89,7 @@ def predict(mris: list,
         torch.Tensor: Segmentations.
     """
     inp = np.stack([mri.mri.data.numpy() for mri in mris])
+
     logits = engine(inp)
     logits = to_ca_mode(torch.tensor(logits[0]), ca_mode)
 
@@ -102,7 +105,7 @@ def predict(mris: list,
     return results
 
 
-def segment(subject: tio.Subject,
+def segment(subjects: List[tio.Subject],
             augmentation_cfg: DictConfig,
             segmentation_cfg: DictConfig,
             n_engines: int,
@@ -113,7 +116,7 @@ def segment(subject: tio.Subject,
     Segments the given subject.
 
     Args:
-        subject (tio.Subject): The subject to segment.
+        subjects (List): List of the subject to segment.
         augmentation_cfg (DictConfig): Augmentation configuration.
         segmentation_cfg (DictConfig): Segmentation configuration.
         engines (Generator[InferenceEngine]): Inference Engines.
@@ -123,8 +126,11 @@ def segment(subject: tio.Subject,
     Returns:
         torch.Tensor: The segmented subject.
     """
-    subjects = get_augmented_subject(subject, augmentation_cfg,
-                                     segmentation_cfg)
+    subjects = list(
+        itertools.chain(*[
+            get_augmented_subject(subject, augmentation_cfg, segmentation_cfg)
+            for subject in subjects
+        ]))
 
     batched_subjects = [
         subjects[x:x + batch_size] for x in range(0, len(subjects), batch_size)

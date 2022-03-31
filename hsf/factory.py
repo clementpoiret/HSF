@@ -12,6 +12,7 @@ from roiloc.locator import RoiLocator
 
 from hsf.engines import get_inference_engines
 from hsf.fetch_models import fetch_models
+from hsf.multispectrality import get_second_contrast, register
 from hsf.roiloc_wrapper import (get_hippocampi, get_mri, load_from_config,
                                 save_hippocampi)
 from hsf.segment import mri_to_subject, save_prediction, segment
@@ -159,7 +160,15 @@ def main(cfg: DictConfig) -> None:
     N = len(mris)
     log.info(f"HSF found {N} MRIs to segment following to your configuration.")
 
+    pattern = cfg.multispectrality.pattern
+    if pattern:
+        log.warning("Multispectrality is currently in beta stage.")
+
     for i, mri in enumerate(mris):
+        second_contrast = get_second_contrast(mri, pattern)
+        if second_contrast:
+            second_contrast = register(mri, second_contrast, cfg)
+
         locator, orientation, hippocampi = get_lr_hippocampi(mri, cfg)
 
         for j, hippocampus in enumerate(hippocampi):

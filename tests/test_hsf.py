@@ -181,11 +181,11 @@ def test_segment(models_path, config, deepsparse_inference_engines):
     mri = models_path / "tse_right_hippocampus.nii.gz"
     sub = hsf.segment.mri_to_subject(mri)
     aug = hsf.augmentation.get_augmentation_pipeline(config.augmentation)
-    sub = aug(sub)
+    sub = [aug(sub)]
 
     for ca_mode in ["1/23", "123"]:
         _, pred = hsf.segment.segment(
-            subject=sub,
+            subjects=sub,
             augmentation_cfg=config.augmentation,
             segmentation_cfg=config.segmentation.segmentation,
             n_engines=1,

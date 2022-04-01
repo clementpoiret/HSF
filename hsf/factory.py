@@ -197,9 +197,9 @@ def main(cfg: DictConfig) -> None:
                                            second_hippocampus, engines, cfg)
 
             if soft_pred.shape[0] > 1:
-                compute_uncertainty(hippocampus, soft_pred)
+                compute_uncertainty(first_hippocampus, soft_pred)
 
-            save(mri, hippocampus, hard_pred, locator, orientation)
+            save(mri, first_hippocampus, hard_pred, locator, orientation)
 
 
 def start():

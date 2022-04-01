@@ -118,7 +118,7 @@ def config(models_path):
 @pytest.fixture(scope="session")
 def deepsparse_inference_engines(models_path):
     """Tests that models can be loaded using DeepSparse"""
-    settings = DictConfig({"num_cores": 0, "batch_size": 1})
+    settings = DictConfig({"num_cores": 0, "batch_size": 2})
 
     engines = hsf.engines.get_inference_engines(models_path,
                                                 engine_name="deepsparse",

@@ -88,8 +88,8 @@ def config(models_path):
             },
         },
         "multispectrality": {
-            "pattern": "tse.nii.gz",
-            "same_space": False,
+            "pattern": None,
+            "same_space": True,
             "registration": {
                 "type_of_transform": "AffineFast"
             }
@@ -188,8 +188,7 @@ def test_segment(models_path, config, deepsparse_inference_engines):
     """Tests that we can segment and save a hippocampus."""
     mri = models_path / "tse_right_hippocampus.nii.gz"
     sub = hsf.segment.mri_to_subject(mri)
-    aug = hsf.augmentation.get_augmentation_pipeline(config.augmentation)
-    sub = [aug(sub)]
+    sub = [sub, sub]
 
     for ca_mode in ["1/23", "123"]:
         _, pred = hsf.segment.segment(
@@ -199,13 +198,26 @@ def test_segment(models_path, config, deepsparse_inference_engines):
             n_engines=1,
             engines=deepsparse_inference_engines,
             ca_mode=ca_mode,
-            batch_size=1)
+            batch_size=2)
 
     hsf.segment.save_prediction(mri, pred)
 
 
-def test_multispectrality(models_path, config):
+def test_multispectrality(models_path):
     """Tests that we can co-locate hippocampi in another contrast."""
+    config = DictConfig({
+        "files": {
+            "output_dir": str(models_path)
+        },
+        "multispectrality": {
+            "pattern": "tse.nii.gz",
+            "same_space": False,
+            "registration": {
+                "type_of_transform": "AffineFast"
+            }
+        }
+    })
+
     mri = hsf.roiloc_wrapper.load_from_config(models_path, "tse.nii.gz")[0]
     second_contrast = hsf.multispectrality.get_second_contrast(
         mri, "tse.nii.gz")
@@ -225,10 +237,7 @@ def test_multispectrality(models_path, config):
     }, None)
 
     _, _ = hsf.multispectrality.get_additional_hippocampi(
-        mri, registered, locator,
-        DictConfig({"files": {
-            "output_dir": str(models_path)
-        }}))
+        mri, registered, locator, config)
 
 
 def test_uncertainty():

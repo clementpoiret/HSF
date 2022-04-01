@@ -151,7 +151,11 @@ def main(cfg: DictConfig) -> None:
     if cfg.hardware.engine == "deepsparse":
         tta = cfg.segmentation.segmentation.test_time_num_aug
         bs = cfg.hardware.engine_settings.batch_size
-        assert tta % bs == 0, "test_time_num_aug must be a multiple of batch_size for deepsparse"
+        multispectral = 2 if cfg.multispectrality.pattern else 1
+
+        assert multispectral * (
+            tta + 1
+        ) % bs == 0, "test_time_num_aug+1 must be a multiple of batch_size for deepsparse"
 
     mris = load_from_config(cfg.files.path, cfg.files.pattern)
 

@@ -87,6 +87,13 @@ def config(models_path):
                 "locked_borders": 0
             },
         },
+        "multispectrality": {
+            "pattern": None,
+            "same_space": True,
+            "registration": {
+                "type_of_transform": "AffineFast"
+            }
+        },
         "segmentation": {
             "ca_mode": "1/2/3",
             "models_path": str(models_path),
@@ -198,7 +205,7 @@ def test_segment(models_path, config, deepsparse_inference_engines):
 
 
 def test_multispectrality(models_path):
-    """Tests that we can segment and save a hippocampus."""
+    """Tests that we can co-locate hippocampi in another contrast."""
     mri = hsf.roiloc_wrapper.load_from_config(models_path, "tse.nii.gz")[0]
     second_contrast = hsf.multispectrality.get_second_contrast(
         mri, "tse.nii.gz")

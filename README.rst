@@ -198,6 +198,7 @@ HSF
 
 **Version 1.1.0**
 
+* New optional multispectral mode de segment from both T1 AND T2 images
 * Bug fixes and optimizations
 
 **Version 1.0.1**

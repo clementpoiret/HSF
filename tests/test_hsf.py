@@ -5,6 +5,7 @@ import ants
 import hsf.engines
 import hsf.factory
 import hsf.fetch_models
+import hsf.multispectrality
 import hsf.roiloc_wrapper
 import hsf.segment
 import hsf.uncertainty
@@ -85,6 +86,13 @@ def config(models_path):
                 "max_displacement": 4,
                 "locked_borders": 0
             },
+        },
+        "multispectrality": {
+            "pattern": None,
+            "same_space": True,
+            "registration": {
+                "type_of_transform": "AffineFast"
+            }
         },
         "segmentation": {
             "ca_mode": "1/2/3",
@@ -181,11 +189,11 @@ def test_segment(models_path, config, deepsparse_inference_engines):
     mri = models_path / "tse_right_hippocampus.nii.gz"
     sub = hsf.segment.mri_to_subject(mri)
     aug = hsf.augmentation.get_augmentation_pipeline(config.augmentation)
-    sub = aug(sub)
+    sub = [aug(sub)]
 
     for ca_mode in ["1/23", "123"]:
         _, pred = hsf.segment.segment(
-            subject=sub,
+            subjects=sub,
             augmentation_cfg=config.augmentation,
             segmentation_cfg=config.segmentation.segmentation,
             n_engines=1,
@@ -194,6 +202,33 @@ def test_segment(models_path, config, deepsparse_inference_engines):
             batch_size=1)
 
     hsf.segment.save_prediction(mri, pred)
+
+
+def test_multispectrality(models_path, config):
+    """Tests that we can co-locate hippocampi in another contrast."""
+    mri = hsf.roiloc_wrapper.load_from_config(models_path, "tse.nii.gz")[0]
+    second_contrast = hsf.multispectrality.get_second_contrast(
+        mri, "tse.nii.gz")
+
+    registered = hsf.multispectrality.register(
+        mri, second_contrast,
+        DictConfig({"multispectrality": {
+            "same_space": True
+        }}))
+    registered = hsf.multispectrality.register(mri, second_contrast, config)
+
+    img = ants.image_read(str(mri), reorient="LPI")
+    locator, _, _ = hsf.roiloc_wrapper.get_hippocampi(img, {
+        "contrast": "t2",
+        "margin": [2, 0, 2],
+        "roi": "hippocampus"
+    }, None)
+
+    _, _ = hsf.multispectrality.get_additional_hippocampi(
+        mri, registered, locator,
+        DictConfig({"files": {
+            "output_dir": str(models_path)
+        }}))
 
 
 def test_uncertainty():

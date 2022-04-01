@@ -2,6 +2,7 @@
 
 ## Software
 
+* New multispectral mode to segment from both T1 and T2 images
 * Fixed ANTs overloading /tmp directory
 * Updated dependencies
 

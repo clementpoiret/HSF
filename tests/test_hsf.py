@@ -88,8 +88,8 @@ def config(models_path):
             },
         },
         "multispectrality": {
-            "pattern": None,
-            "same_space": True,
+            "pattern": "tse.nii.gz",
+            "same_space": False,
             "registration": {
                 "type_of_transform": "AffineFast"
             }

@@ -57,6 +57,26 @@ The following example will recursively search all `*T2w.nii.gz` files in the `~D
 hsf files.path="~/Datasets/MRI/" files.pattern="**/*T2w.nii.gz" files.mask_pattern="*T2w_bet_mask.nii.gz
 ```
 
+### Multispectral mode
+
+Since v1.1.0, HSF supports multispectral mode, where the segmentation is defined from a consensus between segmentations from both T1 and T2 images. Default parameters are defined in [`conf/multispectrality/default.yaml`](https://github.com/clementpoiret/HSF/blob/master/hsf/conf/multispectrality/default.yaml).
+
+- `pattern` defines how to find the alternative contrast of the subject.
+- `same_space` defines whether the alternative contrast is already in the same space as the main one. If not, a registration will be performed with the `registration.*` arguments.
+- `registration` are the parameters given to [`ants.registration`](https://antspy.readthedocs.io/en/latest/registration.html), such as `type_of_transform`.
+
+You can use the multispectral mode with the following example. For each T2w MRI, it will search a local T1w MRI in the same folder, then register the T1 to the T2 image using an affine registration (default behavior), using the meansquares metric.
+
+```sh
+hsf files.path="~/Datasets/MRI/" files.pattern="**/*T2w.nii.gz" multispectrality.pattern="T1w_hires.nii.gz" multispectrality.same_space=False +multispectrality.registration.aff_metric="meansquares"
+```
+
+!!! warning "Multispectral mode may not always be the best choice"
+    Because it comes from a consensus between T1 and T2 images, it is highly dependent on the quality of the registration.
+    If hippocampi do not overlap well, the consensus will be biased.
+
+    A good choice might be to manually register the images, perform a quality check, then use the multispectral mode while passing `same_space=True`.
+
 ### Preprocessing pipeline
 
 The preprocessing pipeline is kept as minimal as possible.

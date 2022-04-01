@@ -18,6 +18,7 @@ Current maintainers:
 
 ### Version 1.1.0 (N/A)
 
+* New optional multispectral mode de segment from both T1 AND T2 images
 * Bug fixes and optimizations
 
 ### Version 1.0.1 (2021-12-07)

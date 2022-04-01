@@ -60,7 +60,7 @@ def config(models_path):
                         "gpu_mem_limit": 2147483648
                     }
                 ], "CPUExecutionProvider"],
-                "batch_size": 2
+                "batch_size": 1
             }
         },
         "roiloc": {

@@ -217,7 +217,8 @@ def test_multispectrality(models_path, config):
         }}))
     registered = hsf.multispectrality.register(mri, second_contrast, config)
 
-    locator, _, _ = hsf.roiloc_wrapper.get_hippocampi(mri, {
+    img = ants.image_read(str(mri), reorient="LPI")
+    locator, _, _ = hsf.roiloc_wrapper.get_hippocampi(img, {
         "contrast": "t2",
         "margin": [2, 0, 2],
         "roi": "hippocampus"

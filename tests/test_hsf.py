@@ -5,6 +5,7 @@ import ants
 import hsf.engines
 import hsf.factory
 import hsf.fetch_models
+import hsf.multispectrality
 import hsf.roiloc_wrapper
 import hsf.segment
 import hsf.uncertainty
@@ -194,6 +195,41 @@ def test_segment(models_path, config, deepsparse_inference_engines):
             batch_size=1)
 
     hsf.segment.save_prediction(mri, pred)
+
+
+def test_multispectrality(models_path):
+    """Tests that we can segment and save a hippocampus."""
+    mri = hsf.roiloc_wrapper.load_from_config(models_path, "tse.nii.gz")[0]
+    second_contrast = hsf.multispectrality.get_second_contrast(
+        mri, "tse.nii.gz")
+
+    registered = hsf.multispectrality.register(
+        mri, second_contrast,
+        DictConfig({"multispectrality": {
+            "same_space": True
+        }}))
+    registered = hsf.multispectrality.register(
+        mri, second_contrast,
+        DictConfig({
+            "multispectrality": {
+                "same_space": False,
+                "registration": {
+                    "type_of_transform": "AffineFast"
+                }
+            }
+        }))
+
+    locator, _, _ = hsf.roiloc_wrapper.get_hippocampi(mri, {
+        "contrast": "t2",
+        "margin": [2, 0, 2],
+        "roi": "hippocampus"
+    }, None)
+
+    _, _ = hsf.multispectrality.get_additional_hippocampi(
+        mri, registered, locator,
+        DictConfig({"files": {
+            "output_dir": str(models_path)
+        }}))
 
 
 def test_uncertainty():

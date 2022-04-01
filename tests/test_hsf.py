@@ -204,7 +204,7 @@ def test_segment(models_path, config, deepsparse_inference_engines):
     hsf.segment.save_prediction(mri, pred)
 
 
-def test_multispectrality(models_path):
+def test_multispectrality(models_path, config):
     """Tests that we can co-locate hippocampi in another contrast."""
     mri = hsf.roiloc_wrapper.load_from_config(models_path, "tse.nii.gz")[0]
     second_contrast = hsf.multispectrality.get_second_contrast(
@@ -215,16 +215,7 @@ def test_multispectrality(models_path):
         DictConfig({"multispectrality": {
             "same_space": True
         }}))
-    registered = hsf.multispectrality.register(
-        mri, second_contrast,
-        DictConfig({
-            "multispectrality": {
-                "same_space": False,
-                "registration": {
-                    "type_of_transform": "AffineFast"
-                }
-            }
-        }))
+    registered = hsf.multispectrality.register(mri, second_contrast, config)
 
     locator, _, _ = hsf.roiloc_wrapper.get_hippocampi(mri, {
         "contrast": "t2",

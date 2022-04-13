@@ -24,7 +24,7 @@ def test_version():
 def models_path(tmpdir_factory):
     """Setup tmpdir."""
     url = "https://zenodo.org/record/6457484/files/arunet_3.0.0_single.onnx?download=1"
-    xxh3 = "40ebbfaad2e2e258"
+    xxh3 = "71edec9011f7f304"
 
     tmpdir_path = tmpdir_factory.mktemp("hsf")
     tmpdir_path = Path(tmpdir_path)
@@ -102,7 +102,7 @@ def config(models_path):
                     "url":
                         "https://zenodo.org/record/6457484/files/arunet_3.0.0_single.onnx?download=1",
                     "xxh3_64":
-                        "40ebbfaad2e2e258"
+                        "71edec9011f7f304"
                 }
             },
             "segmentation": {

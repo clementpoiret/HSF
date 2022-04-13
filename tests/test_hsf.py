@@ -23,8 +23,8 @@ def test_version():
 @pytest.fixture(scope="session")
 def models_path(tmpdir_factory):
     """Setup tmpdir."""
-    url = "https://zenodo.org/record/6277536/files/arunet_2.1.1_single-optimized.onnx?download=1"
-    xxh3 = "76ec1ada8c6dc62e"
+    url = "https://zenodo.org/record/6457484/files/arunet_3.0.0_single.onnx?download=1"
+    xxh3 = "40ebbfaad2e2e258"
 
     tmpdir_path = tmpdir_factory.mktemp("hsf")
     tmpdir_path = Path(tmpdir_path)
@@ -100,9 +100,9 @@ def config(models_path):
             "models": {
                 "model.onnx": {
                     "url":
-                        "https://zenodo.org/record/5524594/files/arunet_bag0.onnx?download=1",
+                        "https://zenodo.org/record/6457484/files/arunet_3.0.0_single.onnx?download=1",
                     "xxh3_64":
-                        "d0de65baa81d9382"
+                        "40ebbfaad2e2e258"
                 }
             },
             "segmentation": {

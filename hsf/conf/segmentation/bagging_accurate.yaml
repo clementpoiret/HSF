@@ -1,6 +1,6 @@
-# Original models from Poiret, et al., 2021.
+# Original models from Poiret, et al., 2022.
 # Uses bootstrap aggregating and test-time augmentation.
-# Current version: 2.1.1
+# Current version: 3.0.0
 
 ca_mode: "1/2/3"
 models_path: "~/.hsf/models/bagging/"

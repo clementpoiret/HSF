@@ -135,7 +135,7 @@ def save(mri: PosixPath, hippocampus: PosixPath, hard_pred: torch.Tensor,
         native_segmentation = ants.reorient_image2(native_segmentation,
                                                    orientation=orientation)
 
-    extensions = "".join(mri.suffixes)
+    extensions = "".join(hippocampus.suffixes)
     fname = hippocampus.name.replace(extensions, "") + "_seg.nii.gz"
     output_path = mri.parent / fname
 

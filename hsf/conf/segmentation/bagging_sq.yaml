@@ -1,0 +1,28 @@
+# Original models from Poiret, et al., 2022.
+# Uses bootstrap aggregating and test-time augmentation.
+# This model is sparsified at 85%, and int8-quantized using:
+# PyTorch 1.9.1 & SparseML 0.12.0.
+# Current version: 3.0.0
+
+ca_mode: "1/2/3"
+models_path: "~/.hsf/models/bagging/"
+models:
+  arunet_bag_0.onnx:
+    url: "https://zenodo.org/record/6482419/files/arunet_3.0.0_85sparse_qat_bag0.onnx?download=1"
+    xxh3_64: "6ad8c700d15e5d69"
+  arunet_bag_1.onnx:
+    url: "https://zenodo.org/record/6482419/files/arunet_3.0.0_85sparse_qat_bag1.onnx?download=1"
+    xxh3_64: "af6b96bae3be1ad0"
+  arunet_bag_2.onnx:
+    url: "https://zenodo.org/record/6482419/files/arunet_3.0.0_85sparse_qat_bag2.onnx?download=1"
+    xxh3_64: "ff060177f9b20e0b"
+  arunet_bag_3.onnx:
+    url: "https://zenodo.org/record/6482419/files/arunet_3.0.0_85sparse_qat_bag3.onnx?download=1"
+    xxh3_64: "62d11c643863017d"
+  arunet_bag_4.onnx:
+    url: "https://zenodo.org/record/6482419/files/arunet_3.0.0_85sparse_qat_bag4.onnx?download=1"
+    xxh3_64: "f1c779a6492290c2"
+
+segmentation:
+  test_time_augmentation: True
+  test_time_num_aug: 20

@@ -9,3 +9,4 @@
 ## Models
 
 * New single and bagging models with more data and less biases (Tails of T1w MRIs)
+* New sparse models with int8-quantized weights

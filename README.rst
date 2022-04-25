@@ -4,7 +4,7 @@ Hippocampal Segmentation Factory (HSF)
 
 Exhaustive documentation available at: `hsf.rtfd.io <https://hsf.rtfd.io/>`_
 
-**Current Models version:** 2.1.1
+**Current Models version:** 3.0.0
 
 .. list-table::
     :header-rows: 1
@@ -115,8 +115,10 @@ To date, we propose 4 different segmentation algorithms (from the fastest to the
 
 - ``single_fast``: a segmentation is performed on the whole volume by only one model,
 - ``single_accurate``: a single model segments the same volume that has been augmented 20 times through TTA,
+- ``single_sq``: like ``single_accurate``, but using int8-quantized sparse models for a fast and efficient inference,
 - ``bagging_fast``: a bagging ensemble of 5 models is used to segment the volume without TTA,
-- ``bagging_accurate``: a bagging ensemble of 5 models is used to segment the volume with TTA.
+- ``bagging_accurate``: a bagging ensemble of 5 models is used to segment the volume with TTA,
+- ``bagging_sq``: like ``bagging_accurate``, but using int8-quantized sparse models for a fast and efficient inference.
 
 Finally, ``segmentation.ca_mode`` is a parameter that allows to combine CA1, CA2 and CA3 subfields.
 It is particularly useful when you want to segment low-resolution images where it makes no sense to
@@ -132,8 +134,10 @@ Compose your configuration from those groups (group=option)
 
 * augmentation: default
 * files: default
-* roiloc: default_t2iso
-* segmentation: bagging_accurate, bagging_fast, single_accurate, single_fast
+* hardware: deepsparse, onnxruntime
+* multispectrality: default
+* roiloc: default_corot2, default_t2iso
+* segmentation: bagging_accurate, bagging_fast, bagging_sq, single_accurate, single_fast, single_sq
 
 Override anything in the config (e.g. hsf roiloc.margin=[16,2,16])
 
@@ -189,6 +193,22 @@ Fields set with ??? are mandatory.
          * max_displacement: 4
          * locked_borders: 0
 
+   multispectrality:
+   
+   * pattern: null
+   * same_space: true
+   * registration:
+     * type_of_transform: Affine
+
+   hardware:
+  
+   * engine: onnxruntime
+   * engine_settings:
+     * execution_providers:
+       - CUDAExecutionProvider
+       - CPUExecutionProvider
+     * batch_size: 1
+
 
 Changelogs
 ==========
@@ -230,6 +250,11 @@ HSF
 
 Models
 ------
+
+**Version 3.0.0**
+
+* More data (coming from the Human Connectome Project),
+* New sparse and int8-quantized models.
 
 **Version 2.1.1**
 

@@ -22,6 +22,9 @@ conf
 │   │   onnxruntime.yaml
 │   │   deepsparse.yaml
 │
+└───multipectrality
+│   │   default.yaml
+│
 └───roiloc
 │   │   default_corot2.yaml
 │   │   default_t2iso.yaml
@@ -29,8 +32,10 @@ conf
 └───segmentation
     │   single_fast.yaml
     │   single_accurate.yaml
+    │   single_sq.yaml
     │   bagging_fast.yaml
     │   bagging_accurate.yaml
+    │   bagging_sq.yaml
 ```
 
 Groups can be selected with `group=option`. For example: `hsf segmentation=bagging_fast`
@@ -257,9 +262,9 @@ hsf hardware=deepsparse
     For example, models can be pruned (e.g. weights are removed to obtain an optimal sub-model),
     or Quantized (e.g. weights, biases and activations are quantized to 8-bit).
 
-<!-- Since HSF v1.0.0, we provide sparsified and quantized models. Therefore, to fully benefit from
+Since HSF v1.1.0, we provide sparsified and quantized models. Therefore, to fully benefit from
 DeepSparse, you can our sparsified bootstrapped models trained with Quantization Aware Training (QAT):
 
 ```sh
-hsf hardware=deepsparse segmentation=bagging_sparseqat
-``` -->
+hsf hardware=deepsparse segmentation=bagging_sq
+```

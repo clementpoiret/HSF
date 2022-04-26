@@ -204,9 +204,7 @@ Fields set with ??? are mandatory.
   
    * engine: onnxruntime
    * engine_settings:
-     * execution_providers:
-       - CUDAExecutionProvider
-       - CPUExecutionProvider
+     * execution_providers: ["CUDAExecutionProvider","CPUExecutionProvider"]
      * batch_size: 1
 
 

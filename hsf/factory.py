@@ -162,7 +162,7 @@ def main(cfg: DictConfig) -> None:
     log.warning(
         "Please be aware that the segmentation is highly dependant on ROILoc to locate both hippocampi.\nROILoc will be run using the following configuration.\nIf the segmentation is of bad quality, please tune your ROILoc settings (e.g. ``margin``)."
     )
-    log.debug(cfg.roiloc)
+    log.info(cfg.roiloc)
     log.info(
         "For additional details about ROILoc, please see https://github.com/clementpoiret/ROILoc"
     )

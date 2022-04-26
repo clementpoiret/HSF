@@ -5,6 +5,7 @@ import ants
 import hsf.engines
 import hsf.factory
 import hsf.fetch_models
+import hsf.multispectrality
 import hsf.roiloc_wrapper
 import hsf.segment
 import hsf.uncertainty
@@ -15,15 +16,15 @@ from omegaconf import DictConfig
 
 
 def test_version():
-    assert __version__ == '1.0.1'
+    assert __version__ == '1.1.0'
 
 
 # SETUP FIXTURES
 @pytest.fixture(scope="session")
 def models_path(tmpdir_factory):
     """Setup tmpdir."""
-    url = "https://zenodo.org/record/5524594/files/arunet_bag0.onnx?download=1"
-    xxh3 = "d0de65baa81d9382"
+    url = "https://zenodo.org/record/6457484/files/arunet_3.0.0_single.onnx?download=1"
+    xxh3 = "71edec9011f7f304"
 
     tmpdir_path = tmpdir_factory.mktemp("hsf")
     tmpdir_path = Path(tmpdir_path)
@@ -59,7 +60,7 @@ def config(models_path):
                         "gpu_mem_limit": 2147483648
                     }
                 ], "CPUExecutionProvider"],
-                "batch_size": 2
+                "batch_size": 1
             }
         },
         "roiloc": {
@@ -86,15 +87,22 @@ def config(models_path):
                 "locked_borders": 0
             },
         },
+        "multispectrality": {
+            "pattern": None,
+            "same_space": True,
+            "registration": {
+                "type_of_transform": "AffineFast"
+            }
+        },
         "segmentation": {
             "ca_mode": "1/2/3",
             "models_path": str(models_path),
             "models": {
                 "model.onnx": {
                     "url":
-                        "https://zenodo.org/record/5524594/files/arunet_bag0.onnx?download=1",
+                        "https://zenodo.org/record/6457484/files/arunet_3.0.0_single.onnx?download=1",
                     "xxh3_64":
-                        "d0de65baa81d9382"
+                        "71edec9011f7f304"
                 }
             },
             "segmentation": {
@@ -110,7 +118,7 @@ def config(models_path):
 @pytest.fixture(scope="session")
 def deepsparse_inference_engines(models_path):
     """Tests that models can be loaded using DeepSparse"""
-    settings = DictConfig({"num_cores": 0, "num_sockets": 0, "batch_size": 1})
+    settings = DictConfig({"num_cores": 0, "batch_size": 2})
 
     engines = hsf.engines.get_inference_engines(models_path,
                                                 engine_name="deepsparse",
@@ -180,20 +188,56 @@ def test_segment(models_path, config, deepsparse_inference_engines):
     """Tests that we can segment and save a hippocampus."""
     mri = models_path / "tse_right_hippocampus.nii.gz"
     sub = hsf.segment.mri_to_subject(mri)
-    aug = hsf.augmentation.get_augmentation_pipeline(config.augmentation)
-    sub = aug(sub)
+    sub = [sub, sub]
 
     for ca_mode in ["1/23", "123"]:
         _, pred = hsf.segment.segment(
-            subject=sub,
+            subjects=sub,
             augmentation_cfg=config.augmentation,
             segmentation_cfg=config.segmentation.segmentation,
             n_engines=1,
             engines=deepsparse_inference_engines,
             ca_mode=ca_mode,
-            batch_size=1)
+            batch_size=2)
 
     hsf.segment.save_prediction(mri, pred)
+
+
+def test_multispectrality(models_path):
+    """Tests that we can co-locate hippocampi in another contrast."""
+    config = DictConfig({
+        "files": {
+            "output_dir": str(models_path)
+        },
+        "multispectrality": {
+            "pattern": "tse.nii.gz",
+            "same_space": False,
+            "registration": {
+                "type_of_transform": "AffineFast"
+            }
+        }
+    })
+
+    mri = hsf.roiloc_wrapper.load_from_config(models_path, "tse.nii.gz")[0]
+    second_contrast = hsf.multispectrality.get_second_contrast(
+        mri, "tse.nii.gz")
+
+    registered = hsf.multispectrality.register(
+        mri, second_contrast,
+        DictConfig({"multispectrality": {
+            "same_space": True
+        }}))
+    registered = hsf.multispectrality.register(mri, second_contrast, config)
+
+    img = ants.image_read(str(mri), reorient="LPI")
+    locator, _, _ = hsf.roiloc_wrapper.get_hippocampi(img, {
+        "contrast": "t2",
+        "margin": [2, 0, 2],
+        "roi": "hippocampus"
+    }, None)
+
+    _, _ = hsf.multispectrality.get_additional_hippocampi(
+        mri, registered, locator, config)
 
 
 def test_uncertainty():

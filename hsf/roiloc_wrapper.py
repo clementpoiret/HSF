@@ -1,12 +1,19 @@
+import logging
 from pathlib import Path, PosixPath
 from typing import Optional
 
 import ants
 from omegaconf.dictconfig import DictConfig
-from rich import print as pprint
+from rich.logging import RichHandler
 from roiloc.locator import RoiLocator
 
-PREFIX = "[italic white]ROILOC >"
+FORMAT = "%(message)s"
+logging.basicConfig(level="NOTSET",
+                    format=FORMAT,
+                    datefmt="[%X]",
+                    handlers=[RichHandler()])
+
+log = logging.getLogger(__name__)
 
 
 def load_from_config(path: str, pattern: str) -> list:
@@ -42,12 +49,12 @@ def get_mri(mri: PosixPath, mask_pattern: Optional[str] = None) -> tuple:
             mask = ants.image_read(str(mask[0]), pixeltype="unsigned int")
         else:
             mask = None
-            pprint(
-                f"{PREFIX} Couldn't find brain extraction mask for the provided pattern."
-            )
+            log.warning(
+                "Couldn't find brain extraction mask for the provided pattern.")
     else:
         mask = None
 
+    log.info(f"Loading mri from {mri}")
     return ants.image_read(str(mri)), mask
 
 

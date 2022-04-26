@@ -1,12 +1,13 @@
-# Original models from Poiret, et al., 2021.
+# Original models from Poiret, et al., 2022.
 # Uses a single model and test-time augmentation.
+# Current version: 3.0.0
 
 ca_mode: "1/2/3"
 models_path: "~/.hsf/models/single/"
 models:
   arunet_bag_0.onnx:
-    url: "https://zenodo.org/record/5657908/files/arunet_2.0.0_single-optimized.onnx?download=1"
-    xxh3_64: "3f8ce0b573829efc"
+    url: "https://zenodo.org/record/6457484/files/arunet_3.0.0_single.onnx?download=1"
+    xxh3_64: "71edec9011f7f304"
 
 segmentation:
   test_time_augmentation: True

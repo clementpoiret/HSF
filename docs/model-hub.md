@@ -48,10 +48,10 @@ All the models are using the same `ARUnet` architecture, which will be detailed 
     Test-time augmentation also allows the computation of an uncertainty map to analyze
     the quality of the resulting segmentation.
 
-<!-- ??? example "`bagging_sparse` and `bagging_sparseqat` models"
+??? example "`single_sq` and `bagging_sq` models"
 
-    Those are the two most advanced methods. Inference is done with 5 models trained
-    on different subsets of the dataset (random sampling with replacement).
+    Those are the two most advanced methods. Inference is done with 1 or 5 models
+    trained on different subsets of the dataset (random sampling with replacement).
 
     This allows to have models with different learned properties, offering a better
     segmentation, but a slower inference compared to the classic `single_*` models.
@@ -60,16 +60,16 @@ All the models are using the same `ARUnet` architecture, which will be detailed 
     the computational cost of the inference while retaining an optimal sub-model
     following the lottery ticket hypothesis.
 
-    The `sparseqat` method also includes Quantization Aware Training to improve even
+    The `sq` method also includes Quantization Aware Training to improve even
     more the efficiency of the inference.
 
     Those methods are appropriate for recent hardware supporting efficient computations
     on sparse vectors. Int8 Quantization is better used on hardware supporting fast
     int8 matrix computations. For example, on a CPU supporting the AVX512-VNNI vector
-    instruction set, your best bet is to use the `bagging_sparseqat` segmentation method.
+    instruction set, your best bet is to use the `bagging_sq` segmentation method.
 
     Test-time augmentation also allows the computation of an uncertainty map to analyze
-    the quality of the resulting segmentation. -->
+    the quality of the resulting segmentation.
 
 ## Third-party Segmentation Models
 

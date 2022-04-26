@@ -1,5 +1,4 @@
 engine: deepsparse
 engine_settings:
   num_cores: 0
-  num_sockets: 0
   batch_size: 1

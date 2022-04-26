@@ -1,0 +1,16 @@
+# Original models from Poiret, et al., 2022.
+# Uses a single model and test-time augmentation.
+# This model is sparsified at 85%, and int8-quantized using:
+# PyTorch 1.9.1 & SparseML 0.12.0.
+# Current version: 3.0.0
+
+ca_mode: "1/2/3"
+models_path: "~/.hsf/models/single_sq/"
+models:
+  arunet_single.onnx:
+    url: "https://zenodo.org/record/6489202/files/arunet_3.0.0_85sparse_qat_single.onnx?download=1"
+    xxh3_64: "79387dac3cbcaa8e"
+
+segmentation:
+  test_time_augmentation: True
+  test_time_num_aug: 20

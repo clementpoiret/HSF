@@ -1,0 +1,4 @@
+pattern: Null
+same_space: True
+registration:
+  type_of_transform: "Affine"

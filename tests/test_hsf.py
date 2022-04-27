@@ -16,7 +16,7 @@ from omegaconf import DictConfig
 
 
 def test_version():
-    assert __version__ == '1.1.0'
+    assert __version__ == '1.1.1'
 
 
 # SETUP FIXTURES
@@ -190,7 +190,7 @@ def test_segment(models_path, config, deepsparse_inference_engines):
     sub = hsf.segment.mri_to_subject(mri)
     sub = [sub, sub]
 
-    for ca_mode in ["1/23", "123"]:
+    for ca_mode in ["1/23", "123", ""]:
         _, pred = hsf.segment.segment(
             subjects=sub,
             augmentation_cfg=config.augmentation,

@@ -16,7 +16,11 @@ Current maintainers:
 
 ## HSF
 
-### Version 1.1.0 (N/A)
+### Version 1.1.1 (2022-04-27)
+
+* Added whole-hippocampus segmentation
+
+### Version 1.1.0 (2022-04-25)
 
 * New optional multispectral mode de segment from both T1 AND T2 images
 * Bug fixes and optimizations

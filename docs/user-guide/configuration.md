@@ -108,6 +108,13 @@ For example, you can override this path by running:
 hsf segmentation.models_path="/mnt/models/"
 ```
 
+The models will output segmentations in the format given by `segmentation.ca_mode`:
+
+- `ca_mode=""`: the segmentation is a binary mask of the whole hippocampus,
+- `ca_mode="123"`: segmentation in subfields, with merged CA1, CA2 and CA3,
+- `ca_mode="1/23"`: segmentation in subfields, with merged CA2 and CA3,
+- `ca_mode="1/2/3"`: segmentation in subfields with separate CA1, CA2, and CA3.
+
 In the config files, the models are hardcoded by two parameters: an URL, and an xxHash3_64 hash to ensure the correct model is loaded.
 We opted for xxHash bacause it is fast and has a very low collision rate. We removed MD5 checksum because of its known security risks.
 

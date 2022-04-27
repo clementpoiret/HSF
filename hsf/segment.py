@@ -47,7 +47,13 @@ def to_ca_mode(logits: torch.Tensor, ca_mode: str = "1/2/3") -> torch.Tensor:
         torch.Tensor: The corrected logits.
     """
     # 0: bg, 1: dg, 2: ca1, 3: ca2, 4: ca3, 5: sub
-    if ca_mode == "1/2/3":
+    if not ca_mode:
+        # Whole hippocampus
+        _pre = logits[:, :1, :, :, :]
+        _in = np.sum(logits[:, 1:, :, :, :], axis=1, keepdims=True)
+
+        return torch.cat([_pre, _in], dim=1)
+    elif ca_mode == "1/2/3":
         # identity
         return logits
     elif ca_mode == "1/23":

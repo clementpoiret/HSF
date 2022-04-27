@@ -214,6 +214,10 @@ Changelogs
 HSF
 ---
 
+**Version 1.1.1**
+
+* Added whole-hippocampus segmentation
+
 **Version 1.1.0**
 
 * New optional multispectral mode de segment from both T1 AND T2 images

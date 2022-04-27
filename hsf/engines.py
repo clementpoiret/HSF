@@ -1,10 +1,25 @@
+import logging
 from pathlib import Path, PosixPath
 from typing import Generator
 
-import deepsparse
 import onnxruntime as ort
 from omegaconf.dictconfig import DictConfig
 from omegaconf.listconfig import ListConfig
+from rich.logging import RichHandler
+
+FORMAT = "%(message)s"
+logging.basicConfig(level="NOTSET",
+                    format=FORMAT,
+                    datefmt="[%X]",
+                    handlers=[RichHandler()])
+
+log = logging.getLogger(__name__)
+
+# Quick hack to import run on non-AVX2 CPUs
+try:
+    import deepsparse
+except Exception as e:
+    log.error(e)
 
 
 def deepsparse_support() -> str:

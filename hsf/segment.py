@@ -50,7 +50,7 @@ def to_ca_mode(logits: torch.Tensor, ca_mode: str = "1/2/3") -> torch.Tensor:
     if not ca_mode:
         # Whole hippocampus
         _pre = logits[:, :1, :, :, :]
-        _in = np.sum(logits[:, 1:, :, :, :], axis=1, keepdims=True)
+        _in = torch.sum(logits[:, 1:, :, :, :], dim=1, keepdim=True)
 
         return torch.cat([_pre, _in], dim=1)
     elif ca_mode == "1/2/3":

@@ -10,6 +10,7 @@ from hsf.engines import check_config, get_inference_engines
 from hsf.fetch_models import fetch_models
 from hsf.multispectrality import (get_additional_hippocampi,
                                   get_second_contrast, register)
+from hsf.preprocessing import resample, to_mni
 from hsf.roiloc_wrapper import get_lr_hippocampi, load_from_config
 from hsf.utils import compute_uncertainty, predict, save
 from hsf.welcome import welcome
@@ -50,6 +51,11 @@ def main(cfg: DictConfig) -> None:
         log.warning("Multispectrality is currently in beta stage.")
 
     for i, mri in enumerate(mris):
+        if cfg.preprocessing.resample.enabled:
+            mri = resample(mri, cfg)
+        if cfg.preprocessing.to_mni.enabled:
+            mri = to_mni(mri, cfg)
+
         second_contrast = get_second_contrast(mri, pattern)
 
         locator, orientation, hippocampi = get_lr_hippocampi(mri, cfg)

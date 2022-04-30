@@ -1,0 +1,14 @@
+resample:
+  enabled: False
+  params:
+    resample_params:
+      - 1.0
+      - 1.0
+      - 1.0
+    use_voxels: False
+    interp_type: 0
+
+to_mni:
+  enabled: False
+  params:
+    type_of_transform: "Affine"

@@ -66,8 +66,8 @@ def register(mri: PosixPath,
         if not registration_params.get("outprefix"):
             registration_params["outprefix"] = outprefix
 
-        fixed = ants.image_read(str(mri))
-        moving = ants.image_read(str(second_contrast))
+        fixed = ants.image_read(str(mri), reorient="LPI")
+        moving = ants.image_read(str(second_contrast), reorient="LPI")
 
         log.info(f"Registering {str(second_contrast)} to {str(mri)}")
         transformation = ants.registration(fixed=fixed,

@@ -51,11 +51,7 @@ def to_mni(mri: PosixPath,
 
     extensions = "".join(mri.suffixes)
     fname = mri.name.replace(extensions, "") + "_MNI.nii.gz"
-    if mri.parent.name != cfg.files.output_dir:
-        output_dir = mri.parent / cfg.files.output_dir
-        output_dir.mkdir(parents=True, exist_ok=True)
-    else:
-        output_dir = mri.parent
+    output_dir = mri.parent
 
     ants.image_write(registered, str(output_dir / fname))
 
@@ -82,11 +78,7 @@ def resample(mri: PosixPath, cfg: DictConfig) -> PosixPath:
 
     extensions = "".join(mri.suffixes)
     fname = mri.name.replace(extensions, "") + "_resampled.nii.gz"
-    if mri.parent.name != cfg.files.output_dir:
-        output_dir = mri.parent / cfg.files.output_dir
-        output_dir.mkdir(parents=True, exist_ok=True)
-    else:
-        output_dir = mri.parent
+    output_dir = mri.parent
 
     ants.image_write(resampled, str(output_dir / fname))
 

@@ -9,6 +9,7 @@ import hsf.multispectrality
 import hsf.roiloc_wrapper
 import hsf.segment
 import hsf.uncertainty
+import hsf.utils
 import pytest
 import torch
 from hsf import __version__
@@ -140,7 +141,7 @@ def test_main_compute_uncertainty(models_path):
     soft_pred = torch.randn(5, 6, 448, 30, 448)
     soft_pred = torch.softmax(soft_pred, dim=1)
 
-    hsf.factory.compute_uncertainty(models_path / "tse.nii.gz", soft_pred)
+    hsf.utils.compute_uncertainty(models_path / "tse.nii.gz", soft_pred)
 
 
 # fetch_models

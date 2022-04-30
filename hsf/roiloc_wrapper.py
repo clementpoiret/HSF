@@ -82,6 +82,40 @@ def get_hippocampi(mri: ants.ANTsImage,
     return locator, right_mri, left_mri
 
 
+def get_lr_hippocampi(mri: PosixPath, cfg: DictConfig) -> tuple:
+    """
+    Get left and right hippocampi from a given MRI.
+
+    Args:
+        mri (PosixPath): Path to the MRI.
+        cfg (DictConfig): Configuration.
+
+    Returns:
+        tuple: Tuple containing locator, orientation, left and right hippocampi.
+    """
+    image, bet_mask = get_mri(mri, cfg.files.mask_pattern)
+    log.info(image)
+    original_orientation = image.orientation
+
+    if original_orientation != "LPI":
+        log.warning(
+            "The image is not in LPI orientation, we encourage you to save it in LPI."
+        )
+        image = ants.reorient_image2(image, orientation="LPI")
+
+    log.info("Started locating left and right hippocampi...")
+    locator, right_mri, left_mri = get_hippocampi(mri=image,
+                                                  roiloc_cfg=cfg.roiloc,
+                                                  mask=bet_mask)
+
+    log.info("Saving left and right hippocampi (LPI orientation)...")
+    return locator, original_orientation, save_hippocampi(
+        right_mri=right_mri,
+        left_mri=left_mri,
+        dir_name=cfg.files.output_dir,
+        original_mri_path=mri)
+
+
 def save_hippocampi(right_mri: ants.ANTsImage, left_mri: ants.ANTsImage,
                     dir_name: str, original_mri_path: PosixPath) -> tuple:
     """

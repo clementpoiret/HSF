@@ -56,6 +56,23 @@ def print_deepsparse_support():
         deepsparse_support())
 
 
+def check_config(cfg: DictConfig) -> None:
+    """
+    Check if the configuration is valid.
+
+    Args:
+        cfg (DictConfig): Configuration.
+    """
+    if cfg.hardware.engine == "deepsparse":
+        tta = cfg.segmentation.segmentation.test_time_num_aug
+        bs = cfg.hardware.engine_settings.batch_size
+        multispectral = 2 if cfg.multispectrality.pattern else 1
+
+        assert multispectral * (
+            tta + 1
+        ) % bs == 0, "test_time_num_aug+1 must be a multiple of batch_size for deepsparse"
+
+
 def get_inference_engines(models_path: PosixPath, engine_name: str,
                           engine_settings: DictConfig) -> Generator:
     """

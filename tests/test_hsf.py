@@ -184,7 +184,7 @@ def test_preprocessing(models_path):
         }
     })
     resampled = hsf.preprocessing.resample(mri, config)
-    registered = hsf.preprocessing.to_mni(resampled, config)
+    _ = hsf.preprocessing.to_mni(resampled, config)
 
 
 def test_main_compute_uncertainty(models_path):

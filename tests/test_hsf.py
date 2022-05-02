@@ -6,6 +6,7 @@ import hsf.engines
 import hsf.factory
 import hsf.fetch_models
 import hsf.multispectrality
+import hsf.preprocessing
 import hsf.roiloc_wrapper
 import hsf.segment
 import hsf.uncertainty
@@ -62,6 +63,22 @@ def config(models_path):
                     }
                 ], "CPUExecutionProvider"],
                 "batch_size": 1
+            }
+        },
+        "preprocessing": {
+            "resample": {
+                "enabled": False,
+                "params": {
+                    "resample_params": [1.0, 1.0, 1.0],
+                    "use_voxels": False,
+                    "interp_type": 1
+                }
+            },
+            "to_mni": {
+                "enabled": False,
+                "params": {
+                    "type_of_transform": "AffineFast"
+                }
             }
         },
         "roiloc": {
@@ -136,6 +153,40 @@ def test_main(config):
     hsf.factory.main(config)
 
 
+def test_preprocessing(models_path):
+    """Tests that preprocessing can be done."""
+    mri = hsf.roiloc_wrapper.load_from_config(models_path, "tse.nii.gz")[0]
+
+    # Resampling & Registration
+    config = DictConfig({
+        "files": {
+            "output_dir": "hsf_outputs"
+        },
+        "roiloc": {
+            "contrast": "t2",
+            "bet": False
+        },
+        "preprocessing": {
+            "resample": {
+                "enabled": True,
+                "params": {
+                    "resample_params": [1.0, 1.0, 1.0],
+                    "use_voxels": False,
+                    "interp_type": 1
+                }
+            },
+            "to_mni": {
+                "enabled": True,
+                "params": {
+                    "type_of_transform": "AffineFast"
+                }
+            }
+        }
+    })
+    resampled = hsf.preprocessing.resample(mri, config)
+    registered = hsf.preprocessing.to_mni(resampled, config)
+
+
 def test_main_compute_uncertainty(models_path):
     """Tests that the main script can compute uncertainty."""
     soft_pred = torch.randn(5, 6, 448, 30, 448)
@@ -158,7 +209,7 @@ def test_fetch_models(models_path, config):
     hsf.fetch_models.fetch_models(models_path, config.segmentation.models)
 
 
-# # ROILoc
+# ROILoc
 def test_roiloc(models_path):
     """Tests that we can locate and save hippocampi."""
     mris = hsf.roiloc_wrapper.load_from_config(models_path, "tse.nii.gz")

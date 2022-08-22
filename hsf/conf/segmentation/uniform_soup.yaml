@@ -1,0 +1,15 @@
+# Models from Poiret, et al., 2022.
+# Mix of multiple models through uniform soup, see https://arxiv.org/pdf/2203.05482.pdf
+# Uses test-time augmentation.
+# Current version: 3.0.0 (alpha)
+
+ca_mode: "1/2/3"
+models_path: "~/.hsf/models/uniform_soup/"
+models:
+  arunet_single.onnx:
+    url: "https://zenodo.org/record/7014993/files/arunet_3.0.0_uniform-soup.onnx?download=1"
+    xxh3_64: "c5d6d001655b7b66"
+
+segmentation:
+  test_time_augmentation: True
+  test_time_num_aug: 20

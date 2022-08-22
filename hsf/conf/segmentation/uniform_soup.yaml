@@ -6,7 +6,7 @@
 ca_mode: "1/2/3"
 models_path: "~/.hsf/models/uniform_soup/"
 models:
-  arunet_single.onnx:
+  arunet_uniform-soup.onnx:
     url: "https://zenodo.org/record/7014993/files/arunet_3.0.0_uniform-soup.onnx?download=1"
     xxh3_64: "c5d6d001655b7b66"
 

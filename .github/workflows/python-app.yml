@@ -45,7 +45,7 @@ jobs:
             poetry-${{ secrets.CACHE_VERSION }}-${{ matrix.python-version }}-${{ matrix.operating-system }}-${{ hashFiles('**/poetry.lock') }}
 
       - name: Install Dependencies
-        run: poetry install
+        run: poetry install --all-extras
         if: steps.cache.outputs.cache-hit != 'true'
 
       - name: Test & Coverage

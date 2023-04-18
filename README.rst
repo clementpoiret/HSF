@@ -220,6 +220,10 @@ Changelogs
 HSF
 ---
 
+**Version 1.1.3**
+
+* Lower onnxruntime dependency to min 1.8.0
+
 **Version 1.1.2**
 
 * ***BREAKING CHANGE***: HSF needs to be installed using extra dependencies depending on the backend you want to use.

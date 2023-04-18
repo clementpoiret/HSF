@@ -11,7 +11,7 @@ from roiloc.locator import RoiLocator
 from hsf.roiloc_wrapper import save_hippocampi
 
 FORMAT = "%(message)s"
-logging.basicConfig(level="NOTSET",
+logging.basicConfig(level=logging.INFO,
                     format=FORMAT,
                     datefmt="[%X]",
                     handlers=[RichHandler()])

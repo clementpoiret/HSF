@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "HSF"
-version = "1.1.1"
+version = "1.1.2"
 description = "A simple yet exhaustive segmentation tool of the Hippocampal Subfields in T1w and T2w MRIs."
 authors = ["Clément POIRET <poiret.clement@outlook.fr>"]
 license = "MIT"
@@ -23,13 +23,19 @@ deepsparse_support = 'hsf.engines:print_deepsparse_support'
 python = "^3.7.1"
 torchio = "^0.18.56"
 roiloc = ">0.2.8"
-onnxruntime = "^1.8.1"
 hydra-core = "^1.1.1"
 wget = "^3.2"
-antspyx = ">0.2.9"
-xxhash = "^2.0.2"
+antspyx = ">0.3.0"
+xxhash = "^3.2.0"
 rich = ">11.0.0"
-deepsparse = ">0.8.0, <1.0.0"
+onnxruntime = {version = "^1.14.0", optional = true}
+onnxruntime-gpu = {version = "^1.14.0", optional = true}
+deepsparse = {version = "^1.4.0", optional = true}
+
+[tool.poetry.extras]
+cpu = ["onnxruntime"]
+gpu = ["onnxruntime-gpu"]
+sparse = ["deepsparse", "onnxruntime"]
 
 [tool.poetry.dev-dependencies]
 pytest = "^6"

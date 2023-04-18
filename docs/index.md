@@ -5,7 +5,7 @@
     <br>
     <font size="+2"><b>Hippocampal</b> <i>Segmentation</i> Factory</font>
     <br>
-    <b>Current HSF version:</b> 1.1.1<br>
+    <b>Current HSF version:</b> 1.1.2<br>
     <b>Built-in Models version:</b> 3.0.0<br>
     <b>Models in the Hub:</b> 6
 </p>

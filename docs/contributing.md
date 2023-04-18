@@ -62,7 +62,7 @@ We would be very grateful.
 We always seek for new datasets, so if you have a dataset with manual segmentations of hippocampi, or heard about a new released dataset, please let us know.
 
 As soon as we have obtained a relatively good amount of new segmentations (maybe 10 to 20 new hippocampi), we will retrain our models, and we will release a new version of HSF.
-You will then be able to benefit from the improved segmentation by running `pip install -U hsf` as soon as the new version is released.
+You will then be able to benefit from the improved segmentation by running `pip install -U hsf["your_hardware"]` as soon as the new version is released.
 
 Additionaly, if you trained your own models and you want to share them with the community, please consider making a pull request with
 a configuration file like the ones in `hsf/conf/segmentation/*.yaml`.

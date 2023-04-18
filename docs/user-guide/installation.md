@@ -27,7 +27,7 @@ You'll be able to to install HSF from PyPI by following the instructions:
 === "CPU"
 
     ```shell
-    pip install hsf
+    pip install hsf["cpu"]
     ```
 
 === "CUDA"
@@ -42,12 +42,10 @@ You'll be able to to install HSF from PyPI by following the instructions:
     ONNXRuntime 1.8 requires at least CUDA 11.0.3, and cuDNN 8.0.4. For newer versions, please
     check the [ONNXRuntime documentation](https://onnxruntime.ai/docs/execution-providers/CUDA-ExecutionProvider.html)
 
-    Then run the following commands (please note that sometimes, you need to uninstall `onnxruntime` for the GPU to be detected correctly):
+    Then run the following commands (please note that if you already installed HSF before, you need to uninstall `onnxruntime` for the GPU to be detected correctly):
 
     ```shell
-    pip install hsf
-    pip uninstall onnxruntime  # If needed
-    pip install onnxruntime-gpu
+    pip install hsf["gpu"]
     ```
 
 === "DirectML"
@@ -68,6 +66,7 @@ You'll be able to to install HSF from PyPI by following the instructions:
 
 You can now check the installation and default parameters of HSF using `hsf -h`.
 
+Please note that using `pip install hsf` will install HSF without any execution provider.
 
 ## Installation from sources
 

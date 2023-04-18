@@ -8,7 +8,7 @@ from rich.logging import RichHandler
 from roiloc.locator import RoiLocator
 
 FORMAT = "%(message)s"
-logging.basicConfig(level="NOTSET",
+logging.basicConfig(level=logging.INFO,
                     format=FORMAT,
                     datefmt="[%X]",
                     handlers=[RichHandler()])

@@ -21,7 +21,7 @@ from hsf.uncertainty import voxelwise_uncertainty
 from hsf.welcome import welcome
 
 FORMAT = "%(message)s"
-logging.basicConfig(level="NOTSET",
+logging.basicConfig(level=logging.INFO,
                     format=FORMAT,
                     datefmt="[%X]",
                     handlers=[RichHandler()])

@@ -91,7 +91,13 @@ If the environment isn't properly configured, you might be stuck running inferen
 
 Then, simply run:
 
-``pip install hsf``.
+``pip install hsf["your_hardware"]``.
+
+You should always specify the hardware you want to use, as it will install the proper dependencies, supported choices are ``cpu``, ``gpu`` and ``sparse``.
+
+So for example, if you want to use the GPU backend, run:
+
+``pip install hsf["gpu"]``.
 
 
 Quick start
@@ -214,6 +220,13 @@ Changelogs
 HSF
 ---
 
+**Version 1.1.2**
+
+* ***BREAKING CHANGE***: HSF needs to be installed using extra dependencies depending on the backend you want to use.
+  See the [installation guide](https://hsf.readthedocs.io/en/latest/user-guide/installation/) for more details.
+* Updated dependencies
+* Fixed installation on MacOS
+ 
 **Version 1.1.1**
 
 * Added whole-hippocampus segmentation

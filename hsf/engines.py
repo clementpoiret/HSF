@@ -1,10 +1,16 @@
 from pathlib import Path, PosixPath
 from typing import Generator
 
-import deepsparse
 import onnxruntime as ort
 from omegaconf.dictconfig import DictConfig
 from omegaconf.listconfig import ListConfig
+
+# If DeepSparse is installed, import it
+try:
+    import deepsparse
+    DEEPSPARSE_AVAILABLE = True
+except ImportError:
+    DEEPSPARSE_AVAILABLE = False
 
 
 def deepsparse_support() -> str:
@@ -14,6 +20,9 @@ def deepsparse_support() -> str:
     Returns:
         str: Support Status
     """
+    if not DEEPSPARSE_AVAILABLE:
+        return "not installed (you probably installed hsf using `pip install hsf[cpu]` or `hsf[gpu]`)"
+
     avx2 = deepsparse.cpu.cpu_avx2_compatible()
     avx512 = deepsparse.cpu.cpu_avx512_compatible()
     vnni = deepsparse.cpu.cpu_vnni_compatible()
@@ -54,6 +63,11 @@ def get_inference_engines(models_path: PosixPath, engine_name: str,
     Returns:
         List[InferenceEngine]: Inference Engines.
     """
+    if engine_name == "deepsparse" and not DEEPSPARSE_AVAILABLE:
+        raise ImportError(
+            "DeepSparse is not installed. If you are on Linux, please install it using `pip install hsf[sparse]`."
+        )
+
     p = Path(models_path).expanduser()
     models = list(p.glob("*.onnx"))
 

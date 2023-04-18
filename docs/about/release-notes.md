@@ -3,7 +3,7 @@
 Use pip to upgrade HSF:
 
 ```sh
-pip install -U hsf
+pip install -U hsf["your_hardware"]
 ```
 
 # Maintenance Team

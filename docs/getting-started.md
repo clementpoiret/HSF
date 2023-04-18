@@ -25,10 +25,10 @@ Then, activate the new environment:
 
 Once the environment is set up, you can install HSF using the following command:
 
-`pip install hsf`
+`pip install hsf["cpu"]`
 
 !!! warning "Hardware acceleration"
-    By doing so, HSF will certainly be limited to your CPU.
+    By doing so, HSF will be limited to your CPU.
     If you want to use a different hardware acceleration, please refer to the
     [page dedicated to installation details](user-guide/installation.md).
 

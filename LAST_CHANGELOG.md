@@ -2,11 +2,10 @@
 
 ## Software
 
-* New multispectral mode to segment from both T1 and T2 images
-* Fixed ANTs overloading /tmp directory
-* Updated dependencies
+* Fixed installation on macOS,
+* Backends are now installed as "extras" (e.g. `pip install hsf[gpu]`)
+* Updated dependencies.
 
 ## Models
 
-* New single and bagging models with more data and less biases (Tails of T1w MRIs)
-* New sparse models with int8-quantized weights
+* Nothing to report.

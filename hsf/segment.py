@@ -105,7 +105,7 @@ def predict(mris: list,
                                affine=aug.mri.affine)
         aug.add_image(lm_temp, 'label')
         aug.label.set_data(lab)
-        back = aug.apply_inverse_transform(warn=True)
+        back = aug.apply_inverse_transform(warn=False)
         results.append(back.label.data)
 
     return results

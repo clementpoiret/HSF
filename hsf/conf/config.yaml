@@ -6,3 +6,8 @@ defaults:
   - multispectrality: default
   - hardware: onnxruntime
   - override hydra/help: hsf
+  - _self_
+
+hydra:
+  job:
+    chdir: true

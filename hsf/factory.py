@@ -144,7 +144,7 @@ def save(mri: PosixPath, hippocampus: PosixPath, hard_pred: torch.Tensor,
     log.info(f"Saved segmentation in native space to {str(output_path)}")
 
 
-@hydra.main(config_path="conf", config_name="config")
+@hydra.main(config_path="conf", config_name="config", version_base="1.1")
 def main(cfg: DictConfig) -> None:
     fetch_models(cfg.segmentation.models_path, cfg.segmentation.models)
 

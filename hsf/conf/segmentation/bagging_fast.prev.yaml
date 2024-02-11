@@ -1,0 +1,26 @@
+# Original models from Poiret, et al., 2022.
+# Uses bootstrap aggregating without test-time augmentation.
+# Current version: 3.0.0
+
+ca_mode: "1/2/3"
+models_path: "~/.hsf/models/bagging/"
+models:
+  arunet_bag_0.onnx:
+    url: "https://zenodo.org/record/6470400/files/arunet_3.0.0_bag0.onnx?download=1"
+    xxh3_64: "3979a886022e3646"
+  arunet_bag_1.onnx:
+    url: "https://zenodo.org/record/6470400/files/arunet_3.0.0_bag1.onnx?download=1"
+    xxh3_64: "3f2265542b63edce"
+  arunet_bag_2.onnx:
+    url: "https://zenodo.org/record/6470400/files/arunet_3.0.0_bag2.onnx?download=1"
+    xxh3_64: "7b514bbbaa34c20c"
+  arunet_bag_3.onnx:
+    url: "https://zenodo.org/record/6470400/files/arunet_3.0.0_bag3.onnx?download=1"
+    xxh3_64: "6ed1498726f52bd2"
+  arunet_bag_4.onnx:
+    url: "https://zenodo.org/record/6470400/files/arunet_3.0.0_bag4.onnx?download=1"
+    xxh3_64: "b55d075b1211989c"
+
+segmentation:
+  test_time_augmentation: False
+  test_time_num_aug: 1

@@ -5,9 +5,9 @@
     <br>
     <font size="+2"><b>Hippocampal</b> <i>Segmentation</i> Factory</font>
     <br>
-    <b>Current HSF version:</b> 1.1.3<br>
-    <b>Built-in Models version:</b> 3.0.0<br>
-    <b>Models in the Hub:</b> 6
+    <b>Current HSF version:</b> 1.2.0<br>
+    <b>Built-in Models version:</b> 4.0.0<br>
+    <b>Models in the Hub:</b> 4
 </p>
 
 ____
@@ -82,6 +82,9 @@ which can be used in conjunction with pruned and int8 quantized models
 to deliver a much faster CPU inference speed (see [Hardware Acceleration](user-guide/configuration.md)
 section).
 
+Since v1.2.0, the complete training code is available at [hsf_train](https://github.com/clementpoiret/hsf_train).
+The `hsf_train` repository also contains easy to use scripts to train OR **finetune your own models**.
+
 ____
 
 HSF is distributed under the [MIT license](about/license.md):
@@ -93,5 +96,6 @@ HSF is distributed under the [MIT license](about/license.md):
 !!! note ""
     This work has been partly founded by the Fondation de France.
     HSF has been made possible by the IDRIS/GENCI with the HPE Jean Zay Supercomputer.
+    Latest models have been trained with the help of [Scaleway](https://www.scaleway.com/) and [Hugging Face](https://huggingface.co/).
 
     CEA Saclay | NeuroSpin | UNIACT-Inserm U1141

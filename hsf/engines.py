@@ -103,7 +103,9 @@ class InferenceEngine:
 
     def __call__(self, x):
         if self.engine_name == "onnxruntime":
-            return self.engine.run(None, {"input": x})
+            feed_names = [i.name for i in self.engine.get_inputs()]
+            assert len(feed_names) == 1, "Only one input is supported"
+            return self.engine.run(None, {feed_names[0]: x})
 
         elif self.engine_name == "deepsparse":
             return self.engine.run([x])

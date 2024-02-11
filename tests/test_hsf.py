@@ -16,7 +16,7 @@ from omegaconf import DictConfig
 
 
 def test_version():
-    assert __version__ == '1.1.3'
+    assert __version__ == '1.2.0'
 
 
 # SETUP FIXTURES

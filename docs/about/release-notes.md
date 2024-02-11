@@ -16,6 +16,13 @@ Current maintainers:
 
 ## HSF
 
+### Version 1.2.0 (2024-02-06)
+
+* Released finetuning scripts,
+* New models trained on more data,
+* Models are now hosted on HuggingFace,
+* Bug fixes and optimizations.
+
 ### Version 1.1.1 (2022-04-27)
 
 * Added whole-hippocampus segmentation
@@ -52,6 +59,12 @@ Current maintainers:
 * Initial release
 
 ## Models
+
+### Version 4.0.0 (2024-02-06)
+
+* New models trained on more data,
+* Models integrate architecture improvements,
+* Models are now hosted on HuggingFace.
 
 ### Version 3.0.0 (2022-04-24)
 

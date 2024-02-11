@@ -35,6 +35,7 @@ nav:
     - Installation: 'user-guide/installation.md'
     - Configuration: 'user-guide/configuration.md'
     - ROILoc: 'user-guide/roiloc.md'
+    - Finetuning: 'user-guide/finetuning.md'
     - "Uncertainty Estimations": 'user-guide/uncertainty.md'
   # - Troubleshooting: 'troubleshooting.md'
   - "Model Hub": 'model-hub.md'

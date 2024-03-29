@@ -170,7 +170,7 @@ def test_roiloc(models_path):
     mri, mask = hsf.roiloc_wrapper.get_mri(mris[0],
                                            mask_pattern="no_mask.nii.gz")
     assert isinstance(mri, ants.ANTsImage)
-    assert mask == None
+    assert mask is None
 
     _, right, left = hsf.roiloc_wrapper.get_hippocampi(mri, {
         "contrast": "t2",

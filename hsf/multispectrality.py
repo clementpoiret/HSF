@@ -30,7 +30,6 @@ def get_second_contrast(mri: PosixPath, pattern: str) -> Optional[PosixPath]:
     Returns:
         Optional[PosixPath]: Path to the second contrast.
     """
-
     if pattern:
         second_contrast = list(mri.parent.glob(pattern))
         assert len(

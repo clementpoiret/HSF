@@ -159,7 +159,7 @@ def filter_mris(mris: List[PosixPath], overwrite: bool) -> List[PosixPath]:
     def _get_segmentations(mri: PosixPath) -> List[PosixPath]:
         extensions = "".join(mri.suffixes)
         stem = mri.name.replace(extensions, "")
-        segmentations = mri.parent.glob(f"{stem}*_hippocampus_seg.nii.gz")
+        segmentations = list(mri.parent.glob(f"{stem}*_hippocampus_seg.nii.gz"))
 
         if len(segmentations) > 2:
             log.warning(
@@ -173,7 +173,7 @@ def filter_mris(mris: List[PosixPath], overwrite: bool) -> List[PosixPath]:
                 "Skipping segmentation. If you want to overwrite, set overwrite=True."
             )
 
-        return list(segmentations)
+        return segmentations
 
     mris = [mri for mri in mris if not mri.name.endswith("_seg.nii.gz")]
     if overwrite:

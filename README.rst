@@ -223,6 +223,7 @@ HSF
 **Version 1.2.1**
 
 * Option to override already segmented mris.
+* Minor fixes and optimizations.
 
 **Version 1.2.0**
 

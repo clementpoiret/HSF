@@ -13,15 +13,14 @@ def get_version(url_pattern: str = 'https://pypi.python.org/pypi/HSF/json'):
     req = requests.get(url_pattern)
     version = parse('0')
 
-    if req.encoding:
-        if req.status_code == requests.codes.ok:
-            j = json.loads(req.text.encode(req.encoding))
-            releases = j.get('releases', [])
+    if req.encoding and req.status_code == requests.codes.ok:
+        j = json.loads(req.text.encode(req.encoding))
+        releases = j.get('releases', [])
 
-            for release in releases:
-                ver = parse(release)
-                if not ver.is_prerelease:
-                    version = max(version, ver)
+        for release in releases:
+            ver = parse(release)
+            if not ver.is_prerelease:
+                version = max(version, ver)
 
     return version
 

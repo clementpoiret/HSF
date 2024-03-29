@@ -220,6 +220,10 @@ Changelogs
 HSF
 ---
 
+**Version 1.2.1**
+
+* Option to override already segmented mris.
+
 **Version 1.2.0**
 
 * Released finetuning scripts,

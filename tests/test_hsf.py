@@ -2,6 +2,10 @@ import shutil
 from pathlib import Path
 
 import ants
+import pytest
+import torch
+from omegaconf import DictConfig
+
 import hsf.engines
 import hsf.factory
 import hsf.fetch_models
@@ -9,14 +13,11 @@ import hsf.multispectrality
 import hsf.roiloc_wrapper
 import hsf.segment
 import hsf.uncertainty
-import pytest
-import torch
 from hsf import __version__
-from omegaconf import DictConfig
 
 
 def test_version():
-    assert __version__ == '1.2.0'
+    assert __version__ == '1.2.1'
 
 
 # SETUP FIXTURES
@@ -30,7 +31,7 @@ def models_path(tmpdir_factory):
     tmpdir_path = Path(tmpdir_path)
 
     # Copy sample mri
-    shutil.copy("tests/mri/tse.nii.gz", tmpdir_path / "tse.nii.gz")
+    shutil.copy("tests/mri/sub0_tse.nii.gz", tmpdir_path / "sub0_tse.nii.gz")
     shutil.copy("tests/mri/mask.nii.gz", tmpdir_path / "mask.nii.gz")
 
     # Download model
@@ -47,9 +48,10 @@ def config(models_path):
     configuration = {
         "files": {
             "path": str(models_path),
-            "pattern": "tse.nii.gz",
+            "pattern": "sub*_tse.nii.gz",
             "mask_pattern": None,
             "output_dir": "hsf_outputs",
+            "overwrite": False
         },
         "hardware": {
             "engine": "onnxruntime",
@@ -140,7 +142,7 @@ def test_main_compute_uncertainty(models_path):
     soft_pred = torch.randn(5, 6, 448, 30, 448)
     soft_pred = torch.softmax(soft_pred, dim=1)
 
-    hsf.factory.compute_uncertainty(models_path / "tse.nii.gz", soft_pred)
+    hsf.factory.compute_uncertainty(models_path / "sub0_tse.nii.gz", soft_pred)
 
 
 # fetch_models
@@ -160,7 +162,7 @@ def test_fetch_models(models_path, config):
 # # ROILoc
 def test_roiloc(models_path):
     """Tests that we can locate and save hippocampi."""
-    mris = hsf.roiloc_wrapper.load_from_config(models_path, "tse.nii.gz")
+    mris = hsf.roiloc_wrapper.load_from_config(models_path, "sub0_tse.nii.gz")
     assert mris
 
     mri, mask = hsf.roiloc_wrapper.get_mri(mris[0], mask_pattern="mask.nii.gz")
@@ -186,7 +188,7 @@ def test_roiloc(models_path):
 # Segmentation
 def test_segment(models_path, config, deepsparse_inference_engines):
     """Tests that we can segment and save a hippocampus."""
-    mri = models_path / "tse_right_hippocampus.nii.gz"
+    mri = models_path / "sub0_tse_right_hippocampus.nii.gz"
     sub = hsf.segment.mri_to_subject(mri)
     sub = [sub, sub]
 
@@ -210,7 +212,7 @@ def test_multispectrality(models_path):
             "output_dir": str(models_path)
         },
         "multispectrality": {
-            "pattern": "tse.nii.gz",
+            "pattern": "sub0_tse.nii.gz",
             "same_space": False,
             "registration": {
                 "type_of_transform": "AffineFast"
@@ -218,9 +220,9 @@ def test_multispectrality(models_path):
         }
     })
 
-    mri = hsf.roiloc_wrapper.load_from_config(models_path, "tse.nii.gz")[0]
+    mri = hsf.roiloc_wrapper.load_from_config(models_path, "sub0_tse.nii.gz")[0]
     second_contrast = hsf.multispectrality.get_second_contrast(
-        mri, "tse.nii.gz")
+        mri, "sub0_tse.nii.gz")
 
     registered = hsf.multispectrality.register(
         mri, second_contrast,

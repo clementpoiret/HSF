@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "HSF"
-version = "1.2.0"
+version = "1.2.1"
 description = "A simple yet exhaustive segmentation tool of the Hippocampal Subfields in T1w and T2w MRIs."
 authors = ["Clément POIRET <poiret.clement@outlook.fr>"]
 license = "MIT"

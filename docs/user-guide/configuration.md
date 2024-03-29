@@ -55,6 +55,7 @@ I/O are managed through the `files.*` arguments. Default parameters are defined 
 - `files.path` and `files.pattern` are mandatory arguments and respectively define where to search for MRIs, and how to find them through a `glob()` pattern.
 - `files.mask_pattern` defines how to find brain extraction masks for registration purposes (see [ROILoc documentation](user-guide/roiloc.md)).
 - `files.output_dir` defines where to store temporary files in a relative subject directory.
+- `files.overwrite` defines whether to overwrite existing segmentations.
 
 The following example will recursively search all `*T2w.nii.gz` files in the `~Datasets/MRI/` folder, for search a `*T2w_bet_mask.nii.gz` located next to each T2w images:
 

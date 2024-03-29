@@ -51,6 +51,7 @@ def config(models_path):
             "pattern": "sub*_tse.nii.gz",
             "mask_pattern": None,
             "output_dir": "hsf_outputs",
+            "overwrite": False
         },
         "hardware": {
             "engine": "onnxruntime",

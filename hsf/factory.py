@@ -5,7 +5,6 @@ from typing import Generator, List, Optional
 import ants
 import hydra
 import torch
-# from hydra import compose, initialize
 from omegaconf import DictConfig
 from rich.logging import RichHandler
 from roiloc.locator import RoiLocator
@@ -28,8 +27,6 @@ logging.basicConfig(level=logging.INFO,
 
 log = logging.getLogger(__name__)
 
-# initialize(config_path="hsf/conf")
-# cfg = compose(config_name="config")
 
 
 def get_lr_hippocampi(mri: PosixPath, cfg: DictConfig) -> tuple:

@@ -27,7 +27,6 @@ def mri_to_subject(mri: PosixPath) -> tio.Subject:
     subject = tio.Subject(mri=tio.ScalarImage(mri))
 
     preprocessing_pipeline = tio.Compose([
-        # tio.ToCanonical(),
         tio.ZNormalization(),
         tio.EnsureShapeMultiple(8),
     ])

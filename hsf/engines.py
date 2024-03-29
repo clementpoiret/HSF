@@ -41,9 +41,7 @@ def deepsparse_support() -> str:
 
 
 def print_deepsparse_support():
-    """
-    Prints DeepSparse Support Status.
-    """
+    """Prints DeepSparse Support Status."""
     print(
         "DeepSparse Optimization Status (minimal: AVX2 | partial: AVX512 | full: AVX512 VNNI):",
         deepsparse_support())

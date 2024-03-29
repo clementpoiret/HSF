@@ -38,8 +38,7 @@ def get_second_contrast(mri: PosixPath, pattern: str) -> Optional[PosixPath]:
         ) == 1, f"Invalid file pattern: {pattern}. No or multiple files found."
 
         return second_contrast[0]
-    else:
-        return None
+    return None
 
 
 @handle_cache
@@ -61,33 +60,32 @@ def register(mri: PosixPath,
     """
     if cfg.multispectrality.same_space:
         return second_contrast
-    else:
-        registration_params = dict(cfg.multispectrality.registration)
-        if not registration_params.get("outprefix"):
-            registration_params["outprefix"] = outprefix
+    registration_params = dict(cfg.multispectrality.registration)
+    if not registration_params.get("outprefix"):
+        registration_params["outprefix"] = outprefix
 
-        fixed = ants.image_read(str(mri))
-        moving = ants.image_read(str(second_contrast))
+    fixed = ants.image_read(str(mri))
+    moving = ants.image_read(str(second_contrast))
 
-        log.info(f"Registering {str(second_contrast)} to {str(mri)}")
-        transformation = ants.registration(fixed=fixed,
-                                           moving=moving,
-                                           **registration_params)
+    log.info(f"Registering {str(second_contrast)} to {str(mri)}")
+    transformation = ants.registration(fixed=fixed,
+                                       moving=moving,
+                                       **registration_params)
 
-        registered = ants.apply_transforms(
-            fixed=fixed,
-            moving=moving,
-            transformlist=transformation["fwdtransforms"])
+    registered = ants.apply_transforms(
+        fixed=fixed,
+        moving=moving,
+        transformlist=transformation["fwdtransforms"])
 
-        extensions = "".join(second_contrast.suffixes)
-        fname = second_contrast.name.replace(extensions,
-                                             "") + "_registered.nii.gz"
-        output_dir = mri.parent / cfg.files.output_dir
-        output_dir.mkdir(parents=True, exist_ok=True)
+    extensions = "".join(second_contrast.suffixes)
+    fname = second_contrast.name.replace(extensions,
+                                         "") + "_registered.nii.gz"
+    output_dir = mri.parent / cfg.files.output_dir
+    output_dir.mkdir(parents=True, exist_ok=True)
 
-        ants.image_write(registered, str(output_dir / fname))
+    ants.image_write(registered, str(output_dir / fname))
 
-        return output_dir / fname
+    return output_dir / fname
 
 
 def get_additional_hippocampi(mri: PosixPath, second_contrast: PosixPath,

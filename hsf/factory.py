@@ -199,7 +199,7 @@ def main(cfg: DictConfig) -> None:
     mris = load_from_config(cfg.files.path, cfg.files.pattern)
     _n = len(mris)
 
-    mris = filter_mris(mris, cfg.overwrite)
+    mris = filter_mris(mris, cfg.files.overwrite)
 
     if len(mris) == 0 and _n > 0:
         log.info("No new MRI found. Skipping segmentation.")

@@ -78,8 +78,7 @@ def register(mri: PosixPath,
         transformlist=transformation["fwdtransforms"])
 
     extensions = "".join(second_contrast.suffixes)
-    fname = second_contrast.name.replace(extensions,
-                                         "") + "_registered.nii.gz"
+    fname = second_contrast.name.replace(extensions, "") + "_registered.nii.gz"
     output_dir = mri.parent / cfg.files.output_dir
     output_dir.mkdir(parents=True, exist_ok=True)
 

@@ -62,7 +62,8 @@ def config(models_path):
                         "gpu_mem_limit": 2147483648
                     }
                 ], "CPUExecutionProvider"],
-                "batch_size": 1
+                "batch_size":
+                1
             }
         },
         "roiloc": {
@@ -102,9 +103,8 @@ def config(models_path):
             "models": {
                 "model.onnx": {
                     "url":
-                        "https://zenodo.org/record/6457484/files/arunet_3.0.0_single.onnx?download=1",
-                    "xxh3_64":
-                        "71edec9011f7f304"
+                    "https://zenodo.org/record/6457484/files/arunet_3.0.0_single.onnx?download=1",
+                    "xxh3_64": "71edec9011f7f304"
                 }
             },
             "segmentation": {
@@ -220,7 +220,8 @@ def test_multispectrality(models_path):
         }
     })
 
-    mri = hsf.roiloc_wrapper.load_from_config(models_path, "sub0_tse.nii.gz")[0]
+    mri = hsf.roiloc_wrapper.load_from_config(models_path,
+                                              "sub0_tse.nii.gz")[0]
     second_contrast = hsf.multispectrality.get_second_contrast(
         mri, "sub0_tse.nii.gz")
 

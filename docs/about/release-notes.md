@@ -16,6 +16,10 @@ Current maintainers:
 
 ## HSF
 
+### Version 1.2.1 (2024-03-29)
+
+* Added an option to override already segmented mris.
+
 ### Version 1.2.0 (2024-02-06)
 
 * Released finetuning scripts,

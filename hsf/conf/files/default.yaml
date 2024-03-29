@@ -2,3 +2,4 @@ path: ???
 pattern: ???
 mask_pattern: "*mask.nii.gz"
 output_dir: "hsf_outputs"
+overwrite: false

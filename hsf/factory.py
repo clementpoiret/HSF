@@ -144,6 +144,45 @@ def save(mri: PosixPath, hippocampus: PosixPath, hard_pred: torch.Tensor,
     log.info(f"Saved segmentation in native space to {str(output_path)}")
 
 
+def filter_mris(mris: List[PosixPath], overwrite: bool) -> List[PosixPath]:
+    """
+    Filter mris.
+
+    Args:
+        mris (List[PosixPath]): List of MRI paths.
+        overwrite (bool): Overwrite existing segmentations.
+
+    Returns:
+        List[PosixPath]: List of filtered MRI paths.
+    """
+
+    def _get_segmentations(mri: PosixPath) -> List[PosixPath]:
+        extensions = "".join(mri.suffixes)
+        stem = mri.name.replace(extensions, "")
+        segmentations = mri.parent.glob(f"{stem}*_hippocampus_seg.nii.gz")
+
+        if len(segmentations) > 2:
+            log.warning(
+                f"Found {len(segmentations)} segmentations for {mri}. "
+                "As HSF produces only two files per MRI, this might indicate a misconfiguration."
+            )
+
+        if len(segmentations) > 0:
+            log.info(
+                f"Found {len(segmentations)} segmentations for {mri}. "
+                "Skipping segmentation. If you want to overwrite, set overwrite=True."
+            )
+
+        return list(segmentations)
+
+    mris = [mri for mri in mris if not mri.name.endswith("_seg.nii.gz")]
+    if overwrite:
+        return mris
+
+    mris = [mri for mri in mris if len(_get_segmentations(mri)) == 0]
+    return mris
+
+
 @hydra.main(config_path="conf", config_name="config", version_base="1.1")
 def main(cfg: DictConfig) -> None:
     fetch_models(cfg.segmentation.models_path, cfg.segmentation.models)
@@ -158,6 +197,13 @@ def main(cfg: DictConfig) -> None:
         ) % bs == 0, "test_time_num_aug+1 must be a multiple of batch_size for deepsparse"
 
     mris = load_from_config(cfg.files.path, cfg.files.pattern)
+    _n = len(mris)
+
+    mris = filter_mris(mris, cfg.overwrite)
+
+    if len(mris) == 0 and _n > 0:
+        log.info("No new MRI found. Skipping segmentation.")
+        return
 
     log.warning(
         "Please be aware that the segmentation is highly dependant on ROILoc to locate both hippocampi.\nROILoc will be run using the following configuration.\nIf the segmentation is of bad quality, please tune your ROILoc settings (e.g. ``margin``)."

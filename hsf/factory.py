@@ -1,6 +1,6 @@
 import logging
 from pathlib import Path, PosixPath
-from typing import Generator, Optional
+from typing import Generator, List, Optional
 
 import ants
 import hydra

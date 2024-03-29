@@ -31,7 +31,7 @@ def models_path(tmpdir_factory):
     tmpdir_path = Path(tmpdir_path)
 
     # Copy sample mri
-    shutil.copy("tests/mri/tse.nii.gz", tmpdir_path / "tse.nii.gz")
+    shutil.copy("tests/mri/sub0_tse.nii.gz", tmpdir_path / "sub0_tse.nii.gz")
     shutil.copy("tests/mri/mask.nii.gz", tmpdir_path / "mask.nii.gz")
 
     # Download model

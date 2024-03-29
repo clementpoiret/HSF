@@ -50,7 +50,8 @@ def get_mri(mri: PosixPath, mask_pattern: Optional[str] = None) -> tuple:
         else:
             mask = None
             log.warning(
-                "Couldn't find brain extraction mask for the provided pattern.")
+                "Couldn't find brain extraction mask for the provided pattern."
+            )
     else:
         mask = None
 

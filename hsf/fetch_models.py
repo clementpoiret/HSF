@@ -50,9 +50,8 @@ def fetch(directory: str, filename: str, url: str, xxh3_64: str) -> None:
         if get_hash(str(outfile)) == xxh3_64:
             log.info(f"{filename} already exists and is up to date")
             return
-        else:
-            log.info(f"{filename} already exists but is not up to date")
-            outfile.unlink()
+        log.info(f"{filename} already exists but is not up to date")
+        outfile.unlink()
 
     log.info(f"Fetching {url}")
     wget.download(url, out=str(outfile))

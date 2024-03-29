@@ -62,5 +62,4 @@ def get_augmented_subject(subject: tio.Subject, augmentation_cfg: DictConfig,
         subjects.append(subject)
 
         return subjects
-    else:
-        return [subject]
+    return [subject]

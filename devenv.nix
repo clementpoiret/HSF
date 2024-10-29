@@ -28,4 +28,11 @@ in {
   enterTest = ''
     uv run pytest
   '';
+
+  scripts.pytestcoverage.exec = ''
+    uv sync
+    uv pip install onnxruntime>=1.8.0 deepsparse>=1.4.0
+    uv run coverage run --source=hsf -m pytest
+    uv run coverage xml
+  '';
 }

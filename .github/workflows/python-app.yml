@@ -27,13 +27,8 @@ jobs:
       - name: Install devenv.sh
         run: nix profile install nixpkgs#devenv
 
-      - name: Run tests
-        shell: devenv shell bash -e {0}
-        run: |
-          uv sync
-          uv pip install onnxruntime>=1.8.0 deepsparse>=1.4.0
-          uv run coverage run --source=hsf -m pytest
-          uv run coverage xml
+      - name: Run Tests and Coverage
+        run: devenv shell pytestcoverage
 
       - name: Publish Coverage on CodeClimate
         uses: paambaati/codeclimate-action@v3.0.0

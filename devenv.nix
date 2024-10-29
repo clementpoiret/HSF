@@ -3,6 +3,7 @@ let
   buildInputs = with pkgs; [
     pythonManylinuxPackages.manylinux2014Package
     stdenv.cc.cc
+    glibc
     libuv
     zlib
   ];

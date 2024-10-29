@@ -16,6 +16,14 @@ Current maintainers:
 
 ## HSF
 
+
+### Version 1.2.1 (2024-10-29)
+
+* Updated ROILoc to v0.4.1 (latest ANTs version),
+* Updated dependencies,
+* Added a proper dev env using Nix,
+* Switched from poetry to uv.
+
 ### Version 1.2.1 (2024-03-29)
 
 * Added an option to override already segmented mris.

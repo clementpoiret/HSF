@@ -81,6 +81,35 @@ Table of Contents...
 
 .. contents:: ...To guide you in the challenging world of hippocampal subfields segmentation :)
 
+Development Environment
+=======================
+
+ROILoc relies on Nix_ and Devenv_.
+
+.. _Nix: https://nixos.org/download/
+.. _Devenv: https://devenv.sh
+
+**Step 1**: Install Nix_:
+::
+
+    sh <(curl -L https://nixos.org/nix/install) --daemon
+
+**Step 2**: Install Devenv_:
+::
+
+    nix-env -iA devenv -f https://github.com/NixOS/nixpkgs/tarball/nixpkgs-unstable
+
+**Step 3**: 
+::
+
+    devenv shell
+
+That's it :)
+
+If you want something even easier, install direnv_ and
+allow it to automatically activate the current env (``direnv allow``).
+
+.. _direnv: https://direnv.net/
 
 Installation
 ============
@@ -219,6 +248,13 @@ Changelogs
 
 HSF
 ---
+
+**Version 1.2.2**
+
+* Updated ROILoc to v0.4.1 (latest ANTs version),
+* Updated dependencies,
+* Added a proper dev env using Nix,
+* Switched from poetry to uv.
 
 **Version 1.2.1**
 

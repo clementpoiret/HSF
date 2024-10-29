@@ -1,16 +1,15 @@
 import logging
 from pathlib import Path
 
-import wget
+import requests
 import xxhash
 from omegaconf import DictConfig
 from rich.logging import RichHandler
 
 FORMAT = "%(message)s"
-logging.basicConfig(level=logging.INFO,
-                    format=FORMAT,
-                    datefmt="[%X]",
-                    handlers=[RichHandler()])
+logging.basicConfig(
+    level=logging.INFO, format=FORMAT, datefmt="[%X]", handlers=[RichHandler()]
+)
 
 log = logging.getLogger(__name__)
 
@@ -54,7 +53,11 @@ def fetch(directory: str, filename: str, url: str, xxh3_64: str) -> None:
         outfile.unlink()
 
     log.info(f"Fetching {url}")
-    wget.download(url, out=str(outfile))
+    response = requests.get(url, stream=True)
+    response.raise_for_status()
+    with open(outfile, "wb") as f:
+        for chunk in response.iter_content(chunk_size=8192):
+            f.write(chunk)
     print("\n")
 
     if not xxh3_64 == get_hash(str(outfile)):

@@ -28,20 +28,22 @@ jobs:
         run: nix profile install nixpkgs#devenv
 
       - name: Run Tests and Coverage
-        run: devenv shell pytestcoverage
+        run: devenv test
 
-      - name: Publish Coverage on CodeClimate
-        uses: paambaati/codeclimate-action@v3.0.0
-        env:
-          CC_TEST_REPORTER_ID: ${{ secrets.CC_TEST_REPORTER_ID }}
-        with:
-          coverageLocations: |
-            ${{ github.workspace }}/coverage.xml:coverage.py
-          debug: true
-
-      - name: Publish Coverage on Codacy
-        uses: codacy/codacy-coverage-reporter-action@v1.1.0
-        with:
-          project-token: ${{ secrets.CODACY_PROJECT_TOKEN }}
-          api-token: ${{ secrets.CODACY_API_TOKEN }}
-          coverage-reports: ${{ github.workspace }}/coverage.xml
+      #   run: devenv shell pytestcoverage
+      #
+      # - name: Publish Coverage on CodeClimate
+      #   uses: paambaati/codeclimate-action@v3.0.0
+      #   env:
+      #     CC_TEST_REPORTER_ID: ${{ secrets.CC_TEST_REPORTER_ID }}
+      #   with:
+      #     coverageLocations: |
+      #       ${{ github.workspace }}/coverage.xml:coverage.py
+      #     debug: true
+      #
+      # - name: Publish Coverage on Codacy
+      #   uses: codacy/codacy-coverage-reporter-action@v1.1.0
+      #   with:
+      #     project-token: ${{ secrets.CODACY_PROJECT_TOKEN }}
+      #     api-token: ${{ secrets.CODACY_API_TOKEN }}
+      #     coverage-reports: ${{ github.workspace }}/coverage.xml

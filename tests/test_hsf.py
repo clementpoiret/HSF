@@ -17,7 +17,7 @@ from hsf import __version__
 
 
 def test_version():
-    assert __version__ == '1.2.1'
+    assert __version__ == "1.2.2"
 
 
 # SETUP FIXTURES
@@ -51,26 +51,22 @@ def config(models_path):
             "pattern": "sub*_tse.nii.gz",
             "mask_pattern": None,
             "output_dir": "hsf_outputs",
-            "overwrite": False
+            "overwrite": False,
         },
         "hardware": {
             "engine": "onnxruntime",
             "engine_settings": {
-                "execution_providers": [[
-                    "CUDAExecutionProvider", {
-                        "device_id": 0,
-                        "gpu_mem_limit": 2147483648
-                    }
-                ], "CPUExecutionProvider"],
-                "batch_size":
-                1
-            }
+                "execution_providers": [
+                    [
+                        "CUDAExecutionProvider",
+                        {"device_id": 0, "gpu_mem_limit": 2147483648},
+                    ],
+                    "CPUExecutionProvider",
+                ],
+                "batch_size": 1,
+            },
         },
-        "roiloc": {
-            "roi": "hippocampus",
-            "contrast": "t2",
-            "margin": [2, 0, 2]
-        },
+        "roiloc": {"roi": "hippocampus", "contrast": "t2", "margin": [2, 0, 2]},
         "augmentation": {
             "flip": {
                 "axes": ["LR"],
@@ -87,30 +83,24 @@ def config(models_path):
             "elastic": {
                 "num_control_points": 4,
                 "max_displacement": 4,
-                "locked_borders": 0
+                "locked_borders": 0,
             },
         },
         "multispectrality": {
             "pattern": None,
             "same_space": True,
-            "registration": {
-                "type_of_transform": "AffineFast"
-            }
+            "registration": {"type_of_transform": "AffineFast"},
         },
         "segmentation": {
             "ca_mode": "1/2/3",
             "models_path": str(models_path),
             "models": {
                 "model.onnx": {
-                    "url":
-                    "https://zenodo.org/record/6457484/files/arunet_3.0.0_single.onnx?download=1",
-                    "xxh3_64": "71edec9011f7f304"
+                    "url": "https://zenodo.org/record/6457484/files/arunet_3.0.0_single.onnx?download=1",
+                    "xxh3_64": "71edec9011f7f304",
                 }
             },
-            "segmentation": {
-                "test_time_augmentation": True,
-                "test_time_num_aug": 5
-            }
+            "segmentation": {"test_time_augmentation": True, "test_time_num_aug": 5},
         },
     }
 
@@ -122,9 +112,9 @@ def deepsparse_inference_engines(models_path):
     """Tests that models can be loaded using DeepSparse"""
     settings = DictConfig({"num_cores": 0, "batch_size": 2})
 
-    engines = hsf.engines.get_inference_engines(models_path,
-                                                engine_name="deepsparse",
-                                                engine_settings=settings)
+    engines = hsf.engines.get_inference_engines(
+        models_path, engine_name="deepsparse", engine_settings=settings
+    )
 
     return list(engines)
 
@@ -167,16 +157,13 @@ def test_roiloc(models_path):
 
     mri, mask = hsf.roiloc_wrapper.get_mri(mris[0], mask_pattern="mask.nii.gz")
     assert isinstance(mask, ants.ANTsImage)
-    mri, mask = hsf.roiloc_wrapper.get_mri(mris[0],
-                                           mask_pattern="no_mask.nii.gz")
+    mri, mask = hsf.roiloc_wrapper.get_mri(mris[0], mask_pattern="no_mask.nii.gz")
     assert isinstance(mri, ants.ANTsImage)
     assert mask is None
 
-    _, right, left = hsf.roiloc_wrapper.get_hippocampi(mri, {
-        "contrast": "t2",
-        "margin": [2, 0, 2],
-        "roi": "hippocampus"
-    }, mask)
+    _, right, left = hsf.roiloc_wrapper.get_hippocampi(
+        mri, {"contrast": "t2", "margin": [2, 0, 2], "roi": "hippocampus"}, mask
+    )
 
     assert isinstance(right, ants.ANTsImage)
     assert isinstance(left, ants.ANTsImage)
@@ -200,47 +187,41 @@ def test_segment(models_path, config, deepsparse_inference_engines):
             n_engines=1,
             engines=deepsparse_inference_engines,
             ca_mode=ca_mode,
-            batch_size=2)
+            batch_size=2,
+        )
 
     hsf.segment.save_prediction(mri, pred)
 
 
 def test_multispectrality(models_path):
     """Tests that we can co-locate hippocampi in another contrast."""
-    config = DictConfig({
-        "files": {
-            "output_dir": str(models_path)
-        },
-        "multispectrality": {
-            "pattern": "sub0_tse.nii.gz",
-            "same_space": False,
-            "registration": {
-                "type_of_transform": "AffineFast"
-            }
+    config = DictConfig(
+        {
+            "files": {"output_dir": str(models_path)},
+            "multispectrality": {
+                "pattern": "sub0_tse.nii.gz",
+                "same_space": False,
+                "registration": {"type_of_transform": "AffineFast"},
+            },
         }
-    })
+    )
 
-    mri = hsf.roiloc_wrapper.load_from_config(models_path,
-                                              "sub0_tse.nii.gz")[0]
-    second_contrast = hsf.multispectrality.get_second_contrast(
-        mri, "sub0_tse.nii.gz")
+    mri = hsf.roiloc_wrapper.load_from_config(models_path, "sub0_tse.nii.gz")[0]
+    second_contrast = hsf.multispectrality.get_second_contrast(mri, "sub0_tse.nii.gz")
 
     registered = hsf.multispectrality.register(
-        mri, second_contrast,
-        DictConfig({"multispectrality": {
-            "same_space": True
-        }}))
+        mri, second_contrast, DictConfig({"multispectrality": {"same_space": True}})
+    )
     registered = hsf.multispectrality.register(mri, second_contrast, config)
 
     img = ants.image_read(str(mri), reorient="LPI")
-    locator, _, _ = hsf.roiloc_wrapper.get_hippocampi(img, {
-        "contrast": "t2",
-        "margin": [2, 0, 2],
-        "roi": "hippocampus"
-    }, None)
+    locator, _, _ = hsf.roiloc_wrapper.get_hippocampi(
+        img, {"contrast": "t2", "margin": [2, 0, 2], "roi": "hippocampus"}, None
+    )
 
     _, _ = hsf.multispectrality.get_additional_hippocampi(
-        mri, registered, locator, config)
+        mri, registered, locator, config
+    )
 
 
 def test_uncertainty():

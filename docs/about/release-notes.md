@@ -16,8 +16,11 @@ Current maintainers:
 
 ## HSF
 
+### Version 1.2.3 (2024-11-17)
 
-### Version 1.2.1 (2024-10-29)
+* Switched to Hatchling build backend
+
+### Version 1.2.2 (2024-10-29)
 
 * Updated ROILoc to v0.4.1 (latest ANTs version),
 * Updated dependencies,

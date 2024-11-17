@@ -249,6 +249,10 @@ Changelogs
 HSF
 ---
 
+**Version 1.2.3**
+
+* Switched to Hatchling build backend
+
 **Version 1.2.2**
 
 * Updated ROILoc to v0.4.1 (latest ANTs version),

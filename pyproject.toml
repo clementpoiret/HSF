@@ -1,6 +1,6 @@
 [project]
 name = "hsf"
-version = "1.2.2"
+version = "1.2.3"
 description = "A simple yet exhaustive segmentation tool of the Hippocampal Subfields in T1w and T2w MRIs."
 license = {text = "MIT License"}
 readme = {file = "README.rst", content-type = "text/x-rst"}
@@ -45,3 +45,7 @@ filterwarnings = ["ignore::DeprecationWarning"]
 
 [tool.coverage.report]
 omit = ["hsf/welcome.py"]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
